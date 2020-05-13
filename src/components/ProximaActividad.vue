@@ -96,23 +96,13 @@
 <script>
 export default {
   name: "ProximaActividad",
-
+  computed:{
+    items() {
+      return this.$store.getters.proximaActividad
+    }
+  },
   data() {
     return {
-      //Objeto con los datos de la actividad
-      items: [
-        {
-          dia: "Sábado",
-          fecha: "02/05/2020",
-          hora: "17:00",
-          lugar: "Casa de las asociaciones",
-          descripcion:
-            "Paseo por el Arroyo la Vega, merienda y juegos al aire libre",
-          precio: "2",
-          horaFin: "20:00",
-          lugarFin: "Casa de las asociaciones"
-        }
-      ],
 
       valid: true, //v-if --> method edit
 
@@ -134,14 +124,8 @@ export default {
     edit(index) {
       this.valid = false;
 
-      this.newDia = this.items[index].dia;
-      this.newFecha = this.items[index].fecha;
-      this.newHora = this.items[index].hora;
-      this.newLugar = this.items[index].lugar;
-      this.newDescripcion = this.items[index].descripcion;
-      this.newPrecio = this.items[index].precio;
-      this.newHoraFin = this.items[index].horaFin;
-      this.newLugarFin = this.items[index].lugarFin;
+      this.$store.proximaActividad({data:[this.newDia,this.newFecha,this.newHora,this.newLugar,this.newDescripcion,this.newPrecio,this.newHoraFin,this.newLugarFin]})
+
 
       this.indexActi = index;
     },

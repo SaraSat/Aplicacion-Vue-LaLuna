@@ -2,7 +2,8 @@
 
 ## Project setup
 ```
-npm install vue cli
+npm install vue cli (local)
+vue add vuetify
 ```
 
 ### Compiles and hot-reloads for development
