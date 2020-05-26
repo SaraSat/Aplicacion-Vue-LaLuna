@@ -55,7 +55,7 @@
 import FormularioActividad from "../components/FormularioActividad.vue";
 import { variables } from "../components/FormularioActividad.vue";
 export default {
-  name: "ListaActividades",
+  name: "Actividades",
   components: {
     FormularioActividad
   },

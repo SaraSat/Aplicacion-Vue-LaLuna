@@ -102,7 +102,7 @@
 </template>
 <script>
   export default {
-  name: "ProximaActividad",
+  name: "Home",
   computed:{
     items() {
       return this.$store.getters.proximaActividad
