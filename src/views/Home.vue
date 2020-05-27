@@ -101,16 +101,15 @@
     </v-container>
 </template>
 <script>
-  export default {
+export default {
   name: "Home",
-  computed:{
+  computed: {
     items() {
-      return this.$store.getters.proximaActividad
+      return this.$store.getters.proximaActividad;
     }
   },
   data() {
     return {
-
       valid: true, //v-if --> method edit
 
       //Variables recogidas en v-model del formulario
@@ -126,23 +125,25 @@
       indexActi: "" //--> method edit
     };
   },
+  mounted() {
+    this.$store.dispatch('loadInicio')
+  },
   methods: {
     //Recogida de los datos de la actividad a editar  para poder mostrarlos en el formulario de edicion
     edit(index) {
       this.valid = false;
-      item=[
+      item = [
         this.newDia,
         this.newFecha,
         this.newHora,
         this.newLugar,
-        this.newDescripcion,this.newPrecio,
+        this.newDescripcion,
+        this.newPrecio,
         this.newHoraFin,
         this.newLugarFin
-      ]
-        
-      
-      this.$store.proximaActividad({datos:item})
+      ];
 
+      this.$store.proximaActividad({ datos: item });
 
       this.indexActi = index;
     },
@@ -163,7 +164,6 @@
     }
   }
 };
-
 </script>
 <style>
 h1,
