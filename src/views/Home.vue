@@ -113,9 +113,6 @@ export default {
       valid: true, //v-if --> method edit
       item:[],
       id:1,
-      //Variables recogidas en v-model del formulario
-
-      indexActi: "" //--> method edit
     };
   },
   mounted() {
