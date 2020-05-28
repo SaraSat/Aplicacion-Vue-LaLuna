@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const PREFIX = 'http://127.0.0.1:5000';
+const PREFIX = 'http://127.0.0.1:8000';
 
 const axios = require('axios').default;
 
@@ -73,32 +73,32 @@ class L_client {
 
   //Peticiones ajax página de inicio: 
 
-  load_inicio() {
+  load_inicio(id) {
     return new Promise((resolutionFunc, rejectionFunc) => {
       const instance = axios.create({
         baseURL: this.server,
         //timeout: 1000,
         headers: { 'Authorization': 'Bearer ' + this.auth_token }
       });
-      instance.get(this.server + '/api/actividadInicio', {
+      instance.get(this.server + '/api/inicios/' , {
 
       }).then((res) => {
         resolutionFunc(res.data)
-        console.log(data)
       }).catch((res) => {
         rejectionFunc(res.data)
       });
     });
   }
 
-  update_inicio(datos) {
+  update_inicio(id, datos) {
+    console.log(id)
     return new Promise((resolutionFunc, rejectionFunc) => {
       const instance = axios.create({
         baseURL: this.server,
         //timeout: 1000,
         headers: { 'Authorization': 'Bearer ' + this.auth_token }
       });
-      instance.put(this.server + '/api/actividadInicio/'+1, {
+      instance.put(this.server + '/api/inicios/' + id, {
         dia: datos.dia,
         fecha: datos.fecha,
         lugar: datos.lugar,
@@ -152,9 +152,19 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadInicio(context){
-      client.load_inicio().then((data)=>{
+    loadInicio(context, id){
+      client.load_inicio(id).then((data)=>{
         context.commit('setProximaActividad', data)
+      }).catch((data)=>{
+        console.log(data)
+      })
+    },
+    updateInicio(context, {datos, id}){
+      client.update_inicio(id,datos).then((data)=>{
+        client.load_inicio().then((data)=>{
+          context.commit('setProximaActividad', data)
+        })
+        
       }).catch((data)=>{
         console.log(data)
       })
