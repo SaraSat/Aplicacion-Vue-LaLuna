@@ -126,7 +126,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
 
-            id = id_act || ""
+           var id = id_act || ""
 
             instance.get(this.server + '/api/actividads/' + id, {
 
@@ -243,8 +243,9 @@ export default new Vuex.Store({
             })
         },
         updateActividades(context, { id, datos }) {
+            console.log(datos)
             client.update_actividades(id, datos).then((data) => {
-                client.load_inicio().then((data) => {
+                client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
                 })
             }).catch((data) => {
@@ -253,7 +254,7 @@ export default new Vuex.Store({
         },
         deleteActividad(context, id) {
             client.delete_actividad(id).then((data) => {
-                client.load_inicio().then((data) => {
+                client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
                 })
             }).catch((data) => {
