@@ -9,8 +9,8 @@
       Se importa el componente FormularioActividad para agregar o editar
       Se importa la constante variables de Formulario actividad para poder acceder a gettes y setters de los datos-->
     <v-content>
-      <!--Dialog para poder insertar una nueva tarjeta actividad -->
       
+      <!--Dialog para poder insertar una nueva tarjeta actividad -->
           <v-btn class="d-flex flex-column ml-12" @click="dialog=true" small="">
             <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
             <span>Insertar</span>
@@ -49,6 +49,8 @@
               </v-card-actions>
             </v-card>
           </v-flex>
+
+          <!--Dialog para poder editar cada tarjeta por separado-->
               <v-dialog v-model="dialog2">
                 <v-card dark xs12 md6>
                   <v-card-title>
