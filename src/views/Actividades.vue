@@ -29,8 +29,8 @@
               <v-text-field label="introduce una breve descripción" v-model="desc"></v-text-field>
           </v-card-text>
           <v-card-actions>
-              <v-btn class="success" type="submit">Aceptar</v-btn>
-              <v-btn class="error" @click="cancelar">Cancelar</v-btn>
+              <v-btn class="success" @click="insertar">Aceptar</v-btn>
+              <v-btn class="error" @click="dialog=false">Cancelar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -75,21 +75,37 @@ export default {
   },
   data() {
     return {
-      add: true, //-.>method editar
-      edit: true, //-->method agregar
+      ed: false, //-->method editar
       item:[], 
       nombre:'',
       fecha:'',
       desc:'',
+      dialog:false
     };
   },
   methods: {
     edit(){
-
+      var datos={
+        nombre:this.items.nombre,
+        fecha:this.items.fecha,
+        desc:this.items.desc
+      }
+      this.$store.dispatch('updateActividades', {id:this.items.id, datos:datos})
+      this.edd=false
     },
     eliminar() {
-
+      this.$store.dispatch('deleteActividad', this.items.id)
     },
+    insertar() {
+      var datos={
+        nombre:this.nombre,
+        fecha:this.fecha,
+        desc:this.desc
+      }
+      this.$store.dispatch('insertActividad', {datos:datos})
+      this.dialog=false
+
+    }
   }
 
 };

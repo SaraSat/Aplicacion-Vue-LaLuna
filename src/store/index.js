@@ -80,7 +80,7 @@ class L_client {
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
-            instance.get(this.server + '/api/inicios/', {
+            instance.get(this.server + '/api/inicios/' , {
 
             }).then((res) => {
                 resolutionFunc(res.data)
@@ -173,6 +173,26 @@ class L_client {
 
     }
 
+    insert_actividad(datos){
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.post(this.server + '/api/actividads/', {
+                nombre:datos.nombre,
+                fecha:datos.fecha,
+                desc:datos.desc
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
 }
 
 const client = new L_client(PREFIX);
@@ -192,9 +212,12 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        loadInicio(context, id) {
-            client.load_inicio(id).then((data) => {
+
+        //Página inicio 
+        loadInicio(context) {
+            client.load_inicio().then((data) => {
                 context.commit('setProximaActividad', data)
+               
             }).catch((data) => {
                 console.log(data)
             })
@@ -210,6 +233,7 @@ export default new Vuex.Store({
             })
         },
 
+        //Página actividades
         loadActividades(context) {
             client.load_actividades().then((data) => {
                 context.commit('setActividades', data)
@@ -233,6 +257,15 @@ export default new Vuex.Store({
                     context.commit('setActividades', data)
                 })
             }).catch((data) => {
+                console.log(data)
+            })
+        }, 
+        insertActividad(context, {datos}){
+            client.insert_actividad(datos).then((data)=>{
+                client.load_actividades().then((data)=>{
+                    context.commit('setActividades', data)
+                })
+            }).catch((data)=>{
                 console.log(data)
             })
         }
