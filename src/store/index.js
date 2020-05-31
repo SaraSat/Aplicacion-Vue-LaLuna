@@ -35,7 +35,7 @@ class L_client {
         //Login --> petición ajax al login
     connect(user, password) {
         return new Promise((resolutionFunc, rejectionFunc) => {
-            axios.post(this.server + '/api/v1/auth', {
+            axios.post(this.server + '/api/auth', {
                 username: user,
                 password: password
             }).then((res) => {
@@ -61,7 +61,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
 
-            instance.get(this.server + '/api/v1/auth/', {
+            instance.get(this.server + '/api/auth/', {
 
             }).then((res) => {
                 resolutionFunc(res.data)
@@ -193,6 +193,118 @@ class L_client {
 
     }
 
+    //Peticiones ajax página evaluaciones:
+
+    load_evaluaciones(id_eva) {
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+
+           var id = id_eva || ""
+
+            instance.get(this.server + '/api/evaluacions/' + id, {
+
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+    update_evaluaciones(id, datos) {
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.put(this.server + '/api/evaluacions/' + id, {
+                dia: datos.nombre,
+                fecha: datos.fecha,
+                desc: datos.desc,
+                mejor:datos.mejor,
+                peor:datos.peor,
+                equipo:datos.equipo,
+                recordar:datos.recordar
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+    delete_evaluacion(id) {
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.delete(this.server + '/api/evaluacions/' + id, {}).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
+    insert_evaluacion(datos){
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.post(this.server + '/api/evaluacions/', {
+                nombre:datos.nombre,
+                fecha:datos.fecha,
+                desc:datos.desc,
+                mejor:datos.mejor,
+                peor:datos.peor,
+                equipo:datos.equipo,
+                recordar:datos.recordar
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
+    //Monitores 
+    insert_monitor(datos){
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.post(this.server + '/api/monitors/', {
+                nombre:datos.nombre,
+                apellidos:datos.apellidos,
+                telefono:datos.telefono,
+                email:datos.email,
+                contraseña:datos.contraseña,
+                coment:datos.coment,
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
+
+
+
 }
 
 const client = new L_client(PREFIX);
@@ -202,6 +314,7 @@ export default new Vuex.Store({
     state: {
         proximaActividad: [],
         actividades: [],
+        evaluaciones:[],
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -209,7 +322,11 @@ export default new Vuex.Store({
         },
         setActividades(state, actividades) {
             state.actividades = actividades
+        },
+        setEvaluaciones(state, evaluaciones) {
+            state.evaluaciones = evaluaciones
         }
+
     },
     actions: {
 
@@ -269,7 +386,55 @@ export default new Vuex.Store({
             }).catch((data)=>{
                 console.log(data)
             })
+        },
+
+        //Página evaluaciones
+        loadEvaluaciones(context) {
+            client.load_evaluaciones().then((data) => {
+                context.commit('setEvaluaciones', data)
+            }).catch((data) => {
+                console.log(data)
+            })
+        },
+        updateEvaluaciones(context, { id, datos }) {
+            console.log(datos)
+            client.update_evaluaciones(id, datos).then((data) => {
+                client.load_evaluaciones().then((data) => {
+                    context.commit('setEvaluaciones', data)
+                })
+            }).catch((data) => {
+                console.log(data)
+            })
+        },
+        deleteEvaluacion(context, id) {
+            client.delete_evaluacion(id).then((data) => {
+                client.load_evaluaciones().then((data) => {
+                    context.commit('setEvaluaciones', data)
+                })
+            }).catch((data) => {
+                console.log(data)
+            })
+        }, 
+        insertEvaluacion(context, {datos}){
+            client.insert_evaluacion(datos).then((data)=>{
+                client.load_evaluaciones().then((data)=>{
+                    context.commit('setEvaluaciones', data)
+                })
+            }).catch((data)=>{
+                console.log(data)
+            })
+        },
+
+        //Pagina registro: 
+        insertMonitor(context, {datos}){
+            client.insert_monitor(datos).then((data)=>{
+                console.log("Registro realizado")
+            }).catch((data)=>{
+                console.log(data)
+            })
         }
+
+        
 
     },
     getters: {
@@ -278,6 +443,9 @@ export default new Vuex.Store({
         },
         actividades(state) {
             return state.actividades
+        },
+        evaluaciones(state) {
+            return state.evaluaciones
         }
     },
     modules: {}

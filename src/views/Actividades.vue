@@ -51,7 +51,7 @@
           </v-flex>
 
           <!--Dialog para poder editar cada tarjeta por separado-->
-              <v-dialog v-model="dialog2">
+              <v-dialog v-model="dialog2" persistent max-width="600px">
                 <v-card dark xs12 md6>
                   <v-card-title>
                   <h4><v-text-field v-model="nombre"></v-text-field></h4>
