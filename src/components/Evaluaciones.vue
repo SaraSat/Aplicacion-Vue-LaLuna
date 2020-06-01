@@ -29,23 +29,23 @@
             <v-card dark>
                 <v-card-title>Nueva Evaluación</v-card-title>
                 <v-card-subtitle>
-                    <v-text-field v-model="nombre" label="Nombre Actividad"></v-text-field>
-                    <v-text-field v-model="fecha" label="Fecha Actividad"></v-text-field>
+                    <v-text-field v-model="nombre" label="Nombre Actividad"  requiered :rules="requiredRules"></v-text-field>
+                    <v-text-field v-model="fecha" label="Fecha Actividad" type="date" requiered :rules="requiredRules"></v-text-field>
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-text-field v-model="desc" label="Qué hemos hecho"></v-text-field>
+                    <v-text-field v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules" ></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="mejor" label="Lo mejor"></v-text-field>
+                    <v-text-field v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="peor" label="Lo peor"></v-text-field>
+                    <v-text-field v-model="peor" label="Lo peor"requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="equipo" label="Equipo"></v-text-field>
+                    <v-text-field v-model="equipo" label="Equipo"requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="recordar" label="A recordar"></v-text-field>
+                    <v-text-field v-model="recordar" label="A recordar"requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="insertar">Aceptar</v-btn>
@@ -59,23 +59,23 @@
                 <v-card dark>
                 <v-card-title>Nueva Evaluación</v-card-title>
                 <v-card-subtitle>
-                    <v-text-field v-model="nombre" label="Nombre Actividad"></v-text-field>
-                    <v-text-field v-model="fecha" label="Fecha Actividad"></v-text-field>
+                    <v-text-field v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-text-field>
+                    <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" type="date"></v-text-field>
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-text-field v-model="desc" label="Qué hemos hecho"></v-text-field>
+                    <v-text-field v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="mejor" label="Lo mejor"></v-text-field>
+                    <v-text-field v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="peor" label="Lo peor"></v-text-field>
+                    <v-text-field v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="equipo" label="Equipo"></v-text-field>
+                    <v-text-field v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="recordar" label="A recordar"></v-text-field>
+                    <v-text-field v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
@@ -110,7 +110,11 @@ export default {
             peor:'',
             equipo:'',
             recordar:'',
-            id:''
+            id:'',
+            requiredRules:[
+            v => !!v || ' Campo obligatorio',
+            ],
+
 
         }
     },

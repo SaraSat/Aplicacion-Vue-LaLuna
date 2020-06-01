@@ -18,14 +18,14 @@
       <v-dialog v-model="dialog"  persistent max-width="600px">
         <v-card dark>
           <v-card-title>
-              <v-text-field label="Introduce el nombre de la actividad" v-model="nombre"></v-text-field>
+              <v-text-field label="Introduce el nombre de la actividad" v-model="nombre" requiered :rules="requiredRules"></v-text-field>
           </v-card-title>
           <v-card-subtitle>
               Fin de Semana previsto:
-              <v-text-field label="introduce el dia" v-model="fecha"></v-text-field>
+              <v-text-field label="introduce el dia --> 01/01/2020" v-model="fecha" requiered :rules="requiredRules"></v-text-field>
           </v-card-subtitle>
           <v-card-text>
-              <v-text-field label="introduce una breve descripción" v-model="desc"></v-text-field>
+              <v-text-field label="introduce una breve descripción" v-model="desc" requiered :rules="requiredRules"></v-text-field>
           </v-card-text>
           <v-card-actions>
               <v-btn class="success" @click="insertar" >Aceptar</v-btn>
@@ -54,12 +54,12 @@
               <v-dialog v-model="dialog2" persistent max-width="600px">
                 <v-card dark xs12 md6>
                   <v-card-title>
-                  <h4><v-text-field v-model="nombre"></v-text-field></h4>
+                  <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                   </v-card-title>
                   <v-card-subtitle>
-                  <h6><v-text-field label="Fin de semana previsto: " v-model="fecha"></v-text-field></h6>
+                  <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"></v-text-field></h6>
                   </v-card-subtitle>
-                  <v-card-text><v-text-field v-model="desc"></v-text-field></v-card-text>
+                  <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
                   <v-card-actions>
                       <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
                       <v-btn class="error" @click="dialog2=false" >Cancelar</v-btn>
@@ -97,7 +97,10 @@ export default {
       fecha:'',
       desc:'',
       id:'',
-      dialog:false
+      dialog:false,
+      requiredRules:[
+        v => !!v || ' Campo obligatorio',
+      ],
     };
   },
   methods: {
