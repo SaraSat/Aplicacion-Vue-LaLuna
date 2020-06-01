@@ -13,7 +13,7 @@
             Contiene la condicio ed, de tal manera que si se presiona el botón editar, los campos serán inputs-->
             <v-flex xs12>
                 <v-card dark height="100%" class="jumbotron">
-                   <v-btn @click="ed=true"  v-if="!ed" class="info float-right mt-4 mr-4">Editar</v-btn>
+                   <v-btn @click="ed=true"  v-if="!ed && login" class="info float-right mt-4 mr-4">Editar</v-btn>
                     <v-card-title>
                       <h1 v-if="!ed">{{item.dia}}</h1>  
                       <h1 v-if="ed"><v-text-field label="Dia" v-model="item.dia"></v-text-field></h1>
@@ -66,6 +66,9 @@ export default {
   computed: {
     items() {
       return this.$store.getters.proximaActividad;
+    },
+    login() {
+      return this.$store.getters.login
     }
   },
   data() {

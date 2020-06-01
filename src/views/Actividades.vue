@@ -11,7 +11,7 @@
     <v-content>
       
       <!--Dialog para poder insertar una nueva tarjeta actividad -->
-          <v-btn class="d-flex flex-column ml-12" @click="dialog=true" small="">
+          <v-btn class="d-flex flex-column ml-12" @click="dialog=true" small="" v-if="login">
             <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
             <span>Insertar</span>
           </v-btn>
@@ -28,8 +28,8 @@
               <v-text-field label="introduce una breve descripción" v-model="desc"></v-text-field>
           </v-card-text>
           <v-card-actions>
-              <v-btn class="success" @click="insertar">Aceptar</v-btn>
-              <v-btn class="error" @click="dialog=false">Cancelar</v-btn>
+              <v-btn class="success" @click="insertar" >Aceptar</v-btn>
+              <v-btn class="error" @click="dialog=false" >Cancelar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -44,8 +44,8 @@
               </v-card-subtitle>
               <v-card-text >{{item.desc}}</v-card-text>
               <v-card-actions>
-              <v-btn class="success" @click="preEdit(item.id)"  >Editar</v-btn>
-              <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+              <v-btn class="success" @click="preEdit(item.id)" v-if="login"  >Editar</v-btn>
+              <v-btn class="error" @click="eliminar(item.id)" v-if="login" >Eliminar</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -81,6 +81,9 @@ export default {
     items() {
       return this.$store.getters.actividades
     },
+    login() {
+      return this.$store.getters.login
+    }
 
   },
     mounted() {

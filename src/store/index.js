@@ -33,11 +33,11 @@ class L_client {
             }
         }
         //Login --> petición ajax al login
-    connect(user, password) {
+    login(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
-            axios.post(this.server + '/api/auth', {
-                username: user,
-                password: password
+            axios.post(this.server + '/api/login', {
+                email: datos.email,
+                password: datos.password
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
@@ -48,27 +48,20 @@ class L_client {
         });
     }
 
-    //Validación de la sesión 
-    validateSession() {
+    register(datos){
         return new Promise((resolutionFunc, rejectionFunc) => {
-            if (!this.auth_token) {
-                rejectionFunc(null);
-                return;
-            }
-            const instance = axios.create({
-                baseURL: this.server,
-                //timeout: 1000,
-                headers: { 'Authorization': 'Bearer ' + this.auth_token }
-            });
-
-            instance.get(this.server + '/api/auth/', {
-
+            axios.post(this.server + '/api/register', {
+                name: datos.name,
+                password: datos.password,
+                c_password:datos.c_password,
+                email:datos.email
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
                 rejectionFunc(res.data)
             });
         });
+
     }
 
     //Peticiones ajax página de inicio: 
@@ -315,6 +308,7 @@ export default new Vuex.Store({
         proximaActividad: [],
         actividades: [],
         evaluaciones:[],
+        login:false
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -325,6 +319,9 @@ export default new Vuex.Store({
         },
         setEvaluaciones(state, evaluaciones) {
             state.evaluaciones = evaluaciones
+        },
+        setLogin(state, login){
+            state.login=login
         }
 
     },
@@ -426,9 +423,20 @@ export default new Vuex.Store({
         },
 
         //Pagina registro: 
-        insertMonitor(context, {datos}){
-            client.insert_monitor(datos).then((data)=>{
+        registro(context, {datos}){
+            client.register(datos).then((data)=>{
                 console.log("Registro realizado")
+            }).catch((data)=>{
+                console.log(data)
+            })
+        },
+
+        //login;
+        login(context, {datos}){
+            console.log(datos)
+
+            client.login(datos).then((data)=>{
+                context.commit('setLogin',true)
             }).catch((data)=>{
                 console.log(data)
             })
@@ -446,6 +454,9 @@ export default new Vuex.Store({
         },
         evaluaciones(state) {
             return state.evaluaciones
+        },
+        login(state){
+            return state.login
         }
     },
     modules: {}

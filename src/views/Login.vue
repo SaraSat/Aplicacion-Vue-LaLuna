@@ -9,8 +9,8 @@
                     <v-card-title>Iniciar sesión</v-card-title>
                     <v-card-text>
                         <v-form @submit.prevent="enter">
-                            <v-text-field label="Usuario" v-model="user"></v-text-field>
-                            <v-text-field label="Contraseña" v-model="pass" type="password"></v-text-field>
+                            <v-text-field label="Usuario" v-model="email"></v-text-field>
+                            <v-text-field label="Contraseña" v-model="password" type="password"></v-text-field>
                     <v-card-actions>
                         <v-btn class="info" type="submit">Aceptar</v-btn>
                     </v-card-actions>
@@ -35,40 +35,28 @@ export default {
     components: {
         Logado
     },
+    computed:{
+        login(){
+            return this.$store.getters.login
+        }
+    },
     data() {
         return {
-            users:[
-                {
-                    user:'Sara',
-                    pass:'Sara0000'
-                },
-                {
-                    user:'Tomas',
-                    pass:'Tomas1111'
-                }
-            ],
-            user:'',
-            pass:'',
-            login:true
-            
+
+            email:'',
+            password:''
+
         }
     },
     methods: {
         enter(){
-            var cont = 0
-         this.users.forEach(user => {
-             if(user.user === this.user && user.pass === this.pass){
-                 cont += 1
-             }
-
-         });
-         if(cont === 0){
-             console.log('Usuario o contraseña erroneas')
-         }else{
-             //this.login=true
-         }
+            var datos={
+                email:this.email,
+                password:this.password
+            }
+            
+            this.$store.dispatch('login', {datos:datos})
         }
-        
     }
 
 }
