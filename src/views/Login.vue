@@ -19,6 +19,11 @@
                 </v-card>
             </v-flex>
         </v-layout>
+            <v-snackbar
+                v-model="snackbar"
+                :multi-line="multiLine"> E-mail o contraseña erróneos
+            <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
 
         </v-content>
         <Logado v-if="login"></Logado>
@@ -38,6 +43,9 @@ export default {
     computed:{
         login(){
             return this.$store.getters.login
+        },
+        snackbar(){
+           return this.$store.getters.snackbar 
         }
     },
     data() {

@@ -43,7 +43,7 @@ class L_client {
                 this.___setCookie('lauth', this.auth_token, 1);
                 resolutionFunc(res)
             }).catch((res) => {
-                rejectionFunc()
+                rejectionFunc(res.data)
             });
         });
     }
@@ -271,22 +271,15 @@ class L_client {
 
     }
 
-    //Monitores 
-    insert_monitor(datos) {
+    // peticiones ajax Luneros 
+    load_luneros() {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
-            instance.post(this.server + '/api/monitors/', {
-                nombre: datos.nombre,
-                apellidos: datos.apellidos,
-                telefono: datos.telefono,
-                email: datos.email,
-                contraseña: datos.contraseña,
-                coment: datos.coment,
-            }).then((res) => {
+            instance.get(this.server + '/api/luneros/', {}).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
                 rejectionFunc(res.data)
@@ -308,7 +301,9 @@ export default new Vuex.Store({
         proximaActividad: [],
         actividades: [],
         evaluaciones: [],
-        login: false
+        login: false,
+        luneros: [],
+        snackbar: false
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -322,6 +317,12 @@ export default new Vuex.Store({
         },
         setLogin(state, login) {
             state.login = login
+        },
+        setLuneros(state, luneros) {
+            state.luneros = luneros
+        },
+        setSnackbar(state, snackbar) {
+            state.snackbar = snackbar
         }
 
     },
@@ -427,16 +428,25 @@ export default new Vuex.Store({
             client.register(datos).then((data) => {
                 console.log("Registro realizado")
             }).catch((data) => {
+                context.commit('setSnackbar', true)
                 console.log(data)
             })
         },
 
         //login;
         login(context, { datos }) {
-            console.log(datos)
-
             client.login(datos).then((data) => {
                 context.commit('setLogin', true)
+            }).catch((data) => {
+                context.commit('setSnackbar', true)
+                console.log(data)
+            })
+        },
+
+        //pagina luneros
+        loadLuneros(context) {
+            client.load_luneros().then((data) => {
+                context.commit('setLuneros', data)
             }).catch((data) => {
                 console.log(data)
             })
@@ -457,6 +467,12 @@ export default new Vuex.Store({
         },
         login(state) {
             return state.login
+        },
+        luneros(state) {
+            return state.luneros
+        },
+        snackbar(state) {
+            return state.snackbar
         }
     },
     modules: {}

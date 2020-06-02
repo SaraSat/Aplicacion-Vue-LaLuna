@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-container>
         <h3>Evaluaciones</h3>
         <v-btn class="d-flex flex-column ml-12" @click="dialog=true">
         <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
@@ -10,7 +10,7 @@
             <v-col  v-for="item in items" :key="item.id">
                 <v-card dark max-width="600px">
                     <v-card-title><h3>Evaluacion</h3></v-card-title>
-                    <v-card-subtitle><h3>Nombre:</h3> {{item.nombre}} Fecha: {{item.fecha}}</v-card-subtitle>
+                    <v-card-subtitle><h3>{{item.nombre}} {{item.fecha}}</h3> </v-card-subtitle>
                     <v-card-text><h4>Qué hemos hecho?:</h4> {{item.desc}}</v-card-text>
                     <v-card-text><h4>Lo mejor:</h4> {{item.mejor}}</v-card-text>
                     <v-card-text><h4>Lo peor:</h4> {{item.peor}}</v-card-text>
@@ -39,13 +39,13 @@
                     <v-text-field v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="peor" label="Lo peor"requiered :rules="requiredRules"></v-text-field>
+                    <v-text-field v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="equipo" label="Equipo"requiered :rules="requiredRules"></v-text-field>
+                    <v-text-field v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="recordar" label="A recordar"requiered :rules="requiredRules"></v-text-field>
+                    <v-text-field v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="insertar">Aceptar</v-btn>
@@ -85,7 +85,7 @@
         </v-dialog>
 
 
-    </v-content>
+    </v-container>
 </template>
 
 <script>
