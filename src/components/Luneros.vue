@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-container>
         <v-toolbar class="text-uppercase" dark>
             <v-toolbar-title class="text-uppercase">
                 <span class="font-weight-light">Lista de </span>
@@ -32,7 +32,7 @@
 
 
         </v-data-table>
-    </v-content>
+    </v-container>
 </template>
 
 <script>

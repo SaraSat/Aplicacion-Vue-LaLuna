@@ -43,6 +43,31 @@ Vue.use(VueRouter)
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Contacto.vue')
   }, 
+  {
+    path: '/registro',
+    name: 'Registro',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/Registro.vue')
+},
+{
+  path: '/evaluaciones',
+  name: 'Evaluaciones',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../components/Evaluaciones.vue')
+},
+{
+  path: '/luneros',
+  name: 'Luneros',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../components/Luneros.vue')
+},
+
 
 
 

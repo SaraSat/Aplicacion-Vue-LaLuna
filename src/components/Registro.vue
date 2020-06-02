@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-container>
         <v-card dark>
             <form lazy-validation>
             <v-card-title>Registrar un nuevo monitor</v-card-title>
@@ -17,7 +17,7 @@
             </v-card-actions>
             </form>
         </v-card>
-    </v-content>
+    </v-container>
 </template>
 
 <script>

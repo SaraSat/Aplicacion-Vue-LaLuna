@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-container>
         <h3>Evaluaciones</h3>
         <v-btn class="d-flex flex-column ml-12" @click="dialog=true">
         <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
@@ -85,7 +85,7 @@
         </v-dialog>
 
 
-    </v-content>
+    </v-container>
 </template>
 
 <script>
