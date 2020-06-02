@@ -304,7 +304,8 @@ export default new Vuex.Store({
         actividades: [],
         evaluaciones:[],
         login:false, 
-        luneros:[]
+        luneros:[],
+        snackbar:false
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -321,6 +322,9 @@ export default new Vuex.Store({
         },
         setLuneros(state, luneros){
             state.luneros=luneros
+        },
+        setSnackbar(state, snackbar){
+            state.snackbar=snackbar
         }
 
     },
@@ -426,6 +430,7 @@ export default new Vuex.Store({
             client.register(datos).then((data)=>{
                 console.log("Registro realizado")
             }).catch((data)=>{
+                context.commit('setSnackbar',true)
                 console.log(data)
             })
         },
@@ -435,6 +440,7 @@ export default new Vuex.Store({
             client.login(datos).then((data)=>{
                 context.commit('setLogin',true)
             }).catch((data)=>{
+                context.commit('setSnackbar',true)
                 console.log(data)
             })
         },
@@ -466,6 +472,9 @@ export default new Vuex.Store({
         },
         luneros(state){
             return state.luneros
+        },
+        snackbar(state){
+            return state.snackbar
         }
     },
     modules: {}

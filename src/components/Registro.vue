@@ -9,7 +9,6 @@
                 <v-text-field label="Telefono" v-model="datos.telefono"></v-text-field>
                 <v-text-field label="Correo" v-model="datos.email" required :rules="emailRules"></v-text-field>
                 <v-text-field label="Contaseña" v-model="datos.password" :type="type" required :rules="passwordRules">
-                    <v-btn icon @click="type='text'"><v-icon>mdi-eye</v-icon></v-btn>
                 </v-text-field>
                 <v-text-field label="Repite contraseña" v-model="datos.c_password" type="password" required :rules="samePass"></v-text-field>
                 <v-text-field label="Comentarios" v-model="datos.coment"></v-text-field>
@@ -19,12 +18,22 @@
             </v-card-actions>
             </form>
         </v-card>
+          <v-snackbar
+            v-model="snackbar"
+            :multi-line="multiLine"> Ha ocurrido un error, compruebe que el correo sea válido
+                    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
     </v-container>
 </template>
 
 <script>
 export default {
     name:'Registro',
+    computed: {
+        snackbar(){
+            return this.$store.getters.snackbar
+        }
+    },
     data() {
         return{
             datos:{
@@ -51,8 +60,10 @@ export default {
             ],
             samePass:[
                 v => !!v || 'La constraseña es obligatoria',
-                v => (this.datos.password!=v) || 'Las contraseñas no coninciden'
-            ]
+                v=> v===this.datos.password || 'Las constraseñas no coinciden'
+                
+            ],
+
         }
     },
     methods: {
@@ -71,7 +82,8 @@ export default {
 
             }
            
-        }
+        },
+
     }
 }
 </script>
