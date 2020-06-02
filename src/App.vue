@@ -4,26 +4,14 @@
 
     <!--Barra de navegación, menú -->
     <v-app-bar dark min-height="140" prominent="">
-        <v-layout align-center wrap=""  >
-          <v-flex>
-            <img src="./assets/Luna_negro.png" alt="Logotipo de la luna con un gato" height="140" width="140">
-          </v-flex>
-          <v-flex>
-          <v-btn  block :to="{name:'Home'}" dark text>Inicio</v-btn>
-          </v-flex>
-          <v-flex>
-            <v-btn  block :to="{name:'Actividades'}" dark text>Actividades</v-btn>
-          </v-flex>
-          <v-flex>
-            <v-btn  block :to="{name:'About'}" dark text>Quienes somos?</v-btn>
-          </v-flex>
-          <v-flex>
-            <v-btn  block :to="{name:'Login'}" dark text>Monitores</v-btn>
-          </v-flex>
-          <v-flex>
-            <v-btn  block :to="{name:'Contacto'}" dark text>Contacto</v-btn>
-          </v-flex>
-        </v-layout>
+      <img src="./assets/Luna_negro.png" alt="Logotipo de la luna con un gato" height="140" width="140">
+        <v-tabs v-resize="menu" :grow="grow" :vertical="vertical">
+          <v-tab :to="{name:'Home'}">Inicio</v-tab>
+          <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
+          <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
+          <v-tab block :to="{name:'Login'}">Monitores</v-tab>
+          <v-tab block :to="{name:'Contacto'}">Contacto</v-tab>
+        </v-tabs>
     </v-app-bar>
 
     <!--Se añaden las rutas de las vistas definidas en el menu -->
@@ -56,7 +44,27 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  data() {
+    return{
+      grow:true,
+      vertical:false,
+    }
+  },
+  methods:{
+    menu(){
+      if(window.innerWidth<808){
+        this.grow=false
+        this.vertical=true
+      }else{
+        this.grow=true
+        this.vertical=false
+      }
+    }
+  },
+  mounted(){
+    this.menu
+  }
 };
 </script>
 

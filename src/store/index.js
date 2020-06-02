@@ -48,6 +48,7 @@ class L_client {
         });
     }
 
+    //Petición ajax registro de un monitor nuevo
     register(datos){
         return new Promise((resolutionFunc, rejectionFunc) => {
             axios.post(this.server + '/api/register', {
@@ -271,21 +272,15 @@ class L_client {
 
     }
 
-    //Monitores 
-    insert_monitor(datos){
+    // peticiones ajax Luneros 
+    load_luneros(){
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
-            instance.post(this.server + '/api/monitors/', {
-                nombre:datos.nombre,
-                apellidos:datos.apellidos,
-                telefono:datos.telefono,
-                email:datos.email,
-                contraseña:datos.contraseña,
-                coment:datos.coment,
+            instance.get(this.server + '/api/luneros/', {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -308,7 +303,8 @@ export default new Vuex.Store({
         proximaActividad: [],
         actividades: [],
         evaluaciones:[],
-        login:false
+        login:false, 
+        luneros:[]
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -322,6 +318,9 @@ export default new Vuex.Store({
         },
         setLogin(state, login){
             state.login=login
+        },
+        setLuneros(state, luneros){
+            state.luneros=luneros
         }
 
     },
@@ -433,10 +432,17 @@ export default new Vuex.Store({
 
         //login;
         login(context, {datos}){
-            console.log(datos)
-
             client.login(datos).then((data)=>{
                 context.commit('setLogin',true)
+            }).catch((data)=>{
+                console.log(data)
+            })
+        },
+
+        //pagina luneros
+        loadLuneros(context){
+            client.load_luneros().then((data)=>{
+                context.commit('setLuneros',data)
             }).catch((data)=>{
                 console.log(data)
             })
@@ -457,6 +463,9 @@ export default new Vuex.Store({
         },
         login(state){
             return state.login
+        },
+        luneros(state){
+            return state.luneros
         }
     },
     modules: {}
