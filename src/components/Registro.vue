@@ -8,8 +8,10 @@
                 <v-text-field label="Apellidos" v-model="datos.apellidos"></v-text-field>
                 <v-text-field label="Telefono" v-model="datos.telefono"></v-text-field>
                 <v-text-field label="Correo" v-model="datos.email" required :rules="emailRules"></v-text-field>
-                <v-text-field label="Contaseña" v-model="datos.password" type="password" required :rules="passwordRules"></v-text-field>
-                <v-text-field label="Repite contraseña" v-model="datos.c_password" type="password" required></v-text-field>
+                <v-text-field label="Contaseña" v-model="datos.password" :type="type" required :rules="passwordRules">
+                    <v-btn icon @click="type='text'"><v-icon>mdi-eye</v-icon></v-btn>
+                </v-text-field>
+                <v-text-field label="Repite contraseña" v-model="datos.c_password" type="password" required :rules="samePass"></v-text-field>
                 <v-text-field label="Comentarios" v-model="datos.coment"></v-text-field>
             </v-card-text>
             <v-card-actions>
@@ -34,6 +36,7 @@ export default {
                 c_password:'',
                 coment:''
             },
+            type:'password',
             nameRules: [
                 v => !!v || ' El nombre es obligatorio',
                 v => (v && v.length <= 4) || 'El nombre debe tener al menos 4 caracteres',
@@ -45,22 +48,29 @@ export default {
             passwordRules:[
                 v => !!v || 'La constraseña es obligatoria',
                 v => (v && v.length <= 8) || 'La contraseña debe tener al menos 8 caracteres'
+            ],
+            samePass:[
+                v => !!v || 'La constraseña es obligatoria',
+                v => (this.datos.password!=v) || 'Las contraseñas no coninciden'
             ]
         }
     },
     methods: {
         insertar() {
-            this.$store.dispatch('registro', {datos:this.datos})
+
+            this.$store.dispatch('registro', {datos:this.datos}) 
+            
             this.datos={
-                name:'',
-                apellidos:'',
-                telefono:'',
-                email:'',
-                password:'',
-                c_password:'',
-                coment:''
+            name:'',
+            apellidos:'',
+            telefono:'',
+            email:'',
+            password:'',
+            c_password:'',
+            coment:''
 
             }
+           
         }
     }
 }
