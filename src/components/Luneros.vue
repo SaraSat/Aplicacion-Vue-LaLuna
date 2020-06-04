@@ -39,7 +39,7 @@
 export default {
     name:'Luneros',
     mounted(){
-        this.$store.dispatch('loadLuneros')
+       return this.$store.dispatch('loadLuneros')
     },
     computed:{
         items(){

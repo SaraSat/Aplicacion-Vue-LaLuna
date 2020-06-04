@@ -48,7 +48,7 @@ export default {
             type:'password',
             nameRules: [
                 v => !!v || ' El nombre es obligatorio',
-                v => (v && v.length <= 4) || 'El nombre debe tener al menos 4 caracteres',
+                v => (v && v.length >= 3) || 'El nombre debe tener al menos 4 caracteres',
             ],
             emailRules: [
                 v => !!v || ' el e-mail es obligatorio',
@@ -56,7 +56,7 @@ export default {
             ],
             passwordRules:[
                 v => !!v || 'La constraseña es obligatoria',
-                v => (v && v.length <= 8) || 'La contraseña debe tener al menos 8 caracteres'
+                v => (v && v.length >= 8) || 'La contraseña debe tener al menos 8 caracteres'
             ],
             samePass:[
                 v => !!v || 'La constraseña es obligatoria',

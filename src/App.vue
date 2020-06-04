@@ -21,8 +21,8 @@
 
     <!-- Footer -->
     <v-footer dark padless xs12>
-      <v-card flat tile class="dark lighten-1 white--text text-center">
-        <v-card-text>
+      <v-card flat tile class="dark lighten-1 white--text text-center" width="100%">
+        <v-card-text> 
           <v-btn icon><v-icon color="blue">mdi-facebook</v-icon></v-btn>
           <v-btn icon ><v-icon color="pink">mdi-instagram</v-icon></v-btn>
         </v-card-text>

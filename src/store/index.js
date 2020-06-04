@@ -41,21 +41,20 @@ class L_client {
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
-                resolutionFunc(res.data)
+                resolutionFunc(res)
             }).catch((res) => {
                 rejectionFunc(res.data)
             });
         });
     }
 
-    //Petición ajax registro de un monitor nuevo
-    register(datos){
+    register(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             axios.post(this.server + '/api/register', {
                 name: datos.name,
                 password: datos.password,
-                c_password:datos.c_password,
-                email:datos.email
+                c_password: datos.c_password,
+                email: datos.email
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -74,7 +73,7 @@ class L_client {
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
-            instance.get(this.server + '/api/inicios/' , {
+            instance.get(this.server + '/api/inicios/', {
 
             }).then((res) => {
                 resolutionFunc(res.data)
@@ -120,7 +119,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
 
-           var id = id_act || ""
+            var id = id_act || ""
 
             instance.get(this.server + '/api/actividads/' + id, {
 
@@ -167,7 +166,7 @@ class L_client {
 
     }
 
-    insert_actividad(datos){
+    insert_actividad(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
@@ -175,9 +174,9 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
             instance.post(this.server + '/api/actividads/', {
-                nombre:datos.nombre,
-                fecha:datos.fecha,
-                desc:datos.desc
+                nombre: datos.nombre,
+                fecha: datos.fecha,
+                desc: datos.desc
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -197,7 +196,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
 
-           var id = id_eva || ""
+            var id = id_eva || ""
 
             instance.get(this.server + '/api/evaluacions/' + id, {
 
@@ -220,10 +219,10 @@ class L_client {
                 dia: datos.nombre,
                 fecha: datos.fecha,
                 desc: datos.desc,
-                mejor:datos.mejor,
-                peor:datos.peor,
-                equipo:datos.equipo,
-                recordar:datos.recordar
+                mejor: datos.mejor,
+                peor: datos.peor,
+                equipo: datos.equipo,
+                recordar: datos.recordar
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -248,7 +247,7 @@ class L_client {
 
     }
 
-    insert_evaluacion(datos){
+    insert_evaluacion(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
@@ -256,13 +255,13 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
             instance.post(this.server + '/api/evaluacions/', {
-                nombre:datos.nombre,
-                fecha:datos.fecha,
-                desc:datos.desc,
-                mejor:datos.mejor,
-                peor:datos.peor,
-                equipo:datos.equipo,
-                recordar:datos.recordar
+                nombre: datos.nombre,
+                fecha: datos.fecha,
+                desc: datos.desc,
+                mejor: datos.mejor,
+                peor: datos.peor,
+                equipo: datos.equipo,
+                recordar: datos.recordar
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -273,15 +272,14 @@ class L_client {
     }
 
     // peticiones ajax Luneros 
-    load_luneros(){
+    load_luneros() {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
-            instance.get(this.server + '/api/luneros/', {
-            }).then((res) => {
+            instance.get(this.server + '/api/luneros/', {}).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
                 rejectionFunc(res.data)
@@ -302,10 +300,10 @@ export default new Vuex.Store({
     state: {
         proximaActividad: [],
         actividades: [],
-        evaluaciones:[],
-        login:false, 
-        luneros:[],
-        snackbar:false
+        evaluaciones: [],
+        login: false,
+        luneros: [],
+        snackbar: false
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -317,14 +315,14 @@ export default new Vuex.Store({
         setEvaluaciones(state, evaluaciones) {
             state.evaluaciones = evaluaciones
         },
-        setLogin(state, login){
-            state.login=login
+        setLogin(state, login) {
+            state.login = login
         },
-        setLuneros(state, luneros){
-            state.luneros=luneros
+        setLuneros(state, luneros) {
+            state.luneros = luneros
         },
-        setSnackbar(state, snackbar){
-            state.snackbar=snackbar
+        setSnackbar(state, snackbar) {
+            state.snackbar = snackbar
         }
 
     },
@@ -334,7 +332,7 @@ export default new Vuex.Store({
         loadInicio(context) {
             client.load_inicio().then((data) => {
                 context.commit('setProximaActividad', data)
-               
+
             }).catch((data) => {
                 console.log(data)
             })
@@ -377,13 +375,13 @@ export default new Vuex.Store({
             }).catch((data) => {
                 console.log(data)
             })
-        }, 
-        insertActividad(context, {datos}){
-            client.insert_actividad(datos).then((data)=>{
-                client.load_actividades().then((data)=>{
+        },
+        insertActividad(context, { datos }) {
+            client.insert_actividad(datos).then((data) => {
+                client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
                 })
-            }).catch((data)=>{
+            }).catch((data) => {
                 console.log(data)
             })
         },
@@ -414,47 +412,47 @@ export default new Vuex.Store({
             }).catch((data) => {
                 console.log(data)
             })
-        }, 
-        insertEvaluacion(context, {datos}){
-            client.insert_evaluacion(datos).then((data)=>{
-                client.load_evaluaciones().then((data)=>{
+        },
+        insertEvaluacion(context, { datos }) {
+            client.insert_evaluacion(datos).then((data) => {
+                client.load_evaluaciones().then((data) => {
                     context.commit('setEvaluaciones', data)
                 })
-            }).catch((data)=>{
+            }).catch((data) => {
                 console.log(data)
             })
         },
 
         //Pagina registro: 
-        registro(context, {datos}){
-            client.register(datos).then((data)=>{
+        registro(context, { datos }) {
+            client.register(datos).then((data) => {
                 console.log("Registro realizado")
-            }).catch((data)=>{
-                context.commit('setSnackbar',true)
+            }).catch((data) => {
+                context.commit('setSnackbar', true)
                 console.log(data)
             })
         },
 
         //login;
-        login(context, {datos}){
-            client.login(datos).then((data)=>{
-                context.commit('setLogin',true)
-            }).catch((data)=>{
-                context.commit('setSnackbar',true)
+        login(context, { datos }) {
+            client.login(datos).then((data) => {
+                context.commit('setLogin', true)
+            }).catch((data) => {
+                context.commit('setSnackbar', true)
                 console.log(data)
             })
         },
 
         //pagina luneros
-        loadLuneros(context){
-            client.load_luneros().then((data)=>{
-                context.commit('setLuneros',data)
-            }).catch((data)=>{
+        loadLuneros(context) {
+            client.load_luneros().then((data) => {
+                context.commit('setLuneros', data)
+            }).catch((data) => {
                 console.log(data)
             })
         }
 
-        
+
 
     },
     getters: {
@@ -467,13 +465,13 @@ export default new Vuex.Store({
         evaluaciones(state) {
             return state.evaluaciones
         },
-        login(state){
+        login(state) {
             return state.login
         },
-        luneros(state){
+        luneros(state) {
             return state.luneros
         },
-        snackbar(state){
+        snackbar(state) {
             return state.snackbar
         }
     },
