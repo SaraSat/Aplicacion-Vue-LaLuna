@@ -6,9 +6,9 @@
         <span>Insertar</span>
         </v-btn>
         <!--Tarjeta de evaluacion-->
-        <v-row>
+        <v-row wrap>
             <v-col  v-for="item in items" :key="item.id">
-                <v-card dark max-width="600px">
+                <v-card dark width="500px" height="700px">
                     <v-card-title><h3>Evaluacion</h3></v-card-title>
                     <v-card-subtitle><h3>{{item.nombre}} {{item.fecha}}</h3> </v-card-subtitle>
                     <v-card-text><h4>Qué hemos hecho?:</h4> {{item.desc}}</v-card-text>
@@ -18,12 +18,25 @@
                     <v-card-text><h4>A recordar:</h4> {{item.recordar}}</v-card-text>
                     <v-card-actions>
                         <v-btn class="green" @click="preEdit(item.id)">Editar</v-btn>
-                        <v-btn class="error" @click="eliminar(item.id)">Eliminar</v-btn>
+                        <v-btn class="error" @click="dialog3=true">Eliminar</v-btn>
                     </v-card-actions>
                 </v-card>
 
+                    <!--Dialogo para confirmar eliminación-->
+                    <v-dialog v-model="dialog3" persistent max-width="350px">
+                    <v-card>
+                        <v-card-title>Seguro que quieres eliminar?</v-card-title>
+                        <v-card-actions>
+                        <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+                        <v-btn @click="dialog3=false">Cancelar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                    </v-dialog>
+
             </v-col>
         </v-row>
+
+
         <!--Tarjeta para insertar nueva evaluacion-->
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card dark>
@@ -49,7 +62,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="insertar">Aceptar</v-btn>
-                    <v-btn class="success" @click="dialog=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="dialog=false">Cancelar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -79,7 +92,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
-                    <v-btn class="success" @click="dialog2=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="dialog2=false">Cancelar</v-btn>
                 </v-card-actions>
         </v-card>
         </v-dialog>
@@ -103,6 +116,7 @@ export default {
         return {
             dialog:false,
             dialog2:false,
+            dialog3:false,
             nombre:'',
             fecha:'',
             desc:'',
@@ -182,6 +196,7 @@ export default {
 
         },
         eliminar(id){
+            this.dialog3=false
             this.$store.dispatch('deleteEvaluacion' ,id)
         }
     }

@@ -8,10 +8,11 @@
                         <h2>Puedes mandarnos un correo o llamarnos: </h2>
                     </v-card-title>
                     <v-card-text>
-                        <v-btn text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success">
+                        <v-btn  text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success">
                             lalunaalcobenndas@gmail.com
                         </v-btn>
-                        <v-btn text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success ml-2">
+                        <v-divider vertical></v-divider>
+                        <v-btn text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success ml-12">
                             la_luna_alcobenndas@hotmail.com
                         </v-btn>
                         <hr class=" my-4 ">

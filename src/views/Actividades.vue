@@ -5,16 +5,14 @@
     <h1>Actividades previstas</h1>
 
       <!--Tarjeta de actividad, se genera un for para recorrer el objeto que contenga las diferentes actividades programadas
-      y asi mostrar los datos de cada una con la misma estructura
-      Se importa el componente FormularioActividad para agregar o editar
-      Se importa la constante variables de Formulario actividad para poder acceder a gettes y setters de los datos-->
-    <v-content>
-      
-      <!--Dialog para poder insertar una nueva tarjeta actividad -->
-          <v-btn class="d-flex flex-column ml-12" @click="dialog=true" small="" v-if="login">
+      y asi mostrar los datos de cada una con la misma estructura-->
+    <v-content>  
+          <v-btn class="d-flex flex-column ml-12 mb-5" @click="dialog=true"  v-if="login">
             <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
             <span>Insertar</span>
           </v-btn>
+          
+      <!--Dialog para poder insertar una nueva tarjeta actividad -->
       <v-dialog v-model="dialog"  persistent max-width="600px">
         <v-card dark>
           <v-card-title>
@@ -35,9 +33,10 @@
       </v-dialog>
 
       <!--Tarjetas de actividad-->
-      <v-layout wrap>
-          <v-flex v-for="(item,index) in items" :key="index" mb-1>
-            <v-card dark xs12 md6>
+      <v-container fluid align-center justify-center="">
+      <v-row wrap>
+        <v-col v-for="(item,index) in items" :key="index" mb-1>
+            <v-card dark width="350" height="250">
               <v-card-title><h4 >{{item.nombre}}</h4>
               </v-card-title>
               <v-card-subtitle><h6 >Fin de semana previsto: {{item.fecha}}</h6>
@@ -45,14 +44,30 @@
               <v-card-text >{{item.desc}}</v-card-text>
               <v-card-actions>
               <v-btn class="success" @click="preEdit(item.id)" v-if="login"  >Editar</v-btn>
-              <v-btn class="error" @click="eliminar(item.id)" v-if="login" >Eliminar</v-btn>
+              <v-btn class="error" @click="dialog3=true" v-if="login" >Eliminar</v-btn>
               </v-card-actions>
             </v-card>
-          </v-flex>
+
+            <!--Dialogo para confirmar eliminación-->
+              <v-dialog v-model="dialog3" persistent max-width="350px">
+                <v-card>
+                  <v-card-title>Seguro que quieres eliminar?</v-card-title>
+                  <v-card-actions>
+                    <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+                    <v-btn @click="dialog3=false">Cancelar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog> 
+
+        </v-col>
+      </v-row>
+
+      </v-container>
+          
 
           <!--Dialog para poder editar cada tarjeta por separado-->
               <v-dialog v-model="dialog2" persistent max-width="600px">
-                <v-card dark xs12 md6>
+                <v-card dark xs12>
                   <v-card-title>
                   <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                   </v-card-title>
@@ -67,8 +82,7 @@
             </v-card>
             </v-dialog>
 
-      </v-layout>
-    </v-content>
+      </v-content>
   </v-container>
 </template>
 <script>
@@ -92,6 +106,7 @@ export default {
   data() {
     return {
       dialog2: false, //-->method editar
+      dialog3:false, //-->method eliminar
 
       nombre:'',
       fecha:'',
@@ -136,7 +151,7 @@ export default {
       this.dialog2=false
     },
     eliminar(id) {
-
+      this.dialog3=false
       this.$store.dispatch('deleteActividad', id)
     },
     insertar() {

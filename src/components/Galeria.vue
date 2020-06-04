@@ -4,7 +4,7 @@
                 reverse-transition="fade-transition"
                 transition="fade-transition">
 
-            <v-img :src="item.src" contain aspect-ratio=1.7> </v-img>
+            <v-img :src="item.src" contain aspect-ratio=2 :alt="item.alt"> </v-img>
         </v-carousel-item>
     </v-carousel> 
 </template>
@@ -16,17 +16,31 @@ export default {
         return {
             items: [
                 {
-                    src:require("@/assets/test1.jpg")
+                    src:require("@/assets/grupal.jpeg"),
+                    alt:"Grupal en la estación de renfe de Alcobendas" 
                 },
                 {
-                    src:require('../assets/test2.jpg')
+                    src:require('../assets/manofest.jpeg'),
+                    alt:"Grupal en el festival de cine de la mano negra" 
                 },
                 {
-                    src:require('../assets/team1.jpg')
+                    src:require('../assets/manualidades.jpeg'),
+                    alt:"Preparando los disfraces para el festival de Carnaval" 
                 },
                 {
-                    src:require('../assets/team3.jpg')
+                    src:require('../assets/plazaMayor.jpeg'),
+                    alt:"Esperando el bocadillo en la plaza Mayor de Madrid" 
                 },
+                                {
+                    src:require('../assets/renfe.jpeg'),
+                    alt:"Yendo hace Cercedilla en renfe" 
+                },
+                                {
+                    src:require('../assets/rugby.jpeg'),
+                    alt:"Jugando al rugby" 
+                },
+
+
 
                 
             ]

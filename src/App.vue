@@ -4,7 +4,7 @@
 
     <!--Barra de navegación, menú -->
     <v-app-bar dark min-height="140" prominent="">
-      <img src="./assets/Luna_negro.png" alt="Logotipo de la luna con un gato" height="140" width="140">
+      <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="140" width="140">
         <v-tabs v-resize="menu" :grow="grow" :vertical="vertical">
           <v-tab :to="{name:'Home'}">Inicio</v-tab>
           <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
