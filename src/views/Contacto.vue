@@ -5,20 +5,26 @@
             <v-flex xs12>
                 <v-card dark> 
                     <v-card-title>
-                        <h2>Puedes mandarnos un correo o llamarnos: </h2>
+                        <p class="display-1">Puedes mandarnos un correo o llamarnos: </p>
                     </v-card-title>
-                    <v-card-text>
-                        <v-btn  text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success">
-                            lalunaalcobenndas@gmail.com
-                        </v-btn>
-                        <v-divider vertical></v-divider>
-                        <v-btn text small href="mailto:lalunaalcobenndas@gmail.com?Subject=Interesado%en%la%Luna" class="success ml-12">
-                            la_luna_alcobenndas@hotmail.com
-                        </v-btn>
+                    <v-card-text> 
+                        <div>
+                            <v-btn  text small href="mailto:lalunaalcobendas@gmail.com?Subject=Interesado%en%la%Luna" color="blue" left=""> 
+                                lalunaalcobenndas@gmail.com
+                            </v-btn>
+                            <v-btn text small href="mailto:lalunaalcobendas@gmail.com?Subject=Interesado%en%la%Luna" color="blue" right=""> 
+                                la_luna_alcobenndas@hotmail.com
+                            </v-btn>
+                        </div>
                         <hr class=" my-4 ">
                         Teléfono de la luna: <v-btn text href="tel:611688021" ><h4>611 68 80 21</h4></v-btn>
                         <hr class=" my-4 ">
-                        <p>Cualquier duda estamos a su disposición</p>
+                        <p class="display-1">Cualquier duda estamos a su disposición!</p>
+                        <p>también puedes encontrarnos en  <span class="font-weight-bold">facebook o instagram</span>
+                            <v-btn icon href="https://www.facebook.com/La-Luna-1575189982738297"><v-icon color="blue" >mdi-facebook</v-icon></v-btn>
+                            <v-btn icon href="https://www.instagram.com/lalunaalcobendas" ><v-icon color="pink">mdi-instagram</v-icon></v-btn>
+                            </p>
+                        
                         <hr class=" my-4 ">
                         <p>NIF: G81164469</p>
                         <p>Casa de las asociaciones<br>Calle de Cáceres,18 <br> 28100 Alcobendas, Madrid</p>
@@ -28,6 +34,7 @@
                                 width="auto " height="350 " frameborder="0 " style="border:3; " allowfullscreen=" " aria-hidden="false " tabindex="0 "></iframe>
                     </v-card-actions>
                 </v-card>
+                <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
             </v-flex>
         </v-layout>
     </v-container>

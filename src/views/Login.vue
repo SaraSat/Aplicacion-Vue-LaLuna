@@ -4,13 +4,14 @@
             <v-content>
         <v-content v-if="!login">
                     <v-layout justify-center >
-            <v-flex xs6>
-                <v-card>
+            <v-flex xs6 align-self-center="">
+                <v-card max-width="800">
                     <v-card-title>Iniciar sesión</v-card-title>
                     <v-card-text>
                         <v-form @submit.prevent="enter">
                             <v-text-field label="Usuario" v-model="email"></v-text-field>
-                            <v-text-field label="Contraseña" v-model="password" type="password"></v-text-field>
+                            <v-text-field label="Contraseña"  :type="pass ? 'text' : 'password'" :append-icon="pass ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="pass = !pass" v-model="password"></v-text-field>
                     <v-card-actions>
                         <v-btn class="info" type="submit">Aceptar</v-btn>
                     </v-card-actions>
@@ -19,9 +20,7 @@
                 </v-card>
             </v-flex>
         </v-layout>
-            <v-snackbar
-                v-model="snackbar"
-                :multi-line="multiLine"> E-mail o contraseña erróneos
+            <v-snackbar v-if="snackbar"> E-mail o contraseña erróneos
             <v-btn color="red" text @click="snackbar = false">Close</v-btn>
             </v-snackbar>
 
@@ -52,7 +51,8 @@ export default {
         return {
 
             email:'',
-            password:''
+            password:'',
+            pass:false
 
         }
     },
@@ -64,7 +64,8 @@ export default {
             }
             
             this.$store.dispatch('login', {datos:datos})
-        }
+        },
+
     }
 
 }

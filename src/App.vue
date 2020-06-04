@@ -23,8 +23,8 @@
     <v-footer dark padless xs12>
       <v-card flat tile class="dark lighten-1 white--text text-center" width="100%">
         <v-card-text> 
-          <v-btn icon><v-icon color="blue">mdi-facebook</v-icon></v-btn>
-          <v-btn icon ><v-icon color="pink">mdi-instagram</v-icon></v-btn>
+          <v-btn icon href="https://www.facebook.com/La-Luna-1575189982738297"><v-icon color="blue" >mdi-facebook</v-icon></v-btn>
+          <v-btn icon href="https://www.instagram.com/lalunaalcobendas" ><v-icon color="pink">mdi-instagram</v-icon></v-btn>
         </v-card-text>
         <v-card-text class="white--text pt-0">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit similique assumenda repellat, facilis sint suscipit eius, 
@@ -71,5 +71,8 @@ export default {
 <style>
 #app {
   background-color: rgb(46, 45, 45);
+}
+p, v-card, v-dialog, v-container, v-content, h1, h2, h3{
+  word-break: normal;
 }
 </style>

@@ -11,6 +11,8 @@
             <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
             <span>Insertar</span>
           </v-btn>
+
+          <v-btn  v-if="min" absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>  
           
       <!--Dialog para poder insertar una nueva tarjeta actividad -->
       <v-dialog v-model="dialog"  persistent max-width="600px">
@@ -81,8 +83,9 @@
                   </v-card-actions>
             </v-card>
             </v-dialog>
-
+         
       </v-content>
+          
   </v-container>
 </template>
 <script>
@@ -103,6 +106,9 @@ export default {
     mounted() {
       this.$store.dispatch('loadActividades')
   },
+  beforeUpdate(){
+      this.btnMin()
+  },
   data() {
     return {
       dialog2: false, //-->method editar
@@ -116,6 +122,7 @@ export default {
       requiredRules:[
         v => !!v || ' Campo obligatorio',
       ],
+      min:false
     };
   },
   methods: {
@@ -163,6 +170,13 @@ export default {
       this.$store.dispatch('insertActividad', {datos:datos})
       this.dialog=false
 
+    }, 
+    btnMin(){
+      if(window.innerWidth<808){
+        this.min=true
+      }else{
+        this.min=false
+      }
     }
   }
 

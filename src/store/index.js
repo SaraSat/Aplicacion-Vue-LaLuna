@@ -41,7 +41,7 @@ class L_client {
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
-                resolutionFunc(res)
+                resolutionFunc()
             }).catch((res) => {
                 rejectionFunc(res.data)
             });
@@ -56,7 +56,7 @@ class L_client {
                 c_password: datos.c_password,
                 email: datos.email
             }).then((res) => {
-                resolutionFunc(res.data)
+                resolutionFunc()
             }).catch((res) => {
                 rejectionFunc(res.data)
             });
