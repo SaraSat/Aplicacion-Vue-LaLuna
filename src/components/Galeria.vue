@@ -1,4 +1,5 @@
 <template>
+<!--Galería de imágenes-->
     <v-carousel>
         <v-carousel-item v-for="(item, index) in items" :key="index" 
                 reverse-transition="fade-transition" 
