@@ -5,13 +5,10 @@
             <v-card-title>Registrar un nuevo monitor</v-card-title>
             <v-card-text >
                 <v-text-field label="Nombre" v-model="datos.name" required :rules="nameRules"></v-text-field>
-                <v-text-field label="Apellidos" v-model="datos.apellidos"></v-text-field>
-                <v-text-field label="Telefono" v-model="datos.telefono"></v-text-field>
                 <v-text-field label="Correo" v-model="datos.email" required :rules="emailRules"></v-text-field>
                 <v-text-field label="Contaseña" v-model="datos.password" :type="type" required :rules="passwordRules">
                 </v-text-field>
                 <v-text-field label="Repite contraseña" v-model="datos.c_password" type="password" required :rules="samePass"></v-text-field>
-                <v-text-field label="Comentarios" v-model="datos.coment"></v-text-field>
             </v-card-text>
             <v-card-actions>
                 <v-btn class="success" @click="insertar">Registrar</v-btn>
