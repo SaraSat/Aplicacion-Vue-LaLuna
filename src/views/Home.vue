@@ -16,7 +16,6 @@
             <!--Tarjeta con información del comienzo de la actividad
             Contiene la condicio ed, de tal manera que si se presiona el botón editar, los campos serán inputs-->
             <v-flex xs12>
-              <a href="#inicio"></a>
                 <v-card dark height="90%" class="jumbotron">
                    <v-btn @click="ed=true"  v-if="!ed && login" class="info float-right mt-4 mr-8">Editar</v-btn>
                     <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id)">Aceptar</v-btn>

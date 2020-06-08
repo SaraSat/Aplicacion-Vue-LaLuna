@@ -39,6 +39,7 @@
 
                 </v-card-text>  
             </v-card>    
+              <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
 
           </v-flex>
         </v-layout>

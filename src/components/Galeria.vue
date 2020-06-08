@@ -1,10 +1,10 @@
 <template>
     <v-carousel>
         <v-carousel-item v-for="(item, index) in items" :key="index" 
-                reverse-transition="fade-transition"
-                transition="fade-transition">
+                reverse-transition="fade-transition" 
+                transition="fade-transition" >
 
-            <v-img :src="item.src" contain aspect-ratio=2 :alt="item.alt"> </v-img>
+            <v-img :src="item.src" :alt="item.alt" contain="" height="100%" width="100%"> </v-img>
         </v-carousel-item>
     </v-carousel> 
 </template>
@@ -31,7 +31,7 @@ export default {
                     src:require('../assets/plazaMayor.jpeg'),
                     alt:"Esperando el bocadillo en la plaza Mayor de Madrid" 
                 },
-                                {
+                {
                     src:require('../assets/renfe.jpeg'),
                     alt:"Yendo hace Cercedilla en renfe" 
                 },

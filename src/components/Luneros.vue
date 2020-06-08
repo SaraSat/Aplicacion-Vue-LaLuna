@@ -12,11 +12,10 @@
                     single-line
                     append-icon="mdi-magnify">
                 </v-text-field>
-                <v-spacer/>
-                
-            </v-toolbar>
-
-        <v-spacer/>
+            <v-spacer/>
+            <v-btn class="error" :to="{name:'Login'}">Salir</v-btn>            
+        </v-toolbar>
+            <v-spacer/>
 
         <v-data-table :headers="headers" :items="items"  hide-default-footer :search="filter" show-select
                             v-model="selected" dark :sort-by="['name']" 
@@ -39,7 +38,7 @@
 export default {
     name:'Luneros',
     mounted(){
-       return this.$store.dispatch('loadLuneros')
+        this.$store.dispatch('loadLuneros')
     },
     computed:{
         items(){

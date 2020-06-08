@@ -1,10 +1,16 @@
 <template>
     <v-container>
         <h3>Evaluaciones</h3>
-        <v-btn class="d-flex flex-column ml-12" @click="dialog=true">
-        <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
-        <span>Insertar</span>
-        </v-btn>
+        <div> 
+            
+            <v-btn class=" ml-12" @click="dialog=true">
+                <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
+                <span>Insertar</span>
+            </v-btn>
+            <v-btn class="error float-right mt-0 mr-10" :to="{name:'Login'}" large=""> Salir</v-btn>               
+        </div>
+             
+            
         <!--Tarjeta de evaluacion-->
         <v-row wrap>
             <v-col  v-for="item in items" :key="item.id">
@@ -97,7 +103,8 @@
         </v-card>
         </v-dialog>
 
-
+        <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
+        
     </v-container>
 </template>
 

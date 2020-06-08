@@ -4,22 +4,33 @@
             <form lazy-validation>
             <v-card-title>Registrar un nuevo monitor</v-card-title>
             <v-card-text >
-                <v-text-field label="Nombre" v-model="datos.name" required :rules="nameRules"></v-text-field>
-                <v-text-field label="Correo" v-model="datos.email" required :rules="emailRules"></v-text-field>
-                <v-text-field label="Contaseña" v-model="datos.password" :type="type" required :rules="passwordRules">
-                </v-text-field>
-                <v-text-field label="Repite contraseña" v-model="datos.c_password" type="password" required :rules="samePass"></v-text-field>
+                <v-text-field label="Nombre" v-model="name" required :rules="nameRules"></v-text-field>
+                <v-text-field label="Correo" v-model="email" required :rules="emailRules"></v-text-field>
+                <v-text-field label="Contraseña"  :type="pass ? 'text' : 'password'" :append-icon="pass ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="pass = !pass" :rules="passwordRules" required v-model="password"></v-text-field>
+                <v-text-field label="Repite contraseña" v-model="c_password" :type="pass ? 'text' : 'password'" required :rules="samePass"></v-text-field>
             </v-card-text>
             <v-card-actions>
                 <v-btn class="success" @click="insertar">Registrar</v-btn>
+                <v-btn class="error" :to="{name:'Login'}">Salir</v-btn>
             </v-card-actions>
             </form>
         </v-card>
-          <v-snackbar
-            v-model="snackbar"
-            :multi-line="multiLine"> Ha ocurrido un error, compruebe que el correo sea válido
+          <v-snackbar v-model="snackbar"> 
+              Ha ocurrido un error, compruebe que el correo sea válido
                     <v-btn color="red" text @click="snackbar = false">Close</v-btn>
             </v-snackbar>
+
+            <v-dialog v-model="dialog" width="350px">
+                <v-card>
+                    <v-card-title>Registro completado</v-card-title>
+                    <v-card-subtitle>Desea realizar otro registro?</v-card-subtitle>
+                    <v-card-actions>
+                        <v-btn @click="dialog=false">Continuar</v-btn>
+                        <v-btn :to="{name:'Login'}" class="error">Salir</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
     </v-container>
 </template>
 
@@ -33,16 +44,11 @@ export default {
     },
     data() {
         return{
-            datos:{
-                name:'',
-                apellidos:'',
-                telefono:'',
-                email:'',
-                password:'',
-                c_password:'',
-                coment:''
-            },
-            type:'password',
+
+            name:'',
+            email:'',
+            password:'',
+            c_password:'',
             nameRules: [
                 v => !!v || ' El nombre es obligatorio',
                 v => (v && v.length >= 3) || 'El nombre debe tener al menos 4 caracteres',
@@ -57,27 +63,30 @@ export default {
             ],
             samePass:[
                 v => !!v || 'La constraseña es obligatoria',
-                v=> v===this.datos.password || 'Las constraseñas no coinciden'
+                v=> v===this.password || 'Las constraseñas no coinciden'
                 
             ],
-
+            dialog:false,
+            pass:false,
         }
     },
     methods: {
         insertar() {
 
-            this.$store.dispatch('registro', {datos:this.datos}) 
-            
-            this.datos={
-            name:'',
-            apellidos:'',
-            telefono:'',
-            email:'',
-            password:'',
-            c_password:'',
-            coment:''
-
+            var datos={
+                name:this.name,
+                email:this.email,
+                password:this.password,
+                c_password:this.c_password
             }
+            this.$store.dispatch('registro', {datos:datos}) 
+            
+            this.name='',
+            this.email='',
+            this.password='',
+            this.c_password='',
+        
+            this.dialog=true
            
         },
 
