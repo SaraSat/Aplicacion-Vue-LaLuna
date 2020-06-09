@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const PREFIX = 'http://127.0.0.1:8000';
 
@@ -35,21 +35,26 @@ class L_client {
         //Login --> petición ajax al login
     login(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
-            axios.post(this.server + '/api/login', {
+            const instance = axios.create({
+                baseURL: this.server,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.post(this.server + '/api/login', {
                 email: datos.email,
                 password: datos.password
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
-                resolutionFunc()
+                resolutionFunc(res.data)
+                console.log("ok")
             }).catch((res) => {
                 rejectionFunc(res.data)
             });
         });
     }
 
-    cerrar_sesion(){
-        this.___setCookie('lauth','',-1)
+    cerrar_sesion() {
+        this.___setCookie('lauth', '', -1)
     }
 
     register(datos) {
@@ -68,9 +73,9 @@ class L_client {
 
     }
 
-    admin(pass){
+    admin(pass) {
         return new Promise((resolutionFunc, rejectionFunc) => {
-            axios.post(this.server + '/api/administradors', {
+            axios.post(this.server + '/api/admin', {
                 password: pass
             }).then((res) => {
                 resolutionFunc()
@@ -321,8 +326,8 @@ export default new Vuex.Store({
         login: false,
         luneros: [],
         snackbar: false,
-        adminPass:true,
-        errorAdmin:false
+        adminPass: true,
+        errorAdmin: false
     },
     mutations: {
         setProximaActividad: function(state, proximaActividad) {
@@ -343,11 +348,11 @@ export default new Vuex.Store({
         setSnackbar(state, snackbar) {
             state.snackbar = snackbar
         },
-        setAdminPass(state, admin){
-            state.adminPass=admin
+        setAdminPass(state, admin) {
+            state.adminPass = admin
         },
-        setErrorAdmin(state, errorAdmin){
-            state.errorAdmin=errorAdmin
+        setErrorAdmin(state, errorAdmin) {
+            state.errorAdmin = errorAdmin
         }
 
     },
@@ -467,14 +472,14 @@ export default new Vuex.Store({
             })
         },
 
-        cerrarSesion(context){
-                context.commit('setLogin',false)
+        cerrarSesion(context) {
+            context.commit('setLogin', false)
         },
 
-        administradores(context, pass){
-            client.admin(pass).then((data)=>{
-                constext.commit('setAdminPass',false)
-            }).catch((data)=>{
+        administradores(context, pass) {
+            client.admin(pass).then((data) => {
+                constext.commit('setAdminPass', false)
+            }).catch((data) => {
                 context.commit('setErrorAdmin', true)
                 console.log(data)
             })
@@ -511,7 +516,7 @@ export default new Vuex.Store({
         snackbar(state) {
             return state.snackbar
         },
-        adminPass(state){
+        adminPass(state) {
             return state.adminPass
         }
     },

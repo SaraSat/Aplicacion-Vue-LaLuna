@@ -11,13 +11,15 @@
           <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
           <v-tab block :to="{name:'Login'}">Monitores</v-tab>
           <v-tab block :to="{name:'Contacto'}">Contacto</v-tab>
+          <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesion</v-btn>
         </v-tabs>
-        <v-btn class="error" v-if="login" @click="cerrar">cerrar sesion</v-btn>
 
       <!--Versión menu navegación para pantallas pequeñas-->  
-        <v-app-bar-nav-icon v-if="vertical" @click.stop="open=!open"></v-app-bar-nav-icon>
-        <span v-if="vertical">Menu</span>
-        <v-navigation-drawer v-model="open" width="350" absolute="" floating="" hide-overlay>
+        <v-app-bar-nav-icon v-if="vertical" @click.stop="open=!open" class="mt-12 ml-6"></v-app-bar-nav-icon>
+        <v-toolbar-title v-if="vertical" class="mb-6">Menu</v-toolbar-title>
+       
+    </v-app-bar>
+            <v-navigation-drawer v-model="open"  absolute="" float hide-overlay dark>
           <v-list dense>
             <v-list-item link :to="{name:'Home'}">
               <v-list-item-action>
@@ -47,9 +49,14 @@
                 <v-list-item-title>Contacto</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          </v-list>        
+          </v-list>  
+          <v-list-item>
+            <v-list-item-action>
+               <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesión</v-btn>
+            </v-list-item-action>
+          </v-list-item>      
           </v-navigation-drawer>
-    </v-app-bar>
+
 
     
 

@@ -113,7 +113,7 @@ export default {
             this.password='',
             this.c_password='',
         
-            this.dialog=true,
+            this.dialog=true
            
         },
 
