@@ -6,16 +6,18 @@
     <v-app-bar dark min-height="140" prominent="">
       <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="140" width="140">
         <v-tabs v-resize="menu" :grow="grow" v-if="grow">
-          <v-tab >Inicio</v-tab>
+          <v-tab :to="{name:'Home'}">Inicio</v-tab>
           <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
           <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
           <v-tab block :to="{name:'Login'}">Monitores</v-tab>
           <v-tab block :to="{name:'Contacto'}">Contacto</v-tab>
         </v-tabs>
+        <v-btn class="error" v-if="login" @click="cerrar">cerrar sesion</v-btn>
 
-      <!--Versión menu navegación para pantallas pequeñas-->          
+      <!--Versión menu navegación para pantallas pequeñas-->  
         <v-app-bar-nav-icon v-if="vertical" @click.stop="open=!open"></v-app-bar-nav-icon>
-        <v-navigation-drawer v-model="open">
+        <span v-if="vertical">Menu</span>
+        <v-navigation-drawer v-model="open" width="350" absolute="" floating="" hide-overlay>
           <v-list dense>
             <v-list-item link :to="{name:'Home'}">
               <v-list-item-action>
@@ -82,6 +84,11 @@
 <script>
 export default {
   name: "App",
+  computed:{
+    login(){
+      return this.$store.getters.login
+    }
+  },
   data() {
     return{
       //Variables que permiten el cambio de menu en función del tamaño de la pantalla --> menu()
@@ -100,10 +107,16 @@ export default {
         this.grow=true
         this.vertical=false
       }
+    },
+    cerrar(){
+      this.$store.dispatch('cerrarSesion')
     }
   },
   beforeUpdate(){
-    this.menu
+    this.menu()
+  },
+  mounted(){
+    this.menu()
   },
 };
 </script>

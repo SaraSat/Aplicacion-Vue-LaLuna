@@ -45,7 +45,7 @@ export default {
         },
         snackbar(){
            return this.$store.getters.snackbar 
-        }
+        }, 
     },
     data() {
         return {

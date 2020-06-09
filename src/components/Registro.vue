@@ -21,6 +21,7 @@
                     <v-btn color="red" text @click="snackbar = false">Close</v-btn>
             </v-snackbar>
 
+
             <v-dialog v-model="dialog" width="350px">
                 <v-card>
                     <v-card-title>Registro completado</v-card-title>
@@ -31,6 +32,25 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <v-dialog v-model="admin" width="350">
+                <v-card>
+                    <v-card-actions>Acceso a Administradores</v-card-actions>
+                    <v-card-text>
+                        <v-text-field  v-model="passAdmin" label="Introduzca la Constraseña" type="password" :rules="passwordRules"></v-text-field>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn @click="isAdmin" class="info">Aceptar</v-btn>
+                        <v-btn class="error" :to="{name:'Login'}">Cancelar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-snackbar v-model="errorAdmin"> 
+              Contraseña no válida
+                    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
+
     </v-container>
 </template>
 
@@ -40,6 +60,12 @@ export default {
     computed: {
         snackbar(){
             return this.$store.getters.snackbar
+        },
+        admin(){
+            return this.$store.getters.adminPass
+        },
+        errorAdmin() {
+            return this.$store.getters.errorAdmin
         }
     },
     data() {
@@ -49,6 +75,7 @@ export default {
             email:'',
             password:'',
             c_password:'',
+            passAdmin:'',
             nameRules: [
                 v => !!v || ' El nombre es obligatorio',
                 v => (v && v.length >= 3) || 'El nombre debe tener al menos 4 caracteres',
@@ -86,10 +113,15 @@ export default {
             this.password='',
             this.c_password='',
         
-            this.dialog=true
+            this.dialog=true,
            
         },
 
-    }
+        isAdmin(){
+            this.$store.dispatch('administradores', this.passAdmin)
+        }
+
+    },
+
 }
 </script>
