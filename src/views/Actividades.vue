@@ -6,13 +6,16 @@
 
       <!--Tarjeta de actividad, se genera un for para recorrer el objeto que contenga las diferentes actividades programadas
       y asi mostrar los datos de cada una con la misma estructura-->
-    <v-content>  
-          <v-btn class="d-flex flex-column ml-12 mb-5" @click="dialog=true"  v-if="login">
-            <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
-            <span>Insertar</span>
-          </v-btn>
+    <v-content> 
 
-          <v-btn  v-if="min" absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>  
+      <!--Botón Intesertar que abre el diálogo con el formulario--> 
+      <v-btn class="d-flex flex-column ml-12 mb-5" @click="dialog=true"  v-if="login">
+        <v-icon color ="green darken-2" x-large >mdi-pencil</v-icon>
+        <span>Insertar</span>
+      </v-btn>
+
+
+      <v-btn  v-if="min" absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>  
           
       <!--Dialog para poder insertar una nueva tarjeta actividad -->
       <v-dialog v-model="dialog"  persistent max-width="600px">
@@ -36,19 +39,20 @@
 
       <!--Tarjetas de actividad-->
       <v-container fluid align-center justify-center="">
-      <v-row wrap>
-        <v-col v-for="(item,index) in items" :key="index" mb-1>
-            <v-card dark width="350" height="250">
-              <v-card-title><h4 >{{item.nombre}}</h4>
-              </v-card-title>
-              <v-card-subtitle><h6 >Fin de semana previsto: {{item.fecha}}</h6>
-              </v-card-subtitle>
-              <v-card-text >{{item.desc}}</v-card-text>
-              <v-card-actions>
-              <v-btn class="success" @click="preEdit(item.id)" v-if="login"  >Editar</v-btn>
-              <v-btn class="error" @click="dialog3=true" v-if="login" >Eliminar</v-btn>
-              </v-card-actions>
-            </v-card>
+        <v-row wrap>
+          <v-col v-for="(item,index) in items" :key="index" mb-1>
+              <v-card dark min-width="350" height="250">
+                <v-card-title><h3 >{{item.nombre}}</h3>
+                </v-card-title>
+                <v-card-subtitle><h5 >Fin de semana previsto: {{item.fecha}}</h5>
+                </v-card-subtitle>
+                <v-card-text ><h6>{{item.desc}}</h6></v-card-text>
+                <v-card-actions>
+                  <v-btn class="success" @click="preEdit(item.id)" v-if="login"  >Editar</v-btn><!--Abre el diálogo de edición 
+                                                                                  con los datos rellenos de la actividad pulsada-->
+                  <v-btn class="error" @click="dialog3=true" v-if="login" >Eliminar</v-btn>
+                </v-card-actions>
+              </v-card>
 
             <!--Dialogo para confirmar eliminación-->
               <v-dialog v-model="dialog3" persistent max-width="350px">
@@ -60,36 +64,32 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog> 
-
-        </v-col>
-      </v-row>
-
+          </v-col>
+        </v-row>
       </v-container>
           
 
-          <!--Dialog para poder editar cada tarjeta por separado-->
-              <v-dialog v-model="dialog2" persistent max-width="600px">
-                <v-card dark xs12>
-                  <v-card-title>
-                  <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
-                  </v-card-title>
-                  <v-card-subtitle>
-                  <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"></v-text-field></h6>
-                  </v-card-subtitle>
-                  <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
-                  <v-card-actions>
-                      <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
-                      <v-btn class="error" @click="dialog2=false" >Cancelar</v-btn>
-                  </v-card-actions>
-            </v-card>
-            </v-dialog>
-         
+        <!--Dialog para poder editar cada tarjeta por separado-->
+            <v-dialog v-model="dialog2" persistent max-width="600px">
+              <v-card dark xs12>
+                <v-card-title>
+                <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
+                </v-card-title>
+                <v-card-subtitle>
+                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"></v-text-field></h6>
+                </v-card-subtitle>
+                <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
+                <v-card-actions>
+                    <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
+                    <v-btn class="error" @click="dialog2=false" >Cancelar</v-btn>
+                </v-card-actions>
+          </v-card>
+          </v-dialog>
       </v-content>
-          
   </v-container>
 </template>
-<script>
 
+<script>
 export default {
   name: "Actividades",
   components: {
@@ -99,18 +99,21 @@ export default {
       return this.$store.getters.actividades
     },
     login() {
-      return this.$store.getters.login
+      return this.$store.getters.login //Si el monitor se ha logado se mostrarán los botones de edición, inserción y eliminación
     }
+  },
 
+  mounted() {
+    this.$store.dispatch('loadActividades')
   },
-    mounted() {
-      this.$store.dispatch('loadActividades')
-  },
+
   beforeUpdate(){
       this.btnMin()
   },
+
   data() {
     return {
+      dialog:false, //-->method insertar
       dialog2: false, //-->method editar
       dialog3:false, //-->method eliminar
 
@@ -118,14 +121,15 @@ export default {
       fecha:'',
       desc:'',
       id:'',
-      dialog:false,
       requiredRules:[
         v => !!v || ' Campo obligatorio',
       ],
-      min:false
+      min:false //-->method btnMin para mostrar el botón up
     };
   },
   methods: {
+
+    //Función que muestra el diálogo de edición con los datos de la actividad pulsada
     preEdit(id) {
       this.items.forEach(element => {
         if(element.id == id){
@@ -138,6 +142,8 @@ export default {
       this.dialog2=true
 
     },
+
+    //Función que permite la edición de la actividad pulsada
     edit(id){
       var datos={}
       this.items.forEach(element => {
@@ -147,20 +153,25 @@ export default {
             fecha:this.fecha,
             desc:this.desc
           }
-          
         }
       });
       this.$store.dispatch('updateActividades', {id:id, datos:datos})
+
       this.nombre='',
       this.fecha='',
       this.desc='',
       this.id=''
+
       this.dialog2=false
     },
+
+    //Eliminación de la actividad pulsada
     eliminar(id) {
       this.dialog3=false
       this.$store.dispatch('deleteActividad', id)
     },
+
+    //Función para insertar una nueva actividad
     insertar() {
       var datos={
         nombre:this.nombre,
@@ -171,6 +182,8 @@ export default {
       this.dialog=false
 
     }, 
+
+    //Función que permite mostrar o no el botón up, en función del tamaño de la pantalla
     btnMin(){
       if(window.innerWidth<808){
         this.min=true
