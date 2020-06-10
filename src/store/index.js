@@ -75,7 +75,7 @@ class L_client {
 
     admin(pass) {
         return new Promise((resolutionFunc, rejectionFunc) => {
-            axios.post(this.server + '/api/admin', {
+            axios.post(this.server + '/api/admins', {
                 password: pass
             }).then((res) => {
                 resolutionFunc()
@@ -478,7 +478,7 @@ export default new Vuex.Store({
 
         administradores(context, pass) {
             client.admin(pass).then((data) => {
-                constext.commit('setAdminPass', false)
+                context.commit('setAdminPass', false)
             }).catch((data) => {
                 context.commit('setErrorAdmin', true)
                 console.log(data)
