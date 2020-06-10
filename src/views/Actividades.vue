@@ -14,7 +14,7 @@
         <span>Insertar</span>
       </v-btn>
 
-
+      <!--Botón up, visible para pantallas pequeñas-->
       <v-btn  v-if="min" absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>  
           
       <!--Dialog para poder insertar una nueva tarjeta actividad -->
@@ -96,7 +96,7 @@ export default {
   },
   computed:{
     items() {
-      return this.$store.getters.actividades
+      return this.$store.getters.actividades //carga de actividades -->mounted()
     },
     login() {
       return this.$store.getters.login //Si el monitor se ha logado se mostrarán los botones de edición, inserción y eliminación
@@ -108,7 +108,7 @@ export default {
   },
 
   beforeUpdate(){
-      this.btnMin()
+      this.btnMin() //Carga btn up para pantallas pequeñas
   },
 
   data() {

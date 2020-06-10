@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <!--Vista de evaluaciones-->
         <h3>Evaluaciones</h3>
         <div> 
             
@@ -72,8 +73,8 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <!--Tarjeta para editar una evaluacion evaluacion-->
-        
+
+        <!--Tarjeta para editar una evaluacion -->
                 <v-dialog v-model="dialog2" persistent max-width="600px">
                 <v-card dark>
                 <v-card-title>Nueva Evaluación</v-card-title>
@@ -113,17 +114,18 @@ export default {
     name:'Evaluaciones',
     computed:{
         items() {
-            return this.$store.getters.evaluaciones
+            return this.$store.getters.evaluaciones //carga de evaluaciones --> Variable
         }
     },
     mounted() {
-         this.$store.dispatch('loadEvaluaciones')
+         this.$store.dispatch('loadEvaluaciones') //Carga de evaluaciones
     },
     data() {
         return {
             dialog:false,
             dialog2:false,
             dialog3:false,
+
             nombre:'',
             fecha:'',
             desc:'',
@@ -132,6 +134,7 @@ export default {
             equipo:'',
             recordar:'',
             id:'',
+
             requiredRules:[
             v => !!v || ' Campo obligatorio',
             ],
@@ -140,6 +143,7 @@ export default {
         }
     },
     methods: {
+        //Función que permite la inserccion de una evaluacion nueva
         insertar() {
             var datos={
                 nombre:this.nombre,
@@ -164,6 +168,8 @@ export default {
             this.dialog=false
 
         }, 
+
+        //Función que permite visualizar en el dialogo de edicion la evaluacion seleccionada
         preEdit(id){
             this.items.forEach(element => {
                 if(element.id==id){
@@ -179,6 +185,8 @@ export default {
             });
             this.dialog2=true
         },
+
+        //Función que permite la edicion de una evaluacion
         editar(id) {
             var datos={
                 nombre:this.nombre,
@@ -202,6 +210,7 @@ export default {
             this.dialog2=false
 
         },
+        //Función que permite eliminar una evaluacion
         eliminar(id){
             this.dialog3=false
             this.$store.dispatch('deleteEvaluacion' ,id)

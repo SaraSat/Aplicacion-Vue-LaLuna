@@ -32,7 +32,8 @@ class L_client {
                 }
             }
         }
-        //Login --> petición ajax al login
+
+     //Login --> petición ajax al login de un monitor registrado
     login(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
@@ -53,10 +54,12 @@ class L_client {
         });
     }
 
+    //Petición ajax para el cierre de sesión 
     cerrar_sesion() {
         this.___setCookie('lauth', '', -1)
     }
 
+    //Petición ajax para el registro de un monitor nuevo. 
     register(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             axios.post(this.server + '/api/register', {
@@ -73,6 +76,7 @@ class L_client {
 
     }
 
+    //Petición ajax para el envio de la password de administradores
     admin(pass) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             axios.post(this.server + '/api/admins', {
@@ -317,19 +321,27 @@ class L_client {
 
 const client = new L_client(PREFIX);
 
-
+//Store:
 export default new Vuex.Store({
     state: {
-        proximaActividad: [],
-        actividades: [],
-        evaluaciones: [],
-        login: false,
-        luneros: [],
-        snackbar: false,
-        adminPass: true,
-        errorAdmin: false
+        proximaActividad: [], //item de pag inicio
+
+        actividades: [], //items pag actividades 
+
+        evaluaciones: [], // items pag evaluaciones
+
+        login: false, //permite que ciertos botones sea visibles si te has logado
+
+        luneros: [], //items pag luneros
+
+        snackbar: false, //permite mostrar mensaje de error si se ha producido desde back
+
+        adminPass: true, //Permite la entrada a registro de monitores si se ha introducido bien la pass de admin
+
+        errorAdmin: false //Permite mostrar mensaje de error si se ha introducido mal la pass de admin
     },
     mutations: {
+        //Setters
         setProximaActividad: function(state, proximaActividad) {
             state.proximaActividad = proximaActividad
         },
@@ -472,10 +484,12 @@ export default new Vuex.Store({
             })
         },
 
+        // cierre de sesión
         cerrarSesion(context) {
             context.commit('setLogin', false)
         },
 
+        //comprobacion pass de admin (pag de registro)
         administradores(context, pass) {
             client.admin(pass).then((data) => {
                 context.commit('setAdminPass', false)

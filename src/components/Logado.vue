@@ -1,5 +1,6 @@
 <template>
 <v-container>
+    <!--Vista principal para los monitores logados. Permite el acceso al listado de luneros, evaluaciones y registro de monitores-->
     <v-layout wrap>
         <v-flex xs12 mb-1>
             <v-card dark class="jumbotron">
@@ -23,7 +24,7 @@
         <v-flex xs12 mb-1>
             <v-card dark class="jumbotron">
                 <v-card-title><h1>Registro</h1></v-card-title>
-                <v-card-text class="display-1">Registrar un nuevo monitor en la app</v-card-text>
+                <v-card-text class="display-1">Registrar un nuevo monitor en la app. Acceso solo a Administradores</v-card-text>
                 <v-card-actions>
                     <v-btn class="info" large :to="{name:'Registro'}">Registrar</v-btn>
                 </v-card-actions>

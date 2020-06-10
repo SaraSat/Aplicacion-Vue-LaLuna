@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <!--Tarjeta de registro de un nuevo monitor, Solo pueden acceder aquellos con la contraseña de Administrador-->
         <v-card dark>
             <form lazy-validation>
             <v-card-title>Registrar un nuevo monitor</v-card-title>
@@ -16,12 +17,14 @@
             </v-card-actions>
             </form>
         </v-card>
+
+        <!--Snackbar que aparece si desde back se devuelve un error, email incorrecto-->
           <v-snackbar v-model="snackbar"> 
               Ha ocurrido un error, compruebe que el correo sea válido
                     <v-btn color="red" text @click="snackbar = false">Close</v-btn>
             </v-snackbar>
 
-
+            <!--Dialog que se muestra al finalizar un registro-->
             <v-dialog v-model="dialog" width="350px">
                 <v-card>
                     <v-card-title>Registro completado</v-card-title>
@@ -33,6 +36,7 @@
                 </v-card>
             </v-dialog>
 
+            <!--Dialog que se muestra al entrar en el sitio, hay que introducir la contraseña del administrador-->
             <v-dialog v-model="admin" width="350">
                 <v-card>
                     <v-card-actions>Acceso a Administradores</v-card-actions>
@@ -46,6 +50,7 @@
                 </v-card>
             </v-dialog>
 
+            <!--Snackbar que aparece si se ha introducido mal la contraseña de administrador-->
             <v-snackbar v-model="errorAdmin"> 
               Contraseña no válida
                     <v-btn color="red" text @click="snackbar = false">Close</v-btn>
@@ -59,13 +64,13 @@ export default {
     name:'Registro',
     computed: {
         snackbar(){
-            return this.$store.getters.snackbar
+            return this.$store.getters.snackbar //true para mostrar snackbar de error en el registro
         },
         admin(){
-            return this.$store.getters.adminPass
+            return this.$store.getters.adminPass //false si la contraseña de administrador se ha introducido correctamente
         },
         errorAdmin() {
-            return this.$store.getters.errorAdmin
+            return this.$store.getters.errorAdmin // true si la constraseña de admin se ha introducido erroneamente
         }
     },
     data() {
@@ -76,6 +81,8 @@ export default {
             password:'',
             c_password:'',
             passAdmin:'',
+
+            //Reglas de resgitro
             nameRules: [
                 v => !!v || ' El nombre es obligatorio',
                 v => (v && v.length >= 3) || 'El nombre debe tener al menos 4 caracteres',
@@ -98,6 +105,7 @@ export default {
         }
     },
     methods: {
+        //Método que permite registrar un nuevo monitor
         insertar() {
 
             var datos={
@@ -116,7 +124,7 @@ export default {
             this.dialog=true
            
         },
-
+        //Función que permite comprobar la contraseña de administrador
         isAdmin(){
             this.$store.dispatch('administradores', this.passAdmin)
         }

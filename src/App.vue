@@ -115,6 +115,7 @@ export default {
         this.vertical=false
       }
     },
+    //Función para cerrar sesión
     cerrar(){
       this.$store.dispatch('cerrarSesion')
     }

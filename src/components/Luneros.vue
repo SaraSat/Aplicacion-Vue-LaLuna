@@ -1,5 +1,7 @@
 <template>
+<!--Vista de la tabla de Luneros -->
     <v-container>
+        <!--Barra de búsqueda y cabecera de la date table-->
         <v-toolbar class="text-uppercase" dark xs4>
             <v-toolbar-title class="text-uppercase">
                 <span class="font-weight-light">Lista de </span>
@@ -17,18 +19,22 @@
         </v-toolbar>
             <v-spacer/>
 
+        <!--Tabla de de datos con filtrado por búesqueda y ordenación por nombre o apellido.
+        Los checkbox sin funcionalidad interna, únicamente se han puesto para marcar al pasar lista-->
         <v-data-table :headers="headers" :items="items"  hide-default-footer :search="filter" show-select
                             v-model="selected" dark :sort-by="['name']" 
                              dense>
 
-                <!--Plantilla del desplegable con más información de la tarea -->
+            <!--Plantilla del botón para abrir dialog con más información -->
             <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="info(item)">mdi-plus</v-icon>
             </template>
         </v-data-table>
-                    <v-dialog v-model="dialog" max-width="500" dark>
-                <v-card>
-                    <v-card-title>Información</v-card-title>
+
+        <!--Dialog con más información del lunero-->
+        <v-dialog v-model="dialog" max-width="500" dark>
+            <v-card>
+                <v-card-title>Información</v-card-title>
                     <v-card-text>
                         Tutores: {{item.tutores}}
                         <v-divider></v-divider>
@@ -49,19 +55,18 @@
 export default {
     name:'Luneros',
     mounted(){
-        this.$store.dispatch('loadLuneros')
+        this.$store.dispatch('loadLuneros') //carga de items
     },
     computed:{
         items(){
-            return this.$store.getters.luneros
+            return this.$store.getters.luneros //carga de luneros
         },
     },
     data(){
         return{
-            selected:[],
-            expanded:[],
-            filter:'',
-            headers:[    
+            selected:[], //checkbox
+            filter:'', //Filtrado por nombre o apellido
+            headers:[    //Cabeceras de la tabla
                 { text: "Nombre", value: "nombre"},
                 { text: "Apellidos", value: "apellidos" },
                 { text: "Teléfono", value: "telf", sortable: false },
@@ -76,6 +81,7 @@ export default {
         }
     },
     methods: {
+        //Función que permite visualizar la información del lunero seleccionado
         info(item){
             this.index = this.items.indexOf(item)
             this.item = Object.assign({}, item)

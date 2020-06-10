@@ -4,7 +4,7 @@
     <v-container>
         <h1>Quiénes somos??</h1>
         <v-layout wrap>
-          <Galeria class="mb-4"></Galeria>
+          <Galeria class="mb-4"></Galeria> <!--Componente Galería-->
           <v-flex xs12 mb-2>
           </v-flex>
           <v-flex xs12>
