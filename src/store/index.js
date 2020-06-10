@@ -22,18 +22,18 @@ class L_client {
     }
 
     ___getCookie(c_name) {
-            var i, x, y, ARRcookies = document.cookie.split(";");
-            for (i = 0; i < ARRcookies.length; i++) {
-                x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
-                y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-                x = x.replace(/^\s+|\s+$/g, "");
-                if (x == c_name) {
-                    return unescape(y);
-                }
+        var i, x, y, ARRcookies = document.cookie.split(";");
+        for (i = 0; i < ARRcookies.length; i++) {
+            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+            x = x.replace(/^\s+|\s+$/g, "");
+            if (x == c_name) {
+                return unescape(y);
             }
         }
+    }
 
-     //Login --> petición ajax al login de un monitor registrado
+    //Login --> petición ajax al login de un monitor registrado
     login(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
@@ -56,7 +56,24 @@ class L_client {
 
     //Petición ajax para el cierre de sesión 
     cerrar_sesion() {
-        this.___setCookie('lauth', '', -1)
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            var auth_token = this.auth_token
+            instance.post(this.server + '/api/logout', {
+                auth_token
+            }).then((res) => {
+
+                this.___setCookie('lauth', this.auth_token, -1);
+                resolutionFunc(res.data)
+                console.log("ok")
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
     }
 
     //Petición ajax para el registro de un monitor nuevo. 
@@ -487,7 +504,12 @@ export default new Vuex.Store({
 
         // cierre de sesión
         cerrarSesion(context) {
-            context.commit('setLogin', false)
+            client.cerrar_sesion().then((data) => {
+                context.commit('setLogin', false)
+
+            }).catch((data) => {
+                console.log(data)
+            })
         },
 
         //comprobacion pass de admin (pag de registro)
@@ -533,8 +555,8 @@ export default new Vuex.Store({
         },
         adminPass(state) {
             return state.adminPass
-        }, 
-        errorAdmin(state){
+        },
+        errorAdmin(state) {
             return state.errorAdmin
         }
     },

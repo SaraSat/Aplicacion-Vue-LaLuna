@@ -55,10 +55,7 @@
                <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesión</v-btn>
             </v-list-item-action>
           </v-list-item>      
-          </v-navigation-drawer>
-
-
-    
+          </v-navigation-drawer>    
 
     <!--Se añaden las rutas de las vistas definidas en el menu -->
     <v-content>
@@ -85,6 +82,19 @@
         </v-card-text>
       </v-card>
     </v-footer>
+
+    <!--Dialog con información de las cookies utilizadas -->
+    <v-dialog v-model="dialog" >
+      <v-card width="300" class="float-right">
+        <v-card-title>Política de cookies</v-card-title>
+        <v-card-text>Esta página web utiliza cookies únicamente temporales para mantener abierta la sesión del usuario, 
+          guardando el usuario y contraseña del último desde el que se ha accedido</v-card-text>          
+        <v-card-actions>
+          <v-btn @click="dialog=false">Cerrar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-app>
 </template>
 
@@ -102,6 +112,7 @@ export default {
       grow:true,
       vertical:false,
       open:false,
+      dialog:true
     }
   },
   methods:{
