@@ -471,7 +471,7 @@ export default new Vuex.Store({
                 console.log("Registro realizado")
             }).catch((data) => {
                 context.commit('setSnackbar', true)
-                console.log(data)
+                console.log(context.getters.snackbar)
             })
         },
 
@@ -481,6 +481,7 @@ export default new Vuex.Store({
                 context.commit('setLogin', true)
             }).catch((data) => {
                 context.commit('setSnackbar', true)
+                console.log(context.getters.snackbar)
             })
         },
 
@@ -532,6 +533,9 @@ export default new Vuex.Store({
         },
         adminPass(state) {
             return state.adminPass
+        }, 
+        errorAdmin(state){
+            return state.errorAdmin
         }
     },
     modules: {}

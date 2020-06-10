@@ -73,10 +73,7 @@
           <v-btn icon href="https://www.instagram.com/lalunaalcobendas" ><v-icon color="pink">mdi-instagram</v-icon></v-btn>
         </v-card-text>
         <v-card-text class="white--text pt-0">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit similique assumenda repellat, facilis sint suscipit eius, 
-          nemo accusantium aliquam ratione necessitatibus, 
-          quam placeat vitae eum iure optio recusandae exercitationem quos?
-        </v-card-text>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">licencia de Creative Commons Reconocimiento-NoComercial 4.0 Internacional</a>.        </v-card-text>
 
         <v-divider></v-divider>
 

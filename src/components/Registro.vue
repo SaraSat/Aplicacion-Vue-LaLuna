@@ -21,11 +21,11 @@
         <!--Snackbar que aparece si desde back se devuelve un error, email incorrecto-->
           <v-snackbar v-model="snackbar"> 
               Ha ocurrido un error, compruebe que el correo sea válido
-                    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+                    <v-btn color="red" text @click="close">Close</v-btn>
             </v-snackbar>
 
             <!--Dialog que se muestra al finalizar un registro-->
-            <v-dialog v-model="dialog" width="350px">
+            <v-dialog v-model="dialog" width="350px" v-if="!snackbar">
                 <v-card>
                     <v-card-title>Registro completado</v-card-title>
                     <v-card-subtitle>Desea realizar otro registro?</v-card-subtitle>
@@ -53,7 +53,7 @@
             <!--Snackbar que aparece si se ha introducido mal la contraseña de administrador-->
             <v-snackbar v-model="errorAdmin"> 
               Contraseña no válida
-                    <v-btn color="red" text @click="snackbar = false">Close</v-btn>
+                    <v-btn color="red" text @click="close">Close</v-btn>
             </v-snackbar>
 
     </v-container>
@@ -108,26 +108,43 @@ export default {
         //Método que permite registrar un nuevo monitor
         insertar() {
 
-            var datos={
-                name:this.name,
-                email:this.email,
-                password:this.password,
-                c_password:this.c_password
+            if(this.name!='' && this.email!='' && this.password!='' && this.c_password!=''){
+                var datos={
+                    name:this.name,
+                    email:this.email,
+                    password:this.password,
+                    c_password:this.c_password
+                }
+                this.$store.dispatch('registro', {datos:datos}) 
+                
+                this.dialog=false
+                
+                this.name='',
+                this.email='',
+                this.password='',
+                this.c_password='' 
+                
+                this.dialog=true
+
             }
-            this.$store.dispatch('registro', {datos:datos}) 
-            
-            this.name='',
-            this.email='',
-            this.password='',
-            this.c_password='',
-        
-            this.dialog=true
            
         },
         //Función que permite comprobar la contraseña de administrador
         isAdmin(){
             this.$store.dispatch('administradores', this.passAdmin)
+        },
+
+        //Functión que permite cerrar el snackbar de error 
+        close(){
+            if(this.$store.getters.snackbar){
+                this.$store.commit('setSnackbar',false)
+            }
+            else if(this.$store.getters.errorAdmin){
+                this.$store.commit('setErrorAdmin',false)
+            }
+            
         }
+
 
     },
 
