@@ -76,7 +76,7 @@
                 <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                 </v-card-title>
                 <v-card-subtitle>
-                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"></v-text-field></h6>
+                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules" type="date"></v-text-field></h6>
                 </v-card-subtitle>
                 <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
                 <v-card-actions>
@@ -146,7 +146,7 @@ export default {
     //Función que permite la edición de la actividad pulsada
     edit(id){
       var datos={}
-      
+      this.fecha=this.crearFecha()
       this.items.forEach(element => {
         if(element.id == id){
           datos={
@@ -174,7 +174,7 @@ export default {
 
     //Función para insertar una nueva actividad
     insertar() {
-        console.log(typeof(this.fecha))
+     this.fecha=this.crearFecha()
       var datos={
         nombre:this.nombre,
         fecha:this.fecha,
@@ -182,6 +182,12 @@ export default {
       }
       this.$store.dispatch('insertActividad', {datos:datos})
       this.dialog=false
+
+      
+      this.nombre='',
+      this.fecha='',
+      this.desc='',
+      this.id=''
 
     }, 
 
@@ -192,6 +198,17 @@ export default {
       }else{
         this.min=false
       }
+    },
+    crearFecha(){
+               
+       var f=new Date(this.fecha)
+       var month=parseInt(f.getMonth())
+       month+=1
+       if(month<10){
+         month='0'+month.toString()
+       }
+
+      return f.getDate()+'/'+month+'/'+f.getFullYear()
     }
   }
 

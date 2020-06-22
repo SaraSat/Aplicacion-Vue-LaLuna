@@ -145,6 +145,7 @@ export default {
     methods: {
         //Función que permite la inserccion de una evaluacion nueva
         insertar() {
+            this.fecha=this.crearFecha()
             var datos={
                 nombre:this.nombre,
                 fecha:this.fecha,
@@ -188,6 +189,7 @@ export default {
 
         //Función que permite la edicion de una evaluacion
         editar(id) {
+            this.fecha=this.crearFecha()
             var datos={
                 nombre:this.nombre,
                 fecha:this.fecha,
@@ -214,7 +216,20 @@ export default {
         eliminar(id){
             this.$store.dispatch('deleteEvaluacion' ,id)
             this.dialog3=false
+        },
+
+        crearFecha(){
+                
+        var f=new Date(this.fecha)
+        var month=parseInt(f.getMonth())
+        month+=1
+        if(month<10){
+            month='0'+month.toString()
         }
+
+        return f.getDate()+'/'+month+'/'+f.getFullYear()
+        }
+
     }
 }
 </script>
