@@ -127,7 +127,6 @@ class L_client {
     }
 
     update_inicio(id, datos) {
-        console.log(id)
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
                 baseURL: this.server,
@@ -182,7 +181,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
             instance.put(this.server + '/api/actividads/' + id, {
-                dia: datos.nombre,
+                nombre: datos.nombre,
                 fecha: datos.fecha,
                 desc: datos.desc,
             }).then((res) => {
@@ -411,13 +410,11 @@ export default new Vuex.Store({
         loadActividades(context) {
             client.load_actividades().then((data) => {
                 context.commit('setActividades', data)
-                console.log(data)
             }).catch((data) => {
                 console.log(data)
             })
         },
         updateActividades(context, { id, datos }) {
-            console.log(datos)
             client.update_actividades(id, datos).then((data) => {
                 client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
@@ -454,7 +451,6 @@ export default new Vuex.Store({
             })
         },
         updateEvaluaciones(context, { id, datos }) {
-            console.log(datos)
             client.update_evaluaciones(id, datos).then((data) => {
                 client.load_evaluaciones().then((data) => {
                     context.commit('setEvaluaciones', data)
@@ -488,7 +484,6 @@ export default new Vuex.Store({
                 console.log("Registro realizado")
             }).catch((data) => {
                 context.commit('setSnackbar', true)
-                console.log(context.getters.snackbar)
             })
         },
 
@@ -498,7 +493,6 @@ export default new Vuex.Store({
                 context.commit('setLogin', true)
             }).catch((data) => {
                 context.commit('setSnackbar', true)
-                console.log(context.getters.snackbar)
             })
         },
 

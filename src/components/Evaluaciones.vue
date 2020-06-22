@@ -30,12 +30,12 @@
                 </v-card>
 
                     <!--Dialogo para confirmar eliminación-->
-                    <v-dialog v-model="dialog3" persistent max-width="350px">
+                    <v-dialog v-model="dialog3" v-if="dialog3" persistent max-width="350px">
                     <v-card>
                         <v-card-title>Seguro que quieres eliminar?</v-card-title>
                         <v-card-actions>
-                        <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
-                        <v-btn @click="dialog3=false">Cancelar</v-btn>
+                            <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+                            <v-btn @click="dialog3=false">Cancelar</v-btn>
                         </v-card-actions>
                     </v-card>
                     </v-dialog>
@@ -212,8 +212,8 @@ export default {
         },
         //Función que permite eliminar una evaluacion
         eliminar(id){
-            this.dialog3=false
             this.$store.dispatch('deleteEvaluacion' ,id)
+            this.dialog3=false
         }
     }
 }

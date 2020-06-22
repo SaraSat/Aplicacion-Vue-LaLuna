@@ -25,7 +25,7 @@
           </v-card-title>
           <v-card-subtitle>
               Fin de Semana previsto:
-              <v-text-field label="introduce el dia --> 01/01/2020" v-model="fecha" requiered :rules="requiredRules"></v-text-field>
+              <v-text-field label="introduce el dia" v-model="fecha" requiered :rules="requiredRules" type="date"></v-text-field>
           </v-card-subtitle>
           <v-card-text>
               <v-text-field label="introduce una breve descripción" v-model="desc" requiered :rules="requiredRules"></v-text-field>
@@ -48,14 +48,14 @@
                 </v-card-subtitle>
                 <v-card-text ><h6>{{item.desc}}</h6></v-card-text>
                 <v-card-actions>
-                  <v-btn class="success" @click="preEdit(item.id)" v-if="login"  >Editar</v-btn><!--Abre el diálogo de edición 
+                  <v-btn class="success" @click="preEdit(item.id)" v-if="login">Editar</v-btn><!--Abre el diálogo de edición 
                                                                                   con los datos rellenos de la actividad pulsada-->
                   <v-btn class="error" @click="dialog3=true" v-if="login" >Eliminar</v-btn>
                 </v-card-actions>
               </v-card>
 
             <!--Dialogo para confirmar eliminación-->
-              <v-dialog v-model="dialog3" persistent max-width="350px">
+              <v-dialog v-model="dialog3" v-if="dialog3" persistent max-width="350px">
                 <v-card>
                   <v-card-title>Seguro que quieres eliminar?</v-card-title>
                   <v-card-actions>
@@ -117,10 +117,10 @@ export default {
       dialog2: false, //-->method editar
       dialog3:false, //-->method eliminar
 
-      nombre:'',
-      fecha:'',
-      desc:'',
-      id:'',
+      nombre:' ',
+      fecha:' ',
+      desc:' ',
+      id:' ',
       requiredRules:[
         v => !!v || ' Campo obligatorio',
       ],
@@ -146,6 +146,7 @@ export default {
     //Función que permite la edición de la actividad pulsada
     edit(id){
       var datos={}
+      
       this.items.forEach(element => {
         if(element.id == id){
           datos={
@@ -157,22 +158,23 @@ export default {
       });
       this.$store.dispatch('updateActividades', {id:id, datos:datos})
 
+      this.dialog2=false
+
       this.nombre='',
       this.fecha='',
       this.desc='',
       this.id=''
-
-      this.dialog2=false
     },
 
     //Eliminación de la actividad pulsada
     eliminar(id) {
-      this.dialog3=false
       this.$store.dispatch('deleteActividad', id)
+      this.dialog3=false
     },
 
     //Función para insertar una nueva actividad
     insertar() {
+        console.log(typeof(this.fecha))
       var datos={
         nombre:this.nombre,
         fecha:this.fecha,

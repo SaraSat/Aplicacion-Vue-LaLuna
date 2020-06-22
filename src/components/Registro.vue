@@ -147,6 +147,9 @@ export default {
 
 
     },
+    mounted(){
+        return this.$store.commit('setAdminPass', true)
+    }
 
 }
 </script>
