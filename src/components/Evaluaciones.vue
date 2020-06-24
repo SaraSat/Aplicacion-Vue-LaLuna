@@ -80,7 +80,8 @@
                 <v-card-title>Nueva Evaluación</v-card-title>
                 <v-card-subtitle>
                     <v-text-field v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-text-field>
-                    <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" type="date"></v-text-field>
+                    <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" 
+                        :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
                 </v-card-subtitle>
                 <v-card-text>
                     <v-text-field v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules"></v-text-field>
@@ -99,7 +100,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
-                    <v-btn class="error" @click="dialog2=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="dialog2=false;editDate=false">Cancelar</v-btn>
                 </v-card-actions>
         </v-card>
         </v-dialog>
@@ -125,6 +126,7 @@ export default {
             dialog:false,
             dialog2:false,
             dialog3:false,
+            editDate:false,
 
             nombre:'',
             fecha:'',
@@ -210,6 +212,7 @@ export default {
             this.recordar='',
 
             this.dialog2=false
+            this.editDate=false
 
         },
         //Función que permite eliminar una evaluacion
@@ -228,7 +231,7 @@ export default {
         }
 
         return f.getDate()+'/'+month+'/'+f.getFullYear()
-        }
+        },
 
     }
 }

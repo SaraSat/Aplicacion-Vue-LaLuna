@@ -76,12 +76,13 @@
                 <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                 </v-card-title>
                 <v-card-subtitle>
-                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules" type="date"></v-text-field></h6>
+                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"  
+                  :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field></h6>
                 </v-card-subtitle>
                 <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
-                    <v-btn class="error" @click="dialog2=false" >Cancelar</v-btn>
+                    <v-btn class="error" @click="dialog2=false;editDate=false" >Cancelar</v-btn>
                 </v-card-actions>
           </v-card>
           </v-dialog>
@@ -116,7 +117,7 @@ export default {
       dialog:false, //-->method insertar
       dialog2: false, //-->method editar
       dialog3:false, //-->method eliminar
-
+      editDate:false,
       nombre:' ',
       fecha:' ',
       desc:' ',
@@ -159,6 +160,7 @@ export default {
       this.$store.dispatch('updateActividades', {id:id, datos:datos})
 
       this.dialog2=false
+      this.editDate=false
 
       this.nombre='',
       this.fecha='',
@@ -200,15 +202,9 @@ export default {
       }
     },
     crearFecha(){
-               
-       var f=new Date(this.fecha)
-       var month=parseInt(f.getMonth())
-       month+=1
-       if(month<10){
-         month='0'+month.toString()
-       }
-
-      return f.getDate()+'/'+month+'/'+f.getFullYear()
+      var f=new Date(this.fecha)
+       console.log(f)
+      return f.toLocaleDateString()
     }
   }
 
