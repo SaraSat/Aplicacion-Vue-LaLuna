@@ -202,7 +202,14 @@ export default {
       }
     },
     crearFecha(){
-      var f=new Date(this.fecha)
+      this.fecha=this.fecha.split('/')
+      if(this.fecha.length>1){
+        var f=new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
+      }else{
+        var f =this.fecha.toString()
+        f=new Date(f)
+      }
+      
        console.log(f)
       return f.toLocaleDateString()
     }
