@@ -50,7 +50,7 @@
                 <v-card-actions>
                   <v-btn class="success" @click="preEdit(item.id)" v-if="login">Editar</v-btn><!--Abre el diálogo de edición 
                                                                                   con los datos rellenos de la actividad pulsada-->
-                  <v-btn class="error" @click="dialog3=true" v-if="login" >Eliminar</v-btn>
+                  <v-btn class="error" @click="eliminar(item.id)" v-if="login" >Eliminar</v-btn>
                 </v-card-actions>
               </v-card>
 
@@ -59,7 +59,7 @@
                 <v-card>
                   <v-card-title>Seguro que quieres eliminar?</v-card-title>
                   <v-card-actions>
-                    <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+                    <v-btn class="error" @click="confirmar()" >Eliminar</v-btn>
                     <v-btn @click="dialog3=false">Cancelar</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -170,7 +170,11 @@ export default {
 
     //Eliminación de la actividad pulsada
     eliminar(id) {
-      this.$store.dispatch('deleteActividad', id)
+      this.id=id
+      this.dialog3=true
+    },
+    confirmar(){
+      this.$store.dispatch('deleteActividad', this.id) 
       this.dialog3=false
     },
 

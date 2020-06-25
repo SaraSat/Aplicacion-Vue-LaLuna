@@ -15,7 +15,7 @@
         <!--Tarjeta de evaluacion-->
         <v-row wrap>
             <v-col  v-for="item in items" :key="item.id" xs-12>
-                <v-card dark min-width="345" >
+                <v-card dark min-width="345" min-height="700" >
                     <v-card-title><h3>Evaluacion</h3></v-card-title>
                     <v-card-subtitle><h3>{{item.nombre}} {{item.fecha}}</h3> </v-card-subtitle>
                     <v-card-text><h4>Qué hemos hecho?:</h4> {{item.desc}}</v-card-text>
@@ -25,7 +25,7 @@
                     <v-card-text><h4>A recordar:</h4> {{item.recordar}}</v-card-text>
                     <v-card-actions>
                         <v-btn class="green" @click="preEdit(item.id)">Editar</v-btn>
-                        <v-btn class="error" @click="dialog3=true">Eliminar</v-btn>
+                        <v-btn class="error" @click="eliminar(item.id)">Eliminar</v-btn>
                     </v-card-actions>
                 </v-card>
 
@@ -34,7 +34,7 @@
                     <v-card>
                         <v-card-title>Seguro que quieres eliminar?</v-card-title>
                         <v-card-actions>
-                            <v-btn class="error" @click="eliminar(item.id)" >Eliminar</v-btn>
+                            <v-btn class="error" @click="confirmar()" >Eliminar</v-btn>
                             <v-btn @click="dialog3=false">Cancelar</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -53,19 +53,19 @@
                     <v-text-field v-model="fecha" label="Fecha Actividad" type="date" requiered :rules="requiredRules"></v-text-field>
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-text-field v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules" ></v-text-field>
+                    <v-textarea v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules" ></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="insertar">Aceptar</v-btn>
@@ -79,7 +79,7 @@
                 <v-card dark>
                 <v-card-title>Nueva Evaluación</v-card-title>
                 <v-card-subtitle>
-                    <v-textarea v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-textarea>
+                    <v-text-field v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-text-field>
                     <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" 
                         :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
                 </v-card-subtitle>
@@ -217,7 +217,13 @@ export default {
         },
         //Función que permite eliminar una evaluacion
         eliminar(id){
-            this.$store.dispatch('deleteEvaluacion' ,id)
+            
+            this.dialog3=true
+            this.id=id
+
+        },
+        confirmar(){
+            this.$store.dispatch('deleteEvaluacion' ,this.id)
             this.dialog3=false
         },
 
