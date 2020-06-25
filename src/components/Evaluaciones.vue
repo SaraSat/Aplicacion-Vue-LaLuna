@@ -79,24 +79,24 @@
                 <v-card dark>
                 <v-card-title>Nueva Evaluación</v-card-title>
                 <v-card-subtitle>
-                    <v-text-field v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-textarea>
                     <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" 
                         :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-text-field v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-text-field>
+                    <v-textarea v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-textarea>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
@@ -221,16 +221,17 @@ export default {
             this.dialog3=false
         },
 
+        //Función que generará una fecha en el formato dd/mm/aaaa
         crearFecha(){
-                
-        var f=new Date(this.fecha)
-        var month=parseInt(f.getMonth())
-        month+=1
-        if(month<10){
-            month='0'+month.toString()
-        }
-
-        return f.getDate()+'/'+month+'/'+f.getFullYear()
+            this.fecha=this.fecha.split('/')
+            if(this.fecha.length>1){
+                var f=new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
+            }else{
+                var f =this.fecha.toString()
+                f=new Date(f)
+            }
+            
+            return f.toLocaleDateString()
         },
 
     }

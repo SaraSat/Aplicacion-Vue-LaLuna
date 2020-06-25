@@ -21,11 +21,10 @@
                   <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id)">Aceptar</v-btn>
                   <v-card-title>
                     <h1 v-if="!ed">{{item.dia}}</h1>  
-                    <h1 v-if="ed"><v-text-field label="Dia" v-model="item.dia" requiered :rules="requiredRules"></v-text-field></h1>
-                    </v-card-title>
+                  </v-card-title>
                   <v-card-subtitle>
                     <h3 v-if="!ed">{{item.fecha}} a las  {{item.hora}} en {{item.lugar}}</h3>  
-                    <h3 v-if="ed"><v-text-field label="Fecha->Formato: 1 de enero" v-model="item.fecha" requiered :rules="requiredRules"></v-text-field> 
+                    <h3 v-if="ed"><v-text-field label="Fecha->Formato: 1 de enero" v-model="item.fecha" requiered :rules="requiredRules" type="date"></v-text-field> 
                     <v-text-field   label="a las (hora)->Formato: 23:59" v-model="item.hora" requiered :rules="requiredRules">
                     </v-text-field><v-text-field label="en (lugar)" v-model="item.lugar" requiered :rules="requiredRules"> </v-text-field></h3>
                   </v-card-subtitle>
@@ -97,9 +96,16 @@ export default {
     //Recogida de los datos de la actividad a editar  para poder mostrarlos en el formulario de edicion
     edit(index) {
       var datos={}
+      var meses=["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto","septiembre", "octubre", 
+                  "noviembre","diciembre"]
+      var dias =["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
       this.items.forEach(element => {
         if (element.id==index){
-            this.$store.dispatch('updateInicio', {datos:element, id:element.id });
+          var fecha=new Date(element.fecha)
+          element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
+          element.dia=dias[fecha.getDay()+1]
+
+          this.$store.dispatch('updateInicio', {datos:element, id:element.id });
         }
       });
       

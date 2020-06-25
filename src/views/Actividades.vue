@@ -201,6 +201,8 @@ export default {
         this.min=false
       }
     },
+
+    //Función que generará una fecha en el formato dd/mm/aaaa
     crearFecha(){
       this.fecha=this.fecha.split('/')
       if(this.fecha.length>1){
@@ -209,8 +211,7 @@ export default {
         var f =this.fecha.toString()
         f=new Date(f)
       }
-      
-       console.log(f)
+
       return f.toLocaleDateString()
     }
   }
