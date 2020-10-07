@@ -42,7 +42,7 @@ class L_client {
             });
             instance.post(this.server + '/api/login', {
                 email: datos.email,
-                password: datos.password
+                password: datos.password,
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
