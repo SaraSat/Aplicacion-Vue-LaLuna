@@ -12,12 +12,13 @@
       <!--Cards Información próxima actividad
       Se genera un for para recorrer el objeto que contiene los datos de la actividad y así poder mostrarlos -->
         <v-layout v-for="(item,index) in items " :key="index" wrap>
+           
 
           <!--Tarjeta con información del comienzo de la actividad
           Contiene la condición ed, de tal manera que si se presiona el botón editar, los campos serán inputs-->
           <v-flex xs12>
               <v-card dark height="90%" class="jumbotron">
-                  <v-btn @click="ed=true"  v-if="!ed && login" class="info float-right mt-4 mr-8">Editar</v-btn>
+                <v-btn @click="ed=true"  v-if="!ed && login" class="info float-right mt-4 mr-8">Editar</v-btn>
                   <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>
                   <v-card-title>
                     <h1 v-if="!ed">{{item.dia}}</h1>  
@@ -97,18 +98,19 @@ export default {
   methods: {
     //Recogida de los datos de la actividad a editar  para poder mostrarlos en el formulario de edicion
     edit(index) {
-      var datos={}
-      var meses=["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto","septiembre", "octubre", 
+      var datos = {}
+      var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto","septiembre", "octubre", 
                   "noviembre","diciembre"]
-      var dias =["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
+      var dias = ["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
       this.items.forEach(element => {
-        if (element.id==index){
-          if(element.fecha.type=="Date"){
-            var fecha=new Date(element.fecha)
-            element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
-            element.dia=dias[fecha.getDay()-1]
+        if (element.id == index){
+          console.log(element.id + " "+ element.fecha.type)
 
-          }
+          var fecha=new Date(element.fecha)
+          element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
+          element.dia=dias[fecha.getDay()-1]
+          console.log(element.dia +"hola")
+          
           this.$store.dispatch('updateInicio', {datos:element, id:element.id });
         }
       });
