@@ -2,11 +2,13 @@
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByIXeeSklnBjggAdqHXZZuyTYR8HbqVG8&callback=initMap"
   type="text/javascript"></script>
+  
 <template>
 <!--Vista de inicio con información de la próxima actividad-->
 
     <v-container>
-        <h1>Próxima actividad</h1>
+        
+        <h2>Próxima Actividad</h2>
 
       <v-content>
       <!--Cards Información próxima actividad
@@ -128,4 +130,6 @@ h3,
 h4 {
   color: azure;
 }
+
+
 </style>

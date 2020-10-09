@@ -3,59 +3,59 @@
   <v-app id="app" >
 
     <!--Barra de navegación, menú -->
-    <v-app-bar dark min-height="140" prominent="">
-      <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="140" width="140">
-        <v-tabs v-resize="menu" :grow="grow" v-if="grow">
-          <v-tab :to="{name:'Home'}">Inicio</v-tab>
-          <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
-          <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
-          <v-tab block :to="{name:'Login'}">Monitores</v-tab>
-          <v-tab block :to="{name:'Contacto'}">Contacto</v-tab>
-          <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesion</v-btn>
-        </v-tabs>
-
-      <!--Versión menu navegación para pantallas pequeñas-->  
-        <v-app-bar-nav-icon v-if="vertical" @click.stop="open=!open" class="mt-12 ml-6"></v-app-bar-nav-icon>
-        <v-toolbar-title v-if="vertical" class="mb-6">Menu</v-toolbar-title>
-       
+    <v-app-bar dark min-height="140" prominent>
+        <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="140" width="140">
+        <v-btn @click.stop="open=!open" :close-on-content-click="!open" class="primary mt-12 ml-12">Menu</v-btn>
+        <h1 id="title" class="float-right mt-12 ml-12" v-model="grow" v-if="grow">Asociación de ocio y tiempo libre La Luna</h1>  
+        <h3 id="title" class="float-right mt-12 ml-12" v-model="vertical" v-if="vertical">Asociación de ocio y tiempo libre La Luna</h3>        
     </v-app-bar>
-            <v-navigation-drawer v-model="open"  absolute="" float hide-overlay dark>
-          <v-list dense>
-            <v-list-item link :to="{name:'Home'}">
-              <v-list-item-action>
-                <v-icon>mdi-home</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>Inicio</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link :to="{name:'Actividades'}">
-              <v-list-item-content>
-                <v-list-item-title>Actividades</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link :to="{name:'About'}">
-              <v-list-item-content>
-                <v-list-item-title>Quienes somos?</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link :to="{name:'Login'}">
-              <v-list-item-content>
-                <v-list-item-title>Monitores</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link :to="{name:'Contacto'}">
-              <v-list-item-content>
-                <v-list-item-title>Contacto</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>  
-          <v-list-item>
-            <v-list-item-action>
-               <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesión</v-btn>
-            </v-list-item-action>
-          </v-list-item>      
-          </v-navigation-drawer>    
+
+    <v-navigation-drawer v-model="open"  absolute="" float hide-overlay dark temporary>
+      <v-list dense>
+
+        <v-list-item link :to="{name:'Home'}">
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Inicio</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link :to="{name:'Actividades'}">
+          <v-list-item-content>
+            <v-list-item-title>Actividades</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link :to="{name:'About'}">
+          <v-list-item-content>
+            <v-list-item-title>Quienes somos?</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link :to="{name:'Login'}">
+          <v-list-item-content>
+            <v-list-item-title>Monitores</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link :to="{name:'Contacto'}">
+          <v-list-item-content>
+            <v-list-item-title>Contacto</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+      <v-list-item>
+        <v-list-item-action>
+            <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesión</v-btn>
+        </v-list-item-action>
+      </v-list-item>
+
+      </v-list> 
+    </v-navigation-drawer> 
+
+          
 
     <!--Se añaden las rutas de las vistas definidas en el menu -->
     <v-content>
@@ -109,15 +109,16 @@ export default {
   data() {
     return{
       //Variables que permiten el cambio de menu en función del tamaño de la pantalla --> menu()
-      grow:true,
-      vertical:false,
       open:false,
-      dialog:true
+      dialog:true,
+      grow:true,
+      vertical:false
     }
   },
   methods:{
     //Función que permite cambiar la vista del menu en función del tamaño de pantalla
-    menu(){
+     
+     menu(){
       if(window.innerWidth<808){
         this.grow=false
         this.vertical=true
@@ -126,25 +127,40 @@ export default {
         this.vertical=false
       }
     },
+
     //Función para cerrar sesión
     cerrar(){
       this.$store.dispatch('cerrarSesion')
     }
   },
+
+  
   beforeUpdate(){
     this.menu()
   },
   mounted(){
     this.menu()
   },
+ 
+
 };
 </script>
 
 <style>
 #app {
   background-color: rgb(46, 45, 45);
+  font-family: 'Indie Flower', cursive;
+  font-family: 'Montserrat', sans-serif;
 }
 p, v-card, v-dialog, v-container, v-content, h1, h2, h3{
   word-break: normal;
 }
+
+#title{
+  font-family: 'Indie Flower', cursive;
+}
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@300&display=swap');
+
 </style>
