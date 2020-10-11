@@ -5,7 +5,8 @@
     <!--Barra de navegación, menú -->
     <v-app-bar dark min-height="140" prominent="">
       <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="80" width="80" class="mt-2">
-      <span class="float-right ml-2 mt-2" id="title">Asociación de ocio y tiempo libre <br> La Luna</span>
+      <span class="float-right ml-2 mt-2" id="title" v-if="grow">Asociación de ocio y tiempo libre <br> La Luna</span>
+      <span class="float-right ml-2 mt-2" id="title" v-if="vertical" style="fontSize:4vw; ">Asociación de ocio y tiempo libre La Luna</span>
         <v-tabs v-resize="menu" :grow="grow" v-if="grow" class="mr-5">
           <v-tab :to="{name:'Home'}">Inicio</v-tab>
           <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
@@ -17,7 +18,7 @@
 
       <!--Versión menu navegación para pantallas pequeñas-->  
         <v-app-bar-nav-icon v-if="vertical" @click.stop="open=!open" class="mt-12 ml-6"></v-app-bar-nav-icon>
-        <v-toolbar-title v-if="vertical" class="mb-6">Menu</v-toolbar-title>
+        <v-toolbar-title v-if="vertical" class="mb-6" style="width:60vw">Menu</v-toolbar-title>
        
     </v-app-bar>
             <v-navigation-drawer v-model="open"  absolute="" float hide-overlay dark>
@@ -113,15 +114,18 @@ export default {
       grow:true,
       vertical:false,
       open:false,
-      dialog:true
+      dialog:true,
     }
+
   },
+
   methods:{
     //Función que permite cambiar la vista del menu en función del tamaño de pantalla
     menu(){
       if(window.innerWidth<808){
         this.grow=false
         this.vertical=true
+        
       }else{
         this.grow=true
         this.vertical=false
@@ -158,11 +162,9 @@ p, v-card, v-dialog, v-container, v-content, h1, h2, h3{
     font-family: 'Dancing Script', cursive;
 
     font-family: 'Indie Flower', cursive;
-
-    width: 35vw;
-
    
   }
+
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Indie+Flower&display=swap'); 
 

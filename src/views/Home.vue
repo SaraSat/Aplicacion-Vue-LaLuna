@@ -19,23 +19,46 @@
           <v-flex xs12>
               <v-card dark height="90%" class="jumbotron">
                 <v-btn @click="ed=true"  v-if="!ed && login" class="info float-right mt-4 mr-8">Editar</v-btn>
+
                   <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>
+
                   <v-card-title>
                     <h1 v-if="!ed">{{item.dia}}</h1>  
                   </v-card-title>
+
                   <v-card-subtitle>
                     <h3 v-if="!ed">{{item.fecha}} a las  {{item.hora}} en {{item.lugar}}</h3>  
-                    <h3 v-if="ed"><v-text-field label="Fecha" v-model="item.fecha" requiered :rules="requiredRules" 
-                    :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field> 
-                    <v-text-field   label="a las (hora)->Formato: 23:59" v-model="item.hora" requiered :rules="requiredRules">
-                    </v-text-field><v-text-field label="en (lugar)" v-model="item.lugar" requiered :rules="requiredRules"> </v-text-field></h3>
+
+                    <v-row v-if="ed" wrap>
+                      <v-col cols="12" sm="6" md="3">
+                        <v-text-field label="Fecha" v-model="item.fecha" requiered :rules="requiredRules" 
+                          :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="6" md="3">                      
+                        <v-text-field   label="a las (hora)->Formato: 23:59" v-model="item.hora" requiered :rules="requiredRules"></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="6" md="3">                      
+                        <v-text-field label="en (lugar)" v-model="item.lugar" requiered :rules="requiredRules"></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="6" md="3">
+                        <v-text-field label="La actividad tendrá un coste de (X)" v-model="item.precio" requiered :rules="requiredRules">€</v-text-field>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
+
                   <v-card-text>
                     <h4 v-if="!ed">{{item.desc}}</h4>
-                    <h4 v-if="ed"><v-text-field  label="Descripción" v-model="item.desc" requiered :rules="requiredRules"></v-text-field></h4>
+                    <v-row v-if="ed">
+                      <v-textarea  label="Descripción" v-model="item.desc" requiered :rules="requiredRules" outlined>
+                      </v-textarea>
+                    </v-row>
+
                     <h4 v-if="!ed">La actividad tendrá un coste de {{item.precio}}€</h4>
-                    <h4 v-if="ed"><v-text-field label="La actividad tendrá un coste de (X)" v-model="item.precio" requiered :rules="requiredRules">€</v-text-field> </h4>
                   </v-card-text>
+
                   <v-card-actions>
                       <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
                       width="mr-auto" height="350" frameborder="0" style="border:3;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
@@ -47,19 +70,31 @@
             <v-flex xs12>
                 <v-card dark height="90%" class="jumbotron">
                     <v-card-title>
-                      <h1>Recogida</h1>
+                      <h1>Recogida:</h1>
                     </v-card-title>
+
                     <v-card-subtitle>
-                      <h3 v-if="!ed">{{item.fecha}} a las  {{item.horaF}} en {{item.lugarF}}</h3>  
-                      <h3 v-if="ed"><v-text-field label="a las (hora recogida)->Formato: 23:59" v-model="item.horaF" requiered :rules="requiredRules"></v-text-field> 
-                      <v-text-field label="en (lugar de recogida)" v-model="item.lugarF" requiered :rules="requiredRules"></v-text-field></h3>
+                      <h3 v-if="!ed">{{item.fecha}} a las  {{item.horaF}} en {{item.lugarF}}</h3>
+
+                      <v-row v-if="ed">
+                        <v-col cols="12" sm="6" md="3">                        
+                          <v-text-field label="a las (hora recogida)->Formato: 23:59" v-model="item.horaF" requiered :rules="requiredRules"></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" sm="6" md="3">
+                          <v-text-field label="en (lugar de recogida)" v-model="item.lugarF" requiered :rules="requiredRules"></v-text-field>
+                        </v-col>
+                      </v-row>
                     </v-card-subtitle>
+
                     <v-card-actions>
                         <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
                         width="mr-auto" height="350" frameborder="0" style="border:3;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </v-card-actions>
                 </v-card>
+
               <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
+
             </v-flex>
         </v-layout>
         <!--Fin Card informacion-->
