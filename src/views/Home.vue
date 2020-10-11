@@ -60,8 +60,12 @@
                   </v-card-text>
 
                   <v-card-actions>
-                      <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
+                    <v-row>
+                       <v-col xs="12" sm="12" md="12">                      
+                         <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
                       width="mr-auto" height="350" frameborder="0" style="border:3;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                  </v-col>
+                    </v-row>
                   </v-card-actions>
               </v-card>
           </v-flex>
@@ -88,8 +92,18 @@
                     </v-card-subtitle>
 
                     <v-card-actions>
-                        <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
-                        width="mr-auto" height="350" frameborder="0" style="border:3;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+                        <v-row wrap>  
+                          <v-col xs="12" sm="12" md="12">                          
+                            <iframe class="d-block w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses"
+                                    width="mr-auto" height="350" frameborder="0" style="border:3;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                          </v-col>
+
+                          <v-col xs="12" sm="12" md="12" v-if="ed">                          
+                            <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>
+                          </v-col>
+                        </v-row>
+                        
                     </v-card-actions>
                 </v-card>
 
@@ -134,20 +148,34 @@ export default {
     //Recogida de los datos de la actividad a editar  para poder mostrarlos en el formulario de edicion
     edit(index) {
       var datos = {}
+
       var meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto","septiembre", "octubre", 
                   "noviembre","diciembre"]
-      var dias = ["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
-      this.items.forEach(element => {
-        if (element.id == index){
-          console.log(element.id + " "+ element.fecha.type)
 
-          var fecha=new Date(element.fecha)
+      var dias = ["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
+
+      this.items.forEach(element => {
+
+          var fecha = element.fecha.split('-')
+          if(fecha.length == 3){
+            fecha=new Date(element.fecha)
+          }
+          else{
+            fecha = element.fecha.split(' ')
+            console.log(fecha)
+            var mes = fecha[2]
+            console.log(mes)
+            mes=meses.indexOf(mes)
+            console.log(mes)  
+            fecha = new Date('2020',mes, fecha[0])
+          }
+          
+          console.log(fecha)
           element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
           element.dia=dias[fecha.getDay()-1]
-          console.log(element.dia +"hola")
           
           this.$store.dispatch('updateInicio', {datos:element, id:element.id });
-        }
+
       });
       
       this.ed=false

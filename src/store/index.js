@@ -133,6 +133,7 @@ class L_client {
                 //timeout: 1000,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
+            console.log(datos)
             instance.put(this.server + '/api/inicios/' + id, {
                 dia: datos.dia,
                 fecha: datos.fecha,
@@ -140,8 +141,8 @@ class L_client {
                 hora: datos.hora,
                 desc: datos.desc,
                 precio: datos.precio,
-                horaFin: datos.horaFin,
-                lugarFin: datos.lugarFin
+                horaF: datos.horaF,
+                lugarF: datos.lugarF
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {

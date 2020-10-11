@@ -13,7 +13,7 @@
           <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
           <v-tab block :to="{name:'Login'}">Monitores</v-tab>
           <v-tab block :to="{name:'Contacto'}">Contacto</v-tab>
-          <v-btn class="error" v-if="login" @click="cerrar" small="">Cerrar Sesion</v-btn>
+          <v-btn class="error mt-5" v-if="login" @click="cerrar" small="">Cerrar Sesion</v-btn>
         </v-tabs>
 
       <!--Versión menu navegación para pantallas pequeñas-->  
