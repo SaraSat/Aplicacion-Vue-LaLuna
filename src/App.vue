@@ -4,8 +4,9 @@
 
     <!--Barra de navegación, menú -->
     <v-app-bar dark min-height="140" prominent="">
-      <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="140" width="140">
-        <v-tabs v-resize="menu" :grow="grow" v-if="grow">
+      <img src="./assets/LunaFondoBueno.png" alt="Logotipo de la luna con un gato" height="80" width="80" class="mt-2">
+      <span class="float-right ml-2 mt-2" id="title">Asociación de ocio y tiempo libre <br> La Luna</span>
+        <v-tabs v-resize="menu" :grow="grow" v-if="grow" class="mr-5">
           <v-tab :to="{name:'Home'}">Inicio</v-tab>
           <v-tab :to="{name:'Actividades'}">Actividades</v-tab>
           <v-tab :to="{name:'About'}">Quienes somos?</v-tab>
@@ -143,8 +144,27 @@ export default {
 <style>
 #app {
   background-color: rgb(46, 45, 45);
+  font-family: 'Dancing Script', cursive;
+
+  font-family: 'Indie Flower', cursive;
+
+  font-family: 'Raleway', sans-serif;
 }
 p, v-card, v-dialog, v-container, v-content, h1, h2, h3{
   word-break: normal;
 }
+
+#title{
+    font-family: 'Dancing Script', cursive;
+
+    font-family: 'Indie Flower', cursive;
+
+    width: 35vw;
+
+   
+  }
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Indie+Flower&display=swap'); 
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Indie+Flower&family=Raleway:wght@200&display=swap');
 </style>
