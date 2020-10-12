@@ -142,7 +142,8 @@ class L_client {
                 desc: datos.desc,
                 precio: datos.precio,
                 horaF: datos.horaF,
-                lugarF: datos.lugarF
+                lugarF: datos.lugarF, 
+                aviso: datos.aviso
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -355,34 +356,54 @@ export default new Vuex.Store({
 
         adminPass: true, //Permite la entrada a registro de monitores si se ha introducido bien la pass de admin
 
-        errorAdmin: false //Permite mostrar mensaje de error si se ha introducido mal la pass de admin
+        errorAdmin: false, //Permite mostrar mensaje de error si se ha introducido mal la pass de admin
+
+        aviso: Boolean, //permite crear aviso en caso de que se cancele la próxima actividad,
+
+        avisoCreado: Boolean //cuando el aviso de cancelación de la actividad próxima se ha creado 
     },
     mutations: {
         //Setters
         setProximaActividad: function(state, proximaActividad) {
             state.proximaActividad = proximaActividad
         },
+
         setActividades(state, actividades) {
             state.actividades = actividades
         },
+
         setEvaluaciones(state, evaluaciones) {
             state.evaluaciones = evaluaciones
         },
+
         setLogin(state, login) {
             state.login = login
         },
+
         setLuneros(state, luneros) {
             state.luneros = luneros
         },
+
         setSnackbar(state, snackbar) {
             state.snackbar = snackbar
         },
+
         setAdminPass(state, admin) {
             state.adminPass = admin
         },
+
         setErrorAdmin(state, errorAdmin) {
             state.errorAdmin = errorAdmin
+        }, 
+
+        setAviso(state, aviso){
+            state.aviso = aviso
+        },
+
+        setAvisoCreado(state, avisoCreado){
+            state.avisoCreado = avisoCreado
         }
+
 
     },
     actions: {
@@ -533,26 +554,41 @@ export default new Vuex.Store({
         proximaActividad(state) {
             return state.proximaActividad
         },
+
         actividades(state) {
             return state.actividades
         },
+
         evaluaciones(state) {
             return state.evaluaciones
         },
+
         login(state) {
             return state.login
         },
+
         luneros(state) {
             return state.luneros
         },
+
         snackbar(state) {
             return state.snackbar
         },
+
         adminPass(state) {
             return state.adminPass
         },
+
         errorAdmin(state) {
             return state.errorAdmin
+        },
+
+        aviso(state){
+            return state.aviso
+        },
+
+        avisoCreado(state){
+            return state.avisoCreado
         }
     },
     modules: {}
