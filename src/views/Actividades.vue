@@ -54,7 +54,7 @@
                 </v-card-actions>
               </v-card>
 
-            <!--Dialogo para confirmar eliminación-->
+            <!-- Dialog3: Dialogo para confirmar eliminación-->
               <v-dialog v-model="dialog3" v-if="dialog3" persistent max-width="350px">
                 <v-card>
                   <v-card-title>Seguro que quieres eliminar?</v-card-title>
@@ -69,7 +69,7 @@
       </v-container>
           
 
-        <!--Dialog para poder editar cada tarjeta por separado-->
+        <!--Dialog2: Dialog para poder editar cada tarjeta por separado-->
             <v-dialog v-model="dialog2" persistent max-width="600px">
               <v-card dark xs12>
                 <v-card-title>
@@ -82,7 +82,7 @@
                 <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
-                    <v-btn class="error" @click="dialog2=false;editDate=false" >Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelarEdicion()" >Cancelar</v-btn>
                 </v-card-actions>
           </v-card>
           </v-dialog>
@@ -117,83 +117,103 @@ export default {
       dialog:false, //-->method insertar
       dialog2: false, //-->method editar
       dialog3:false, //-->method eliminar
+
       editDate:false,
+
       nombre:' ',
       fecha:' ',
       desc:' ',
       id:' ',
+
       requiredRules:[
         v => !!v || ' Campo obligatorio',
       ],
+
       min:false //-->method btnMin para mostrar el botón up
     };
   },
+
   methods: {
 
     //Función que muestra el diálogo de edición con los datos de la actividad pulsada
     preEdit(id) {
+
       this.items.forEach(element => {
+
         if(element.id == id){
-          this.nombre=element.nombre
-          this.fecha=element.fecha,
-          this.desc=element.desc
-          this.id=element.id
+
+          this.nombre = element.nombre
+          this.fecha = element.fecha,
+          this.desc = element.desc
+          this.id = element.id
         }
       });
-      this.dialog2=true
+
+      this.dialog2 = true
 
     },
 
     //Función que permite la edición de la actividad pulsada
     edit(id){
-      var datos={}
-      this.fecha=this.crearFecha()
+
+      var datos = {}
+      this.fecha = this.crearFecha()
+
       this.items.forEach(element => {
+      
         if(element.id == id){
-          datos={
+          datos = {
             nombre:this.nombre,
             fecha:this.fecha,
             desc:this.desc
           }
         }
       });
+
       this.$store.dispatch('updateActividades', {id:id, datos:datos})
 
-      this.dialog2=false
-      this.editDate=false
+      this.dialog2 = false
+      this.editDate = false
 
-      this.nombre='',
-      this.fecha='',
-      this.desc='',
-      this.id=''
+      this.nombre = '',
+      this.fecha = '',
+      this.desc = '',
+      this.id = ''
+    },
+
+    cancelarEdicion(){
+      this.dialog2 = false
+
+      this.editDate = false
+
+      this.nombre = '',
+      this.fecha = '',
+      this.desc = '',
+      this.id = ''
     },
 
     //Eliminación de la actividad pulsada
     eliminar(id) {
-      this.id=id
-      this.dialog3=true
+      this.id = id
+      this.dialog3 = true
     },
+
     confirmar(){
       this.$store.dispatch('deleteActividad', this.id) 
-      this.dialog3=false
+      this.dialog3 = false
     },
 
     //Función para insertar una nueva actividad
     insertar() {
-     this.fecha=this.crearFecha()
-      var datos={
+      this.fecha = this.crearFecha()
+
+      var datos = {
         nombre:this.nombre,
         fecha:this.fecha,
         desc:this.desc
       }
       this.$store.dispatch('insertActividad', {datos:datos})
-      this.dialog=false
-
-      
-      this.nombre='',
-      this.fecha='',
-      this.desc='',
-      this.id=''
+      this.dialog = false
 
     }, 
 

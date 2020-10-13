@@ -193,6 +193,7 @@ export default {
   mounted() {
     this.$store.dispatch('loadInicio')
   },
+
   methods: {
 
     //Recogida de los datos de la actividad a editar  para poder mostrarlos en el formulario de edicion
@@ -210,20 +211,22 @@ export default {
         var fecha = element.fecha.split('-')
 
         if(fecha.length == 3){
+
           fecha=new Date(element.fecha)
-        }
-        else{
+
+        }else{
+
           fecha = element.fecha.split(' ')
 
           var mes = fecha[2]
           
-          mes=meses.indexOf(mes)
+          mes = meses.indexOf(mes)
             
           fecha = new Date('2020',mes, fecha[0])
         }
                 
-        element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
-        element.dia=dias[fecha.getDay()-1]
+        element.fecha = fecha.getDate() + " de " + meses[fecha.getMonth()]
+        element.dia = dias[fecha.getDay()-1]
 
         element.aviso = false
         
@@ -231,7 +234,7 @@ export default {
 
       });
       
-      this.ed=false
+      this.ed = false
     },
 
     //Función que permite comprobar la contraseña de administrador
@@ -242,9 +245,11 @@ export default {
     //Functión que permite cerrar el snackbar de error 
     close(){
       if(this.$store.getters.snackbar){
+
           this.$store.commit('setSnackbar',false)
       }
       else if(this.$store.getters.errorAdmin){
+
           this.$store.commit('setErrorAdmin',false)
       }
             
@@ -252,7 +257,7 @@ export default {
 
     crearAviso() {
 
-      var datos={}
+      var datos = {}
 
       this.items.forEach(element => {
         element.aviso = true
@@ -266,11 +271,11 @@ export default {
       
       this.items.forEach(element=> {
         
-        element.aviso = false
+        element.aviso = false 
+
         this.$store.dispatch('updateInicio', {datos:element, id:element.id });
-        console.log(element.aviso)
         
-        })
+      })
       
     },
 
