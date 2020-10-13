@@ -2,7 +2,15 @@
     <v-container>
         <h2>Acceso a Monitores</h2>
         <v-content>
-            
+
+            <v-content v-if="errors" >
+                <div v-for="(v, k) in errors" :key="k">
+                    <p v-for="error in v" :key="error" class="text-sm error">
+                        {{ error }}
+                    </p>
+                </div>
+            </v-content>
+
             <v-content v-if="!login">
                 <v-layout justify-center >
                     <v-flex xs12 sm6 align-self-center="">
@@ -49,6 +57,10 @@ export default {
 
            return this.$store.getters.snackbar 
         }, 
+
+        errors(){
+            return this.$store.getters.errors
+        }
     },
     data() {
         return {
@@ -70,12 +82,15 @@ export default {
     methods: {
         //función que permite logarte
         enter(){
-            var datos={
+            var datos = {
                 email:this.email,
                 password:this.password
             }
-            
+                
             this.$store.dispatch('login', {datos:datos})
+
+            console.log(this.errors)
+
         },
         //Functión que permite cerrar el snackbar de error 
         close(){

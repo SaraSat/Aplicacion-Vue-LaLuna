@@ -1,20 +1,29 @@
 <template>
     <v-container>
+
+        <v-content v-if="errors" >
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm error">
+                    {{ error }}
+                </p>
+            </div>
+        </v-content>
+
         <!--Tarjeta de registro de un nuevo monitor, Solo pueden acceder aquellos con la contraseña de Administrador-->
         <v-card dark>
             <form lazy-validation>
-            <v-card-title>Registrar un nuevo monitor</v-card-title>
-            <v-card-text >
-                <v-text-field label="Nombre" v-model="name" required :rules="nameRules"></v-text-field>
-                <v-text-field label="Correo" v-model="email" required :rules="emailRules"></v-text-field>
-                <v-text-field label="Contraseña"  :type="pass ? 'text' : 'password'" :append-icon="pass ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="pass = !pass" :rules="passwordRules" required v-model="password"></v-text-field>
-                <v-text-field label="Repite contraseña" v-model="c_password" :type="pass ? 'text' : 'password'" required :rules="samePass"></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn class="success" @click="insertar">Registrar</v-btn>
-                <v-btn class="error" :to="{name:'Login'}">Salir</v-btn>
-            </v-card-actions>
+                <v-card-title>Registrar un nuevo monitor</v-card-title>
+                <v-card-text >
+                    <v-text-field label="Nombre" v-model="name" required :rules="nameRules"></v-text-field>
+                    <v-text-field label="Correo" v-model="email" required :rules="emailRules"></v-text-field>
+                    <v-text-field label="Contraseña"  :type="pass ? 'text' : 'password'" :append-icon="pass ? 'mdi-eye' : 'mdi-eye-off'"
+                        @click:append="pass = !pass" :rules="passwordRules" required v-model="password"></v-text-field>
+                    <v-text-field label="Repite contraseña" v-model="c_password" :type="pass ? 'text' : 'password'" required :rules="samePass"></v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn class="success" @click="insertar()">Registrar</v-btn>
+                    <v-btn class="error" :to="{name:'Login'}">Salir</v-btn>
+                </v-card-actions>
             </form>
         </v-card>
 
@@ -71,6 +80,10 @@ export default {
         },
         errorAdmin() {
             return this.$store.getters.errorAdmin // true si la constraseña de admin se ha introducido erroneamente
+        }, 
+
+        errors() {
+            return this.$store.getters.errors
         }
     },
     data() {
@@ -112,27 +125,31 @@ export default {
         //Método que permite registrar un nuevo monitor
         insertar() {
 
-            if(this.name != '' && this.email != '' && this.password != '' && this.c_password != ''){
+            //if(this.name != '' && this.email != '' && this.password != '' && this.c_password != ''){
 
                 var datos = {
                     name:this.name,
                     email:this.email,
                     password:this.password,
                     c_password:this.c_password
-                }
+              }
 
                 this.$store.dispatch('registro', {datos:datos}) 
+                if(this.errors){
+                    console.log("hola")
+                }
                 
-                this.dialog = false
+                if(!this.errors){
+                    this.dialog = true
                 
-                this.name = '',
-                this.email = '',
-                this.password = '',
-                this.c_password = '' 
-                
-                this.dialog = true
+                    this.name = '',
+                    this.email = '',
+                    this.password = '',
+                    this.c_password = '' 
+                }
+              
 
-            }
+          //  }
            
         },
         //Función que permite comprobar la contraseña de administrador

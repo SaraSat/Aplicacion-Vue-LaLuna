@@ -7,7 +7,6 @@ const PREFIX = 'http://127.0.0.1:8000';
 
 const axios = require('axios').default;
 
-const errors = [];
 
 class L_client {
     constructor(server) {
@@ -42,16 +41,20 @@ class L_client {
                 baseURL: this.server,
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
+
             instance.post(this.server + '/api/login', {
                 email: datos.email,
                 password: datos.password,
+
             }).then((res) => {
                 this.auth_token = res.data.auth_token;
                 this.___setCookie('lauth', this.auth_token, 1);
                 resolutionFunc(res.data)
                 console.log("ok")
-            }).catch((errors) => {
-                console.log("este es el error: "+ errors.response.data)
+
+            }).catch((error) => {
+                rejectionFunc(error.response.data)
+ 
             });
         });
     }
@@ -81,15 +84,18 @@ class L_client {
     //Petición ajax para el registro de un monitor nuevo. 
     register(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
+
             axios.post(this.server + '/api/register', {
                 name: datos.name,
                 password: datos.password,
                 c_password: datos.c_password,
                 email: datos.email
+
             }).then((res) => {
                 resolutionFunc()
-            }).catch((res) => {
-                rejectionFunc(res.data)
+
+            }).catch((error) => {
+                rejectionFunc(error.response.data)
             });
         });
 
@@ -403,7 +409,9 @@ export default new Vuex.Store({
 
         aviso: Boolean, //permite crear aviso en caso de que se cancele la próxima actividad,
 
-        avisoCreado: Boolean //cuando el aviso de cancelación de la actividad próxima se ha creado 
+        avisoCreado: Boolean, //cuando el aviso de cancelación de la actividad próxima se ha creado 
+
+        errors: null //array de errores validación de formularios
     },
     mutations: {
         //Setters
@@ -445,6 +453,10 @@ export default new Vuex.Store({
 
         setAvisoCreado(state, avisoCreado){
             state.avisoCreado = avisoCreado
+        },
+
+        setErrors(state, errors){
+            state.errors = errors
         }
 
 
@@ -560,18 +572,26 @@ export default new Vuex.Store({
         //Pagina registro: 
         registro(context, { datos }) {
             client.register(datos).then((data) => {
+
                 console.log("Registro realizado")
-            }).catch((data) => {
+
+            }).catch((error) => {
                 context.commit('setSnackbar', true)
+                context.commit('setErrors', error)
             })
         },
 
         //login;
         login(context, { datos }) {
             client.login(datos).then((data) => {
+
                 context.commit('setLogin', true)
-            }).catch((data) => {
+                context.commit('setErrors', '')
+
+            }).catch((error) => {
                 context.commit('setSnackbar', true)
+                context.commit('setErrors', error)
+
             })
         },
 
@@ -667,6 +687,10 @@ export default new Vuex.Store({
 
         avisoCreado(state){
             return state.avisoCreado
+        },
+
+        errors(state){
+            return state.errors
         }
     },
     modules: {}
