@@ -19,7 +19,17 @@
           
       <!--Dialog para poder insertar una nueva tarjeta actividad -->
       <v-dialog v-model="dialog"  persistent max-width="600px">
+
         <v-card dark>
+          <v-card-tile>
+            <v-content v-if="errors" >
+              <div v-for="(v, k) in errors" :key="k">
+                  <p v-for="error in v" :key="error" class="text-sm error">
+                      {{ error }}
+                  </p>
+              </div>
+            </v-content>
+          </v-card-tile>
           <v-card-title>
               <v-text-field label="Introduce el nombre de la actividad" v-model="nombre" requiered :rules="requiredRules"></v-text-field>
           </v-card-title>
@@ -31,7 +41,7 @@
               <v-text-field label="introduce una breve descripción" v-model="desc" requiered :rules="requiredRules"></v-text-field>
           </v-card-text>
           <v-card-actions>
-              <v-btn class="success" @click="insertar" >Aceptar</v-btn>
+              <v-btn class="success" @click="insertar()" >Aceptar</v-btn>
               <v-btn class="error" @click="dialog=false" >Cancelar</v-btn>
           </v-card-actions>
         </v-card>
@@ -76,7 +86,7 @@
                 <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                 </v-card-title>
                 <v-card-subtitle>
-                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered :rules="requiredRules"  
+                <h6><v-text-field label="Fin de semana previsto: " v-model="fecha" requiered   
                   :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field></h6>
                 </v-card-subtitle>
                 <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
@@ -101,6 +111,9 @@ export default {
     },
     login() {
       return this.$store.getters.login //Si el monitor se ha logado se mostrarán los botones de edición, inserción y eliminación
+    }, 
+    errors(){
+      return this.$store.getters.errors
     }
   },
 
@@ -205,42 +218,54 @@ export default {
 
     //Función para insertar una nueva actividad
     insertar() {
-      this.fecha = this.crearFecha()
+      
 
       var datos = {
         nombre:this.nombre,
-        fecha:this.fecha,
+        fecha:this.crearFecha(),
         desc:this.desc
       }
-      this.$store.dispatch('insertActividad', {datos:datos})
-      this.dialog = false
 
-      this.nombre = '',
-      this.fecha = '',
-      this.desc = '',
-      this.id = ''
+      this.$store.dispatch('insertActividad', {datos:datos})
+
+      if(!this.errors || this.errors.length == 0){
+
+        this.dialog = false
+
+        this.nombre = ''
+        this.fecha = ''
+        this.desc = ''
+      }
 
     }, 
 
     //Función que permite mostrar o no el botón up, en función del tamaño de la pantalla
     btnMin(){
       if(window.innerWidth<808){
-        this.min=true
+
+        this.min = true
+
       }else{
-        this.min=false
+        this.min = false
       }
     },
 
     //Función que generará una fecha en el formato dd/mm/aaaa
     crearFecha(){
-      this.fecha=this.fecha.split('/')
-      if(this.fecha.length>1){
-        var f=new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
-      }else{
-        var f =this.fecha.toString()
-        f=new Date(f)
-      }
+      this.fecha = this.fecha.split('/')
 
+      console.log(this.fecha)
+      console.log(this.fecha.length)
+
+      if(this.fecha.length > 1){
+
+        var f=new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
+
+      }else{
+        var f = this.fecha.toString()
+        f = new Date(f)
+      }
+      console.log(f.toLocaleDateString())
       return f.toLocaleDateString()
     }
   }

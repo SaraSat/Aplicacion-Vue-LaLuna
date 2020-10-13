@@ -197,8 +197,8 @@ class L_client {
                 desc: datos.desc,
             }).then((res) => {
                 resolutionFunc(res.data)
-            }).catch((res) => {
-                rejectionFunc(res.data)
+            }).catch((error) => {
+                rejectionFunc(error.response.data)
             });
         });
 
@@ -232,8 +232,8 @@ class L_client {
                 desc: datos.desc
             }).then((res) => {
                 resolutionFunc(res.data)
-            }).catch((res) => {
-                rejectionFunc(res.data)
+            }).catch((error) => {
+                rejectionFunc(error.response.data)
             });
         });
 
@@ -509,9 +509,11 @@ export default new Vuex.Store({
             client.update_actividades(id, datos).then((data) => {
                 client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
+                    context.commit('setErrors', '')
                 })
-            }).catch((data) => {
-                console.log(data)
+            }).catch((error) => {
+                console.log(error)
+                context.commit('setErrors', error)
             })
         },
         deleteActividad(context, id) {
@@ -527,9 +529,11 @@ export default new Vuex.Store({
             client.insert_actividad(datos).then((data) => {
                 client.load_actividades().then((data) => {
                     context.commit('setActividades', data)
+                     context.commit('setErrors', '')
                 })
-            }).catch((data) => {
-                console.log(data)
+            }).catch((error) => {
+                console.log(error)
+                context.commit('setErrors', error)
             })
         },
 

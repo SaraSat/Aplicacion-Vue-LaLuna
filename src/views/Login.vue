@@ -89,6 +89,7 @@ export default {
                 
             this.$store.dispatch('login', {datos:datos})
 
+
             console.log(this.errors)
 
         },
