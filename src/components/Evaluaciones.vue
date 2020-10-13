@@ -100,7 +100,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
-                    <v-btn class="error" @click="dialog2=false;editDate=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelarEdicion()">Cancelar</v-btn>
                 </v-card-actions>
         </v-card>
         </v-dialog>
@@ -147,8 +147,10 @@ export default {
     methods: {
         //Función que permite la inserccion de una evaluacion nueva
         insertar() {
-            this.fecha=this.crearFecha()
-            var datos={
+            this.fecha = this.crearFecha()
+
+            var datos = {
+
                 nombre:this.nombre,
                 fecha:this.fecha,
                 desc:this.desc,
@@ -160,39 +162,43 @@ export default {
             }
             this.$store.dispatch('insertEvaluacion', {datos:datos})
             
-            this.nombre=''
-            this.fecha=''
-            this.desc=''
-            this.mejor=''
-            this.peor=''
-            this.equipo=''
-            this.recordar='',
+            this.nombre = ''
+            this.fecha = ''
+            this.desc = ''
+            this.mejor = ''
+            this.peor = ''
+            this.equipo = ''
+            this.recordar = '',
 
-            this.dialog=false
+            this.dialog = false
 
         }, 
 
         //Función que permite visualizar en el dialogo de edicion la evaluacion seleccionada
         preEdit(id){
             this.items.forEach(element => {
-                if(element.id==id){
-                    this.nombre=element.nombre
-                    this.fecha=element.fecha
-                    this.desc=element.desc
-                    this.mejor=element.mejor
-                    this.peor=element.peor
-                    this.equipo=element.equipo
-                    this.recordar=element.recordar
-                    this.id=element.id
+
+                if(element.id == id){
+
+                    this.nombre = element.nombre
+                    this.fecha = element.fecha
+                    this.desc = element.desc
+                    this.mejor = element.mejor
+                    this.peor = element.peor
+                    this.equipo = element.equipo
+                    this.recordar = element.recordar
+                    this.id = element.id
                 }
             });
+
             this.dialog2=true
         },
 
         //Función que permite la edicion de una evaluacion
         editar(id) {
-            this.fecha=this.crearFecha()
-            var datos={
+            this.fecha = this.crearFecha()
+
+            var datos = {
                 nombre:this.nombre,
                 fecha:this.fecha,
                 desc:this.desc,
@@ -201,40 +207,56 @@ export default {
                 equipo:this.equipo,
                 recordar:this.recordar,
             }
+
             this.$store.dispatch('updateEvaluaciones', {id:id, datos:datos})
 
-            this.nombre=''
-            this.fecha=''
-            this.desc=''
-            this.mejor=''
-            this.peor=''
-            this.equipo=''
-            this.recordar='',
+            this.nombre = ''
+            this.fecha = ''
+            this.desc = ''
+            this.mejor = ''
+            this.peor = ''
+            this.equipo = ''
+            this.recordar = '',
 
-            this.dialog2=false
-            this.editDate=false
+            this.dialog2 = false
+            this.editDate = false
 
         },
+
+        cancelarEdicion(){
+            this.dialog2 = false
+
+            this.editDate = false
+
+            this.nombre = ''
+            this.fecha = ''
+            this.desc = ''
+            this.mejor = ''
+            this.peor=''
+            this.equipo = ''
+            this.recordar = ''
+        },
+
         //Función que permite eliminar una evaluacion
         eliminar(id){
             
-            this.dialog3=true
-            this.id=id
+            this.dialog3 = true
+            this.id = id
 
         },
         confirmar(){
             this.$store.dispatch('deleteEvaluacion' ,this.id)
-            this.dialog3=false
+            this.dialog3 = false
         },
 
         //Función que generará una fecha en el formato dd/mm/aaaa
         crearFecha(){
-            this.fecha=this.fecha.split('/')
+            this.fecha = this.fecha.split('/')
             if(this.fecha.length>1){
-                var f=new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
+                var f = new Date(this.fecha[2], this.fecha[1]-1,this.fecha[0])
             }else{
-                var f =this.fecha.toString()
-                f=new Date(f)
+                var f = this.fecha.toString()
+                f = new Date(f)
             }
             
             return f.toLocaleDateString()

@@ -215,6 +215,11 @@ export default {
       this.$store.dispatch('insertActividad', {datos:datos})
       this.dialog = false
 
+      this.nombre = '',
+      this.fecha = '',
+      this.desc = '',
+      this.id = ''
+
     }, 
 
     //Función que permite mostrar o no el botón up, en función del tamaño de la pantalla

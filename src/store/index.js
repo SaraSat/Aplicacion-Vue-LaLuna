@@ -7,6 +7,8 @@ const PREFIX = 'http://127.0.0.1:8000';
 
 const axios = require('axios').default;
 
+const errors = [];
+
 class L_client {
     constructor(server) {
         this.server = server;
@@ -48,8 +50,8 @@ class L_client {
                 this.___setCookie('lauth', this.auth_token, 1);
                 resolutionFunc(res.data)
                 console.log("ok")
-            }).catch((res) => {
-                rejectionFunc(res.data)
+            }).catch((errors) => {
+                console.log("este es el error: "+ errors.response.data)
             });
         });
     }
@@ -333,6 +335,46 @@ class L_client {
 
     }
 
+    insert_lunero(datos) {
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.post(this.server + '/api/luneros/', {
+                nombre: datos.nombre,
+                apellidos: datos.apellidos,
+                tutores: datos.tutores,
+                telf: datos.telf,
+                telf: datos.telf,
+                patologias: datos.patologias,
+                coment: datos.coment
+            }).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
+    delete_lunero(id) {
+        return new Promise((resolutionFunc, rejectionFunc) => {
+            const instance = axios.create({
+                baseURL: this.server,
+                //timeout: 1000,
+                headers: { 'Authorization': 'Bearer ' + this.auth_token }
+            });
+            instance.delete(this.server + '/api/luneros/' + id, {}).then((res) => {
+                resolutionFunc(res.data)
+            }).catch((res) => {
+                rejectionFunc(res.data)
+            });
+        });
+
+    }
+
 
 
 
@@ -560,7 +602,28 @@ export default new Vuex.Store({
             }).catch((data) => {
                 console.log(data)
             })
-        }
+        },
+
+        insertLunero(context, {datos}){
+            client.insert_lunero(datos).then((data) => {
+                client.load_luneros().then((data) => {
+                    context.commit('setLuneros', data)
+                })
+            }).catch((data) => {
+                console.log(data)
+            })
+        },
+
+        deleteLunero(context, id) {
+            client.delete_lunero(id).then((data) => {
+                client.load_luneros().then((data) => {
+                    context.commit('setLuneros', data)
+                })
+            }).catch((data) => {
+                console.log(data)
+            })
+        },
+
 
 
 

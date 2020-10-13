@@ -87,19 +87,23 @@ export default {
                 v => !!v || ' El nombre es obligatorio',
                 v => (v && v.length >= 3) || 'El nombre debe tener al menos 4 caracteres',
             ],
+
             emailRules: [
                 v => !!v || ' el e-mail es obligatorio',
                 v => /.+@.+\..+/.test(v) || 'E-mail no válido',
             ],
+
             passwordRules:[
                 v => !!v || 'La constraseña es obligatoria',
                 v => (v && v.length >= 8) || 'La contraseña debe tener al menos 8 caracteres'
             ],
+
             samePass:[
                 v => !!v || 'La constraseña es obligatoria',
                 v=> v===this.password || 'Las constraseñas no coinciden'
                 
             ],
+
             dialog:false,
             pass:false,
         }
@@ -108,23 +112,25 @@ export default {
         //Método que permite registrar un nuevo monitor
         insertar() {
 
-            if(this.name!='' && this.email!='' && this.password!='' && this.c_password!=''){
-                var datos={
+            if(this.name != '' && this.email != '' && this.password != '' && this.c_password != ''){
+
+                var datos = {
                     name:this.name,
                     email:this.email,
                     password:this.password,
                     c_password:this.c_password
                 }
+
                 this.$store.dispatch('registro', {datos:datos}) 
                 
-                this.dialog=false
+                this.dialog = false
                 
-                this.name='',
-                this.email='',
-                this.password='',
-                this.c_password='' 
+                this.name = '',
+                this.email = '',
+                this.password = '',
+                this.c_password = '' 
                 
-                this.dialog=true
+                this.dialog = true
 
             }
            
