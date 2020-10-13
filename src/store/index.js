@@ -143,7 +143,8 @@ class L_client {
                 precio: datos.precio,
                 horaF: datos.horaF,
                 lugarF: datos.lugarF, 
-                aviso: datos.aviso
+                aviso: datos.aviso,
+                motivo:datos.motivo
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
@@ -412,6 +413,14 @@ export default new Vuex.Store({
         loadInicio(context) {
             client.load_inicio().then((data) => {
                 context.commit('setProximaActividad', data)
+                console.log(data[0].aviso)
+                
+                if(data[0].aviso == 0){
+                    context.commit('setAviso', false)
+                }else{
+                    context.commit('setAviso', true)
+                }
+                
 
             }).catch((data) => {
                 console.log(data)
@@ -421,6 +430,12 @@ export default new Vuex.Store({
             client.update_inicio(id, datos).then((data) => {
                 client.load_inicio().then((data) => {
                     context.commit('setProximaActividad', data)
+
+                    if(datos.aviso == 0){
+                        context.commit('setAviso', false)
+                    }else{
+                        context.commit('setAviso', true)
+                    }
                 })
 
             }).catch((data) => {

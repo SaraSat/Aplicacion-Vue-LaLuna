@@ -10,18 +10,19 @@
       <v-content>
       <!--Cards Información próxima actividad
       Se genera un for para recorrer el objeto que contiene los datos de la actividad y así poder mostrarlos -->
-        <v-layout wrap v-if="!aviso">
+        <v-layout wrap  v-for="(item,index) in items " :key="index" >
+          <v-content v-if="!aviso">
           <h1>Próxima actividad</h1>
           <!--Tarjeta con información del comienzo de la actividad
           Contiene la condición ed, de tal manera que si se presiona el botón editar, los campos serán inputs-->
-          <v-flex xs12>                
+          <v-flex xs12 >                
             <v-row xs="6" sm="3">
               <v-col><v-btn @click="ed=true"  v-if="!ed && login" class="info">Editar</v-btn></v-col>
-              <v-col><v-btn class="error" v-if="login" @click="admin=true">Crear Aviso</v-btn></v-col>
+              <v-col><v-btn class="error" v-if="!ed &&login" @click="$store.commit('setAviso',true)">Crear Aviso</v-btn></v-col>
             </v-row>
 
 
-              <v-card dark height="90%" class="jumbotron" v-for="(item,index) in items " :key="index" >
+              <v-card dark height="90%" class="jumbotron">
 
                                   
                 <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>
@@ -113,49 +114,27 @@
 
               <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
             </v-flex>
+          </v-content>
+            <!--Fin Card informacion-->
+
+            <!--Tarjeta de aviso en caso de cancelación de actividad-->
+            <v-content  v-if="item.aviso">
+              <v-card v-if="avisoCreado" dark="">
+                <v-card-title><h1>Aviso importante!</h1></v-card-title>
+                <v-card-text >{{item.motivo}}</v-card-text>
+                <v-card-actions>
+                  <v-btn class="error" v-if="login" @click="editarAviso()">Editar Aviso</v-btn>
+                  <v-btn class="info" v-if="login" @click="cancelarAviso()">Volver a Crear Actividad</v-btn>
+                </v-card-actions>
+              </v-card>
+              <v-card v-if="!avisoCreado" dark>
+                <v-card-text>
+                  <v-textarea v-model="item.motivo" label="Expliación del aviso"></v-textarea>
+                  <v-btn @click="crearAviso()" class="info">Aceptar</v-btn>
+                </v-card-text>
+              </v-card>
+            </v-content>
         </v-layout>
-        <!--Fin Card informacion-->
-
-        <!--Tarjeta de aviso en caso de cancelación de actividad-->
-        <v-content v-model="aviso" v-if="aviso">
-          <v-card v-if="avisoCreado" dark="">
-            <v-card-title>Aviso importante!</v-card-title>
-            <v-card-text >{{item.motivo}}</v-card-text>
-            <v-card-actions>
-              <v-btn class="error" v-if="login" @click="editarAviso">Editar Aviso</v-btn>
-              <v-btn class="info" v-if="login" @click="cancelarAviso">Volver a Crear Actividad</v-btn>
-            </v-card-actions>
-          </v-card>
-
-          <v-card v-if="!avisoCreado" dark>
-            <v-card-text>
-              <v-textarea v-model="item.motivo" label="Expliación del aviso"></v-textarea>
-              <v-btn @click="crearAviso()">Aceptar</v-btn>
-            </v-card-text>
-          </v-card>
-     
-        </v-content>
-
-
-    <!--Dialog que se muestra al pulsar "Crear Aviso", hay que introducir la contraseña del administrador-->
-      <v-dialog v-model="admin" width="350">
-        <v-card>
-            <v-card-actions>Acceso a Administradores</v-card-actions>
-            <v-card-text>
-                <v-text-field  v-model="passAdmin" label="Introduzca la Constraseña" type="password" :rules="passwordRules"></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn @click="isAdmin" class="info">Aceptar</v-btn>
-                <v-btn class="error" :to="{name:'Home'}">Cancelar</v-btn>
-            </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-    <!--Snackbar que aparece si se ha introducido mal la contraseña de administrador-->
-      <v-snackbar v-model="errorAdmin"> 
-        Contraseña no válida
-        <v-btn color="red" text @click="close">Close</v-btn>
-      </v-snackbar>
     </v-content>
     </v-container>
 </template>
@@ -246,7 +225,7 @@ export default {
         element.fecha=fecha.getDate()+" de "+ meses[fecha.getMonth()]
         element.dia=dias[fecha.getDay()-1]
 
-        element.aviso=''
+        element.aviso = false
         
         this.$store.dispatch('updateInicio', {datos:element, id:element.id });
 
@@ -257,8 +236,6 @@ export default {
 
     //Función que permite comprobar la contraseña de administrador
     isAdmin(){
-      this.$store.dispatch('administradores', this.passAdmin)
-      this.admin=false,
       this.$store.commit('setAviso', true)
     },
 
@@ -278,6 +255,7 @@ export default {
       var datos={}
 
       this.items.forEach(element => {
+        element.aviso = true
         this.$store.dispatch('updateInicio', {datos:element, id:element.id });
       })
 
@@ -285,8 +263,15 @@ export default {
     },
 
     cancelarAviso() {
-      this.$store.commit('setAviso', false)
-      console.log(this.$store.getters.aviso)
+      
+      this.items.forEach(element=> {
+        
+        element.aviso = false
+        this.$store.dispatch('updateInicio', {datos:element, id:element.id });
+        console.log(element.aviso)
+        
+        })
+      
     },
 
     editarAviso() {
