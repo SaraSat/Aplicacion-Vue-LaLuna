@@ -8,22 +8,32 @@
     
     <v-container>
       <v-content>
+
       <!--Cards Información próxima actividad
       Se genera un for para recorrer el objeto que contiene los datos de la actividad y así poder mostrarlos -->
+
         <v-layout wrap  v-for="(item,index) in items " :key="index" >
-          <v-content v-if="!aviso">
+          <v-content v-if="item.aviso == 0">
           <h1>Próxima actividad</h1>
+
           <!--Tarjeta con información del comienzo de la actividad
           Contiene la condición ed, de tal manera que si se presiona el botón editar, los campos serán inputs-->
           <v-flex xs12 >                
             <v-row xs="6" sm="3">
               <v-col><v-btn @click="ed=true"  v-if="!ed && login" class="info">Editar</v-btn></v-col>
-              <v-col><v-btn class="error" v-if="!ed &&login" @click="$store.commit('setAviso',true)">Crear Aviso</v-btn></v-col>
+              <v-col><v-btn class="error" v-if="!ed &&login" @click="crearAviso()">Crear Aviso</v-btn></v-col>
             </v-row>
 
 
               <v-card dark height="90%" class="jumbotron">
 
+                <v-card-title>
+                  <v-content v-if="errors" >
+                    <div v-for="(v, k) in errors" :key="k">
+                        <p v-for="error in v" :key="error" class="text-sm error">{{ error }}</p>
+                    </div>
+                  </v-content>
+                </v-card-title>
                                   
                 <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>
 
@@ -118,7 +128,7 @@
             <!--Fin Card informacion-->
 
             <!--Tarjeta de aviso en caso de cancelación de actividad-->
-            <v-content  v-if="item.aviso">
+            <v-content  v-if="item.aviso == 1" >
               <v-card v-if="avisoCreado" dark="">
                 <v-card-title><h1>Aviso importante!</h1></v-card-title>
                 <v-card-text >{{item.motivo}}</v-card-text>
@@ -165,6 +175,10 @@ export default {
 
     avisoCreado(){
       return this.$store.getters.avisoCreado
+    },
+
+    errors() {
+      return this.$store.getters.errors
     }
   },
 
@@ -192,6 +206,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('loadInicio')
+    this.items.forEach(e=> console.log(e.aviso))
   },
 
   methods: {
@@ -229,30 +244,21 @@ export default {
         element.dia = dias[fecha.getDay()-1]
 
         element.aviso = false
-        
-        this.$store.dispatch('updateInicio', {datos:element, id:element.id });
+
+        datos = element
 
       });
+
+      this.$store.dispatch('updateInicio', {datos:datos, id:datos.id });
+
+      if((datos.lugar != " " && datos.desc != " " && datos.fecha != " " && datos.hora != " " && datos.lugarF != " " && 
+          datos.horaF != " " && datos.precio != " ") && 
+          (datos.lugar != "" && datos.desc != "" && datos.fecha != "" && datos.hora != "" && datos.lugarF != "" && 
+          datos.horaF != "" && datos.precio != "") && typeof(datos.precio) != 'string' )
+          {
       
-      this.ed = false
-    },
-
-    //Función que permite comprobar la contraseña de administrador
-    isAdmin(){
-      this.$store.commit('setAviso', true)
-    },
-
-    //Functión que permite cerrar el snackbar de error 
-    close(){
-      if(this.$store.getters.snackbar){
-
-          this.$store.commit('setSnackbar',false)
-      }
-      else if(this.$store.getters.errorAdmin){
-
-          this.$store.commit('setErrorAdmin',false)
-      }
-            
+            this.ed = false
+          }
     },
 
     crearAviso() {

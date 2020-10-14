@@ -21,7 +21,7 @@
       <v-dialog v-model="dialog"  persistent max-width="600px">
 
         <v-card dark>
-          <v-card-tile>
+          <v-card-title>
             <v-content v-if="errors" >
               <div v-for="(v, k) in errors" :key="k">
                   <p v-for="error in v" :key="error" class="text-sm error">
@@ -29,20 +29,20 @@
                   </p>
               </div>
             </v-content>
-          </v-card-tile>
+          </v-card-title>
           <v-card-title>
-              <v-text-field label="Introduce el nombre de la actividad" v-model="nombre" requiered :rules="requiredRules"></v-text-field>
+              <v-text-field label="Introduce el nombre de la actividad" v-model="nombre"></v-text-field>
           </v-card-title>
           <v-card-subtitle>
               Fin de Semana previsto:
-              <v-text-field label="introduce el dia" v-model="fecha" requiered :rules="requiredRules" type="date"></v-text-field>
+              <v-text-field label="introduce el dia" v-model="fecha"  type="date"></v-text-field>
           </v-card-subtitle>
           <v-card-text>
-              <v-text-field label="introduce una breve descripción" v-model="desc" requiered :rules="requiredRules"></v-text-field>
+              <v-text-field label="introduce una breve descripción" v-model="desc"></v-text-field>
           </v-card-text>
           <v-card-actions>
-              <v-btn class="success" @click="insertar()" >Aceptar</v-btn>
-              <v-btn class="error" @click="dialog=false" >Cancelar</v-btn>
+              <v-btn class="success" @click="insertar()">Aceptar</v-btn>
+              <v-btn class="error" @click="cancelar()" >Cancelar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -82,6 +82,15 @@
         <!--Dialog2: Dialog para poder editar cada tarjeta por separado-->
             <v-dialog v-model="dialog2" persistent max-width="600px">
               <v-card dark xs12>
+
+                <v-card-title>
+                  <v-content v-if="errors" >
+                    <div v-for="(v, k) in errors" :key="k">
+                        <p v-for="error in v" :key="error" class="text-sm error">{{ error }}</p>
+                    </div>
+                  </v-content>
+                </v-card-title>
+
                 <v-card-title>
                 <h4><v-text-field v-model="nombre" requiered :rules="requiredRules"></v-text-field></h4>
                 </v-card-title>
@@ -92,7 +101,7 @@
                 <v-card-text><v-text-field v-model="desc" requiered :rules="requiredRules"></v-text-field></v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="edit(id)"  >Editar</v-btn>
-                    <v-btn class="error" @click="cancelarEdicion()" >Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelar()" >Cancelar</v-btn>
                 </v-card-actions>
           </v-card>
           </v-dialog>
@@ -138,10 +147,6 @@ export default {
       desc:' ',
       id:' ',
 
-      requiredRules:[
-        v => !!v || ' Campo obligatorio',
-      ],
-
       min:false //-->method btnMin para mostrar el botón up
     };
   },
@@ -185,24 +190,36 @@ export default {
 
       this.$store.dispatch('updateActividades', {id:id, datos:datos})
 
-      this.dialog2 = false
-      this.editDate = false
+      console.log(datos)
 
-      this.nombre = '',
-      this.fecha = '',
-      this.desc = '',
-      this.id = ''
+      
+        if((datos.nombre != " " && datos.desc != " " && datos.fecha != " ") && 
+           (datos.nombre != '' && datos.desc != '' && datos.fecha != '')){
+             
+            this.dialog2 = false
+            this.editDate = false
+
+            this.nombre = ''
+            this.fecha = ''
+            this.desc = ''
+            this.id = ''
+
+      }
     },
 
-    cancelarEdicion(){
-      this.dialog2 = false
+    cancelar(){
+      this.dialog = false
 
+      this.dialog2 = false
+      
       this.editDate = false
 
       this.nombre = '',
       this.fecha = '',
       this.desc = '',
       this.id = ''
+
+      this.$store.commit('setErrors', '')
     },
 
     //Eliminación de la actividad pulsada
@@ -219,7 +236,6 @@ export default {
     //Función para insertar una nueva actividad
     insertar() {
       
-
       var datos = {
         nombre:this.nombre,
         fecha:this.crearFecha(),
@@ -228,14 +244,17 @@ export default {
 
       this.$store.dispatch('insertActividad', {datos:datos})
 
-      if(!this.errors || this.errors.length == 0){
+      console.log(this.errors)
 
-        this.dialog = false
+        if((datos.nombre != " " && datos.desc != " " && datos.fecha != " ") && 
+           (datos.nombre != '' && datos.desc != '' && datos.fecha != '')){
+          
+          this.dialog = false
 
-        this.nombre = ''
-        this.fecha = ''
-        this.desc = ''
-      }
+          this.nombre = ''
+          this.fecha = ''
+          this.desc = ''
+        }
 
     }, 
 
@@ -252,10 +271,8 @@ export default {
 
     //Función que generará una fecha en el formato dd/mm/aaaa
     crearFecha(){
+  
       this.fecha = this.fecha.split('/')
-
-      console.log(this.fecha)
-      console.log(this.fecha.length)
 
       if(this.fecha.length > 1){
 
@@ -265,8 +282,17 @@ export default {
         var f = this.fecha.toString()
         f = new Date(f)
       }
-      console.log(f.toLocaleDateString())
-      return f.toLocaleDateString()
+
+      if(f == 'Invalid Date'){
+        return " "
+        
+      }else{
+        
+        return f.toLocaleDateString()
+      }
+
+      
+      
     }
   }
 

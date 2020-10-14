@@ -53,7 +53,7 @@ class L_client {
                 console.log("ok")
 
             }).catch((error) => {
-                rejectionFunc(error.response.data)
+                rejectionFunc(error.response.data.error)
  
             });
         });
@@ -95,7 +95,7 @@ class L_client {
                 resolutionFunc()
 
             }).catch((error) => {
-                rejectionFunc(error.response.data)
+                rejectionFunc(error.response.data.error)
             });
         });
 
@@ -155,8 +155,8 @@ class L_client {
                 motivo:datos.motivo
             }).then((res) => {
                 resolutionFunc(res.data)
-            }).catch((res) => {
-                rejectionFunc(res.data)
+            }).catch((error) => {
+                rejectionFunc(error.response.data.error)            
             });
         });
 
@@ -198,7 +198,7 @@ class L_client {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((error) => {
-                rejectionFunc(error.response.data)
+                rejectionFunc(error.response.data.error)
             });
         });
 
@@ -233,7 +233,7 @@ class L_client {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((error) => {
-                rejectionFunc(error.response.data)
+                rejectionFunc(error.response.data.error)
             });
         });
 
@@ -279,7 +279,7 @@ class L_client {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
-                rejectionFunc(res.data)
+                rejectionFunc(res.response.data.error)
             });
         });
 
@@ -318,7 +318,7 @@ class L_client {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
-                rejectionFunc(res.data)
+                rejectionFunc(res.response.data.error)
             });
         });
 
@@ -359,7 +359,7 @@ class L_client {
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((res) => {
-                rejectionFunc(res.data)
+                rejectionFunc(res.response.data.error)
             });
         });
 
@@ -407,8 +407,6 @@ export default new Vuex.Store({
 
         errorAdmin: false, //Permite mostrar mensaje de error si se ha introducido mal la pass de admin
 
-        aviso: Boolean, //permite crear aviso en caso de que se cancele la próxima actividad,
-
         avisoCreado: Boolean, //cuando el aviso de cancelación de la actividad próxima se ha creado 
 
         errors: null //array de errores validación de formularios
@@ -447,10 +445,6 @@ export default new Vuex.Store({
             state.errorAdmin = errorAdmin
         }, 
 
-        setAviso(state, aviso){
-            state.aviso = aviso
-        },
-
         setAvisoCreado(state, avisoCreado){
             state.avisoCreado = avisoCreado
         },
@@ -466,72 +460,81 @@ export default new Vuex.Store({
         //Página inicio 
         loadInicio(context) {
             client.load_inicio().then((data) => {
+
                 context.commit('setProximaActividad', data)
                 console.log(data[0].aviso)
                 
-                if(data[0].aviso == 0){
-                    context.commit('setAviso', false)
-                }else{
-                    context.commit('setAviso', true)
-                }
-                
-
             }).catch((data) => {
                 console.log(data)
             })
         },
+
         updateInicio(context, { datos, id }) {
+
             client.update_inicio(id, datos).then((data) => {
+
                 client.load_inicio().then((data) => {
+
                     context.commit('setProximaActividad', data)
-
-                    if(datos.aviso == 0){
-                        context.commit('setAviso', false)
-                    }else{
-                        context.commit('setAviso', true)
-                    }
-                })
-
-            }).catch((data) => {
-                console.log(data)
-            })
-        },
-
-        //Página actividades
-        loadActividades(context) {
-            client.load_actividades().then((data) => {
-                context.commit('setActividades', data)
-            }).catch((data) => {
-                console.log(data)
-            })
-        },
-        updateActividades(context, { id, datos }) {
-            client.update_actividades(id, datos).then((data) => {
-                client.load_actividades().then((data) => {
-                    context.commit('setActividades', data)
                     context.commit('setErrors', '')
                 })
+
             }).catch((error) => {
                 console.log(error)
                 context.commit('setErrors', error)
             })
         },
-        deleteActividad(context, id) {
-            client.delete_actividad(id).then((data) => {
+
+        //Página actividades
+        loadActividades(context) {
+
+            client.load_actividades().then((data) => {
+
+                context.commit('setActividades', data)
+
+            }).catch((data) => {
+                console.log(data)
+            })
+        },
+        updateActividades(context, { id, datos }) {
+
+            client.update_actividades(id, datos).then((data) => {
+
                 client.load_actividades().then((data) => {
+
+                    context.commit('setActividades', data)
+                    context.commit('setErrors', '')
+                })
+            }).catch((error) => {
+
+                console.log(error)
+                context.commit('setErrors', error)
+            })
+        },
+        deleteActividad(context, id) {
+
+            client.delete_actividad(id).then((data) => {
+
+                client.load_actividades().then((data) => {
+
                     context.commit('setActividades', data)
                 })
             }).catch((data) => {
                 console.log(data)
             })
         },
+
         insertActividad(context, { datos }) {
+
             client.insert_actividad(datos).then((data) => {
+
                 client.load_actividades().then((data) => {
+
                     context.commit('setActividades', data)
-                     context.commit('setErrors', '')
+                    context.commit('setErrors', '')
                 })
             }).catch((error) => {
+
                 console.log(error)
                 context.commit('setErrors', error)
             })
@@ -539,47 +542,70 @@ export default new Vuex.Store({
 
         //Página evaluaciones
         loadEvaluaciones(context) {
+
             client.load_evaluaciones().then((data) => {
+
                 context.commit('setEvaluaciones', data)
+
             }).catch((data) => {
                 console.log(data)
             })
         },
+        
         updateEvaluaciones(context, { id, datos }) {
+
             client.update_evaluaciones(id, datos).then((data) => {
+
                 client.load_evaluaciones().then((data) => {
+
                     context.commit('setEvaluaciones', data)
+                    context.commit('setErrors', '')
                 })
-            }).catch((data) => {
-                console.log(data)
+            }).catch((error) => {
+
+                console.log(error)
+                context.commit('setErrors', error)
             })
         },
+
         deleteEvaluacion(context, id) {
+
             client.delete_evaluacion(id).then((data) => {
+
                 client.load_evaluaciones().then((data) => {
+
                     context.commit('setEvaluaciones', data)
                 })
             }).catch((data) => {
                 console.log(data)
             })
         },
+
         insertEvaluacion(context, { datos }) {
+
             client.insert_evaluacion(datos).then((data) => {
+
                 client.load_evaluaciones().then((data) => {
+
                     context.commit('setEvaluaciones', data)
+                    context.commit('setErrors', '')
                 })
-            }).catch((data) => {
-                console.log(data)
+            }).catch((error) => {
+
+                console.log(error)
+                context.commit('setErrors', error)
             })
         },
 
         //Pagina registro: 
         registro(context, { datos }) {
+
             client.register(datos).then((data) => {
 
                 console.log("Registro realizado")
 
             }).catch((error) => {
+
                 context.commit('setSnackbar', true)
                 context.commit('setErrors', error)
             })
@@ -587,6 +613,7 @@ export default new Vuex.Store({
 
         //login;
         login(context, { datos }) {
+
             client.login(datos).then((data) => {
 
                 context.commit('setLogin', true)
@@ -601,6 +628,7 @@ export default new Vuex.Store({
 
         // cierre de sesión
         cerrarSesion(context) {
+
             client.cerrar_sesion().then((data) => {
                 context.commit('setLogin', false)
 
@@ -611,9 +639,13 @@ export default new Vuex.Store({
 
         //comprobacion pass de admin (pag de registro)
         administradores(context, pass) {
+
             client.admin(pass).then((data) => {
+
                 context.commit('setAdminPass', false)
+
             }).catch((data) => {
+
                 context.commit('setErrorAdmin', true)
                 console.log(data)
             })
@@ -621,26 +653,38 @@ export default new Vuex.Store({
 
         //pagina luneros
         loadLuneros(context) {
+
             client.load_luneros().then((data) => {
+
                 context.commit('setLuneros', data)
             }).catch((data) => {
+
                 console.log(data)
             })
         },
 
         insertLunero(context, {datos}){
+
             client.insert_lunero(datos).then((data) => {
+
                 client.load_luneros().then((data) => {
+
                     context.commit('setLuneros', data)
+                    context.commit('setErrors', '')
                 })
-            }).catch((data) => {
-                console.log(data)
+            }).catch((error) => {
+
+                console.log(error)
+                context.commit('setErrors', error)
             })
         },
 
         deleteLunero(context, id) {
+
             client.delete_lunero(id).then((data) => {
+
                 client.load_luneros().then((data) => {
+
                     context.commit('setLuneros', data)
                 })
             }).catch((data) => {
@@ -648,10 +692,8 @@ export default new Vuex.Store({
             })
         },
 
-
-
-
     },
+
     getters: {
         proximaActividad(state) {
             return state.proximaActividad
