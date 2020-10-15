@@ -11,6 +11,15 @@
         <!--Dialog2: Dialogo para insertar un nuevo lunero -->
         <v-dialog v-model="dialog2">
             <v-card dark>
+
+                <v-card-title>
+                  <v-content v-if="errors" >
+                    <div v-for="(v, k) in errors" :key="k">
+                        <p v-for="error in v" :key="error" class="text-sm error">{{ error }}</p>
+                    </div>
+                  </v-content>
+                </v-card-title>
+
                 <v-card-title>Insertar un nuevo Lunero</v-card-title>
                 <v-card-text>
                     <v-row>
@@ -29,7 +38,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="crearLunero()">Aceptar</v-btn>
-                    <v-btn class="error" @click="dialog2=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelar()">Cancelar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -55,9 +64,9 @@
 
         <!--Tabla de de datos con filtrado por búesqueda y ordenación por nombre o apellido.
         Los checkbox sin funcionalidad interna, únicamente se han puesto para marcar al pasar lista-->
-        <v-data-table :headers="headers" :items="items"  hide-default-footer :search="filter" show-select
-                            v-model="selected" dark :sort-by="['name']" 
-                             dense>
+        <v-data-table :headers="headers" :items="items"  :search="filter" show-select
+                        v-model="selected" dark :sort-by="['name']" 
+                        dense :items-per-page="10" >
 
             <!--Plantilla del botón para abrir dialog con más información -->
             <template v-slot:item.actions="{ item }">
@@ -70,7 +79,6 @@
                     <v-icon small @click="eliminarLunero(item.id)">mdi-delete</v-icon>
                 </v-btn>
             </template>
-
         </v-data-table>
 
         <!--Dialog con más información del lunero-->
@@ -96,7 +104,7 @@
                 <v-card-title>Seguro que quieres eliminar?</v-card-title>
                 <v-card-actions>
                 <v-btn class="error" @click="confirmarEliminar()" >Eliminar</v-btn>
-                <v-btn @click="dialog3=false" class="error">Cancelar</v-btn>
+                <v-btn @click="dialog3=false" class="success">Cancelar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog> 
@@ -120,6 +128,10 @@ export default {
 
         login() {
             return this.$store.getters.login
+        },
+
+        errors() {
+            return this.$store.getters.errors
         }
     },
     
@@ -137,6 +149,9 @@ export default {
                 { text: 'Más Información', value: 'actions', sortable:false }, 
                 { text: "Eliminar", value: 'delete', sortable:false },               
                 ],
+
+            page: 1,
+            pageCount: 0,
 
             dialog:false,
             dialog2:false,
@@ -165,6 +180,13 @@ export default {
         },
 
         crearLunero(){
+
+            this.telf = parseInt(this.telf)
+
+            if(this.telf2 != "" && this.telf2 != " "){
+                this.telf2 = parseInt(this.telf2)
+            }
+
             var datos = {
 
                 nombre:this.nombre,
@@ -178,16 +200,34 @@ export default {
 
             this.$store.dispatch('insertLunero', {datos:datos})
 
+
+            if((datos.nombre != " " && datos.telf != " ") && 
+                (datos.nombre != '' && datos.telf != '') && (!isNaN(datos.telf) && !isNaN(datos.telf2))){
+
+                        this.dialog2 = false
+
+                        this.nombre = ''
+                        this.apellidos = ''
+                        this.telf = ''
+                        this.telf2 = ''
+                        this.tutores = ''
+                        this.patologias = ''
+                        this.coment = ''
+
+            }
+
+        },
+
+        cancelar(){
+
             this.dialog2 = false
 
-            this.nombre = ''
-            this.apellidos = ''
-            this.telf = ''
-            this.telf2 = ''
-            this.tutores = ''
-            this.patologias = ''
-            this.coment = ''
+            this.nombre = '',
+            this.fecha = '',
+            this.desc = '',
+            this.id = ''
 
+            this.$store.commit('setErrors', '')
         },
 
         eliminarLunero(id){

@@ -59,7 +59,7 @@ class L_client {
         });
     }
 
-    //Petición ajax para el cierre de sesión 
+    //Petición ajax para el CIERRE SESIÓN
     cerrar_sesion() {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
@@ -81,7 +81,7 @@ class L_client {
 
     }
 
-    //Petición ajax para el registro de un monitor nuevo. 
+    //Petición ajax para el REGISTRO de un monitor nuevo. 
     register(datos) {
         return new Promise((resolutionFunc, rejectionFunc) => {
 
@@ -101,7 +101,7 @@ class L_client {
 
     }
 
-    //Petición ajax para el envio de la password de administradores
+    //Petición ajax para el envio de la password de ADMINISTRADORES
     admin(pass) {
         return new Promise((resolutionFunc, rejectionFunc) => {
             axios.post(this.server + '/api/admins', {
@@ -115,7 +115,7 @@ class L_client {
 
     }
 
-    //Peticiones ajax página de inicio: 
+    //Peticiones ajax página de INICIO: 
 
     load_inicio() {
         return new Promise((resolutionFunc, rejectionFunc) => {
@@ -162,7 +162,7 @@ class L_client {
 
     }
 
-    //Peticiones ajax página actividades: 
+    //Peticiones ajax página ACTIVIDADES: 
 
     load_actividades(id_act) {
         return new Promise((resolutionFunc, rejectionFunc) => {
@@ -239,7 +239,7 @@ class L_client {
 
     }
 
-    //Peticiones ajax página evaluaciones:
+    //Peticiones ajax página EVALUACIONES:
 
     load_evaluaciones(id_eva) {
         return new Promise((resolutionFunc, rejectionFunc) => {
@@ -324,7 +324,7 @@ class L_client {
 
     }
 
-    // peticiones ajax Luneros 
+    // peticiones ajax LUNERO 
     load_luneros() {
         return new Promise((resolutionFunc, rejectionFunc) => {
             const instance = axios.create({
@@ -391,6 +391,7 @@ const client = new L_client(PREFIX);
 //Store:
 export default new Vuex.Store({
     state: {
+
         proximaActividad: [], //item de pag inicio
 
         actividades: [], //items pag actividades 
@@ -411,8 +412,10 @@ export default new Vuex.Store({
 
         errors: null //array de errores validación de formularios
     },
+
     mutations: {
         //Setters
+
         setProximaActividad: function(state, proximaActividad) {
             state.proximaActividad = proximaActividad
         },
@@ -457,7 +460,7 @@ export default new Vuex.Store({
     },
     actions: {
 
-        //Página inicio 
+        //Página INICIO 
         loadInicio(context) {
             client.load_inicio().then((data) => {
 
@@ -485,7 +488,7 @@ export default new Vuex.Store({
             })
         },
 
-        //Página actividades
+        //Página ACTIVIDADES
         loadActividades(context) {
 
             client.load_actividades().then((data) => {
@@ -540,7 +543,7 @@ export default new Vuex.Store({
             })
         },
 
-        //Página evaluaciones
+        //Página EVALUACIONES
         loadEvaluaciones(context) {
 
             client.load_evaluaciones().then((data) => {
@@ -597,7 +600,7 @@ export default new Vuex.Store({
             })
         },
 
-        //Pagina registro: 
+        //Pagina REGISTRO: 
         registro(context, { datos }) {
 
             client.register(datos).then((data) => {
@@ -611,7 +614,7 @@ export default new Vuex.Store({
             })
         },
 
-        //login;
+        //LOGIN;
         login(context, { datos }) {
 
             client.login(datos).then((data) => {
@@ -626,7 +629,7 @@ export default new Vuex.Store({
             })
         },
 
-        // cierre de sesión
+        // CIERRE SESIÓN
         cerrarSesion(context) {
 
             client.cerrar_sesion().then((data) => {
@@ -637,7 +640,7 @@ export default new Vuex.Store({
             })
         },
 
-        //comprobacion pass de admin (pag de registro)
+        //comprobacion pass de ADMIN (pag de registro)
         administradores(context, pass) {
 
             client.admin(pass).then((data) => {
@@ -651,7 +654,7 @@ export default new Vuex.Store({
             })
         },
 
-        //pagina luneros
+        //pagina LUNEROS
         loadLuneros(context) {
 
             client.load_luneros().then((data) => {
