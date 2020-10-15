@@ -269,7 +269,7 @@ class L_client {
                 headers: { 'Authorization': 'Bearer ' + this.auth_token }
             });
             instance.put(this.server + '/api/evaluacions/' + id, {
-                dia: datos.nombre,
+                nombre: datos.nombre,
                 fecha: datos.fecha,
                 desc: datos.desc,
                 mejor: datos.mejor,

@@ -22,7 +22,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="success" @click="insertar()">Registrar</v-btn>
-                    <v-btn class="error" :to="{name:'Login'}">Salir</v-btn>
+                    <v-btn class="error" @click="salir" :to="{name:'Login'}" >Salir</v-btn>
                 </v-card-actions>
             </form>
         </v-card>
@@ -135,17 +135,16 @@ export default {
               }
 
                 this.$store.dispatch('registro', {datos:datos}) 
-                if(this.errors){
-                    console.log("hola")
-                }
                 
-                if(!this.errors){
-                    this.dialog = true
-                
-                    this.name = '',
-                    this.email = '',
-                    this.password = '',
-                    this.c_password = '' 
+                if((datos.name != " " && datos.email != " " && datos.password != " " && datos.c_password != " ") && 
+                    (datos.name != '' && datos.email != '' && datos.password != '' && datos.c_password != "")){
+
+                        this.dialog = true
+                    
+                        this.name = '',
+                        this.email = '',
+                        this.password = '',
+                        this.c_password = '' 
                 }
               
 
@@ -166,8 +165,10 @@ export default {
                 this.$store.commit('setErrorAdmin',false)
             }
             
-        }
+        },
 
+        salir() {
+            this.$store.commit('setErrors', '')        }
 
     },
     mounted(){

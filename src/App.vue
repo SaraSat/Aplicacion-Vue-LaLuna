@@ -141,9 +141,12 @@ export default {
   },
   beforeUpdate(){
     this.menu()
+    this.$store.commit('setErrors', '')
+
   },
   mounted(){
     this.menu()
+    this.$store.commit('setErrors', '')
   },
 };
 </script>

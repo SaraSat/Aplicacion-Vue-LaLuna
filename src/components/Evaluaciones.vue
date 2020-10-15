@@ -47,60 +47,138 @@
         <!--Tarjeta para insertar nueva evaluacion-->
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card dark>
+
+                <v-card-title>
+                    <v-content v-if="errors" >
+                    <div v-for="(v, k) in errors" :key="k">
+                        <p v-for="error in v" :key="error" class="text-sm error">
+                            {{ error }}
+                        </p>
+                    </div>
+                    </v-content>
+                </v-card-title>
+
                 <v-card-title>Nueva Evaluación</v-card-title>
+
                 <v-card-subtitle>
-                    <v-text-field v-model="nombre" label="Nombre Actividad"  requiered :rules="requiredRules"></v-text-field>
-                    <v-text-field v-model="fecha" label="Fecha Actividad" type="date" requiered :rules="requiredRules"></v-text-field>
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="nombre" label="Nombre Actividad" ></v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-text-field v-model="fecha" label="Fecha Actividad" type="date"></v-text-field>
+                        </v-col>
+                    </v-row>
                 </v-card-subtitle>
-                <v-card-text>
-                    <v-textarea v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules" ></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
+
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="desc" label="Qué hemos hecho" rows="2"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="mejor" label="Lo mejor" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="peor" label="Lo peor" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="equipo" label="Equipo" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="recordar" label="A recordar" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
                 <v-card-actions>
                     <v-btn class="success" @click="insertar">Aceptar</v-btn>
-                    <v-btn class="error" @click="dialog=false">Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelar()">Cancelar</v-btn>
                 </v-card-actions>
+
             </v-card>
         </v-dialog>
 
         <!--Tarjeta para editar una evaluacion -->
                 <v-dialog v-model="dialog2" persistent max-width="600px">
                 <v-card dark>
+
+                    <v-card-title>
+                        <v-content v-if="errors" >
+                        <div v-for="(v, k) in errors" :key="k">
+                            <p v-for="error in v" :key="error" class="text-sm error">
+                                {{ error }}
+                            </p>
+                        </div>
+                        </v-content>
+                    </v-card-title>
+
+
                 <v-card-title>Nueva Evaluación</v-card-title>
+
                 <v-card-subtitle>
-                    <v-text-field v-model="nombre" label="Nombre Actividad" requiered :rules="requiredRules"></v-text-field>
-                    <v-text-field v-model="fecha" label="Fecha Actividad" requiered :rules="requiredRules" 
-                        :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="nombre" label="Nombre Actividad"></v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-text-field v-model="fecha" label="Fecha Actividad" 
+                                        :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
+                        </v-col>
+                    </v-row>
                 </v-card-subtitle>
-                <v-card-text>
-                    <v-textarea v-model="desc" label="Qué hemos hecho" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="mejor" label="Lo mejor" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="peor" label="Lo peor" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="equipo" label="Equipo" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
-                <v-card-text>
-                    <v-textarea v-model="recordar" label="A recordar" requiered :rules="requiredRules"></v-textarea>
-                </v-card-text>
+                
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="desc" label="Qué hemos hecho" rows="2"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="mejor" label="Lo mejor" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="peor" label="Lo peor" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="equipo" label="Equipo" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                    <v-col>
+                        <v-card-text>
+                            <v-textarea v-model="recordar" label="A recordar" rows="4"></v-textarea>
+                        </v-card-text>
+                    </v-col>
+                </v-row>
+
                 <v-card-actions>
                     <v-btn class="success" @click="editar(id)">Aceptar</v-btn>
-                    <v-btn class="error" @click="cancelarEdicion()">Cancelar</v-btn>
+                    <v-btn class="error" @click="cancelar()">Cancelar</v-btn>
                 </v-card-actions>
         </v-card>
         </v-dialog>
@@ -116,11 +194,17 @@ export default {
     computed:{
         items() {
             return this.$store.getters.evaluaciones //carga de evaluaciones --> Variable
+        },
+
+        errors() {
+            return this.$store.getters.errors
         }
     },
+
     mounted() {
          this.$store.dispatch('loadEvaluaciones') //Carga de evaluaciones
     },
+
     data() {
         return {
             dialog:false,
@@ -137,13 +221,9 @@ export default {
             recordar:'',
             id:'',
 
-            requiredRules:[
-            v => !!v || ' Campo obligatorio',
-            ],
-
-
         }
     },
+
     methods: {
         //Función que permite la inserccion de una evaluacion nueva
         insertar() {
@@ -161,16 +241,20 @@ export default {
 
             }
             this.$store.dispatch('insertEvaluacion', {datos:datos})
-            
-            this.nombre = ''
-            this.fecha = ''
-            this.desc = ''
-            this.mejor = ''
-            this.peor = ''
-            this.equipo = ''
-            this.recordar = '',
 
-            this.dialog = false
+            if((datos.nombre != " " && datos.desc != " " && datos.fecha != " "  && datos.mejor != " " && datos.peor != " "  && datos.equipo != " ") && 
+                (datos.nombre != '' && datos.desc != '' && datos.fecha != ''  && datos.mejor != "" && datos.peor != ""  && datos.equipo != "")){
+
+                    this.nombre = ''
+                    this.fecha = ''
+                    this.desc = ''
+                    this.mejor = ''
+                    this.peor = ''
+                    this.equipo = ''
+                    this.recordar = '',
+
+                    this.dialog = false
+            }
 
         }, 
 
@@ -210,23 +294,30 @@ export default {
 
             this.$store.dispatch('updateEvaluaciones', {id:id, datos:datos})
 
-            this.nombre = ''
-            this.fecha = ''
-            this.desc = ''
-            this.mejor = ''
-            this.peor = ''
-            this.equipo = ''
-            this.recordar = '',
+            if((datos.nombre != " " && datos.desc != " " && datos.fecha != " "  && datos.mejor != " " && datos.peor != " "  && datos.equipo != " ") && 
+                (datos.nombre != '' && datos.desc != '' && datos.fecha != ''  && datos.mejor != "" && datos.peor != ""  && datos.equipo != "")){
 
-            this.dialog2 = false
-            this.editDate = false
+
+                    this.nombre = ''
+                    this.fecha = ''
+                    this.desc = ''
+                    this.mejor = ''
+                    this.peor = ''
+                    this.equipo = ''
+                    this.recordar = '',
+
+                    this.dialog2 = false
+                    this.editDate = false
+            }
 
         },
 
-        cancelarEdicion(){
+        cancelar(){
             this.dialog2 = false
 
             this.editDate = false
+
+            this.dialog = false
 
             this.nombre = ''
             this.fecha = ''
@@ -235,6 +326,8 @@ export default {
             this.peor=''
             this.equipo = ''
             this.recordar = ''
+
+            this.$store.commit('setErrors', '')
         },
 
         //Función que permite eliminar una evaluacion
