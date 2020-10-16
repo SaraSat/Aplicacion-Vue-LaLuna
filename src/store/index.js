@@ -150,9 +150,11 @@ class L_client {
                 desc: datos.desc,
                 precio: datos.precio,
                 horaF: datos.horaF,
-                lugarF: datos.lugarF, 
+                lugarF: datos.lugarF,
+                direccionInicio: datos.direccionInicio,
+                direccionFinal:datos.direccionFinal, 
                 aviso: datos.aviso,
-                motivo:datos.motivo
+                motivo:datos.motivo, 
             }).then((res) => {
                 resolutionFunc(res.data)
             }).catch((error) => {

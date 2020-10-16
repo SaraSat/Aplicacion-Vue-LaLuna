@@ -82,7 +82,7 @@
                     <v-row>
                       <v-col xs="12" sm="12" md="12">
 
-                        <iframe :src="sitioInicio" 
+                        <iframe :src="item.direccionInicio" 
                         width="800" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
 
                         </v-col>
@@ -123,7 +123,7 @@
                           <v-col xs="12" sm="12" md="12">                          
                           </v-col>
 
-                            <iframe :src="sitioFinal" 
+                            <iframe :src="item.direccionFinal" 
                             width="800" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
 
                           <v-col xs="12" sm="12" md="12" v-if="ed">                          
@@ -298,6 +298,8 @@ export default {
 
       var dias = ["Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado", "Domingo"]
 
+      this.selectDireccion()
+
       this.items.forEach(element => {
 
         var fecha = element.fecha.split('-')
@@ -322,13 +324,18 @@ export default {
 
         element.aviso = false
 
+        element.direccionInicio = this.sitioInicio
+
+        element.direccionFinal = this.sitioFinal
+
         datos = element
 
       });
 
       this.$store.dispatch('updateInicio', {datos:datos, id:datos.id });
 
-      this.selectDireccion()
+      console.log(this.items)
+
 
       if((datos.lugar != " " && datos.desc != " " && datos.fecha != " " && datos.hora != " " && datos.lugarF != " " && 
           datos.horaF != " " && datos.precio != " ") && 
