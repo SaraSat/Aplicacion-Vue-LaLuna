@@ -45,24 +45,24 @@
                     <h3 v-if="!ed">{{item.fecha}} a las  {{item.hora}} en {{item.lugar}}</h3>  
 
                     <v-row v-if="ed" wrap>
-                      <v-col cols="12" sm="6" md="3">
+                      <v-col cols="12" sm="6">
                         <v-text-field label="Fecha" v-model="item.fecha" requiered :rules="requiredRules" 
                           :type="editDate ? 'date' : 'text'" @focus="editDate=true"></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="6" md="3">                      
+                      <v-col cols="12" sm="6">                      
                         <v-text-field   label="a las (hora)->Formato: 23:59" v-model="item.hora" requiered :rules="requiredRules"></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="6" md="3">                      
+                      <v-col cols="12" sm="6">                      
                         <v-text-field label="en (lugar)" v-model="item.lugar" requiered :rules="requiredRules"></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="6" md="3">
+                      <v-col cols="12" sm="6">
                         <v-select :items="nombres" label="Selecciona una dirección" v-model="selected"></v-select>
                       </v-col>
 
-                      <v-col cols="12" sm="6" md="3">
+                      <v-col cols="12" sm="6">
                         <v-text-field label="La actividad tendrá un coste de (X)" v-model="item.precio" requiered :rules="requiredRules">€</v-text-field>
                       </v-col>
                     </v-row>
@@ -83,7 +83,7 @@
                       <v-col xs="12" sm="12" md="12">
 
                         <iframe :src="item.direccionInicio" 
-                        width="800" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
+                        width="100%" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
 
                         </v-col>
                     </v-row>
@@ -124,7 +124,7 @@
                           </v-col>
 
                             <iframe :src="item.direccionFinal" 
-                            width="800" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
+                            width="100%" height="480" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> 
 
                           <v-col xs="12" sm="12" md="12" v-if="ed">                          
                             <v-btn  class="info float-right mt-4 mr-4" v-if="ed" @click="edit(item.id);editDate=false">Aceptar</v-btn>

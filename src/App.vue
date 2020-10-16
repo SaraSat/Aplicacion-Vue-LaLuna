@@ -23,7 +23,7 @@
     </v-app-bar>
             <v-navigation-drawer v-model="open"  absolute="" float hide-overlay dark>
           <v-list dense>
-            <v-list-item link :to="{name:'Home'}">
+            <v-list-item link :to="{name:'Home'}" >
               <v-list-item-action>
                 <v-icon>mdi-home</v-icon>
               </v-list-item-action>

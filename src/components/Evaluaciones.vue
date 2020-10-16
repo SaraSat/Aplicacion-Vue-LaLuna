@@ -16,8 +16,7 @@
         <v-row wrap>
             <v-col  v-for="item in items" :key="item.id" xs-12>
                 <v-card dark min-width="345" min-height="700" >
-                    <v-card-title><h3>Evaluacion</h3></v-card-title>
-                    <v-card-subtitle><h3>{{item.nombre}} {{item.fecha}}</h3> </v-card-subtitle>
+                    <v-card-title><h3>{{item.nombre}} {{item.fecha}}</h3> </v-card-title>
                     <v-card-text><h4>Qué hemos hecho?:</h4> {{item.desc}}</v-card-text>
                     <v-card-text><h4>Lo mejor:</h4> {{item.mejor}}</v-card-text>
                     <v-card-text><h4>Lo peor:</h4> {{item.peor}}</v-card-text>

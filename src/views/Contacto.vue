@@ -6,10 +6,10 @@
             <v-flex xs12>
                 <v-card dark> 
                     <v-card-title>
-                        <p class="display-1">Cualquier duda estamos a su disposición!
+                        <h1>Cualquier duda estamos a su disposición!
                             <br>
                             Puedes mandarnos un correo o llamarnos: 
-                        </p>
+                        </h1>
                     </v-card-title>
                     <v-card-text> 
                         <div>
@@ -38,7 +38,7 @@
                     </v-card-text>
                     <v-card-actions>            
                         <iframe class="d-block w-100" src=" https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.1354486690466!2d-3.6343836846003565!3d40.53859657935119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cf780c46225%3A0xc4af6e1770c0aefe!2sCasa%20de%20las%20Asociaciones!5e0!3m2!1ses!2ses!4v1586739419365!5m2!1ses!2ses "
-                                width="auto " height="350 " frameborder="0 " style="border:3; " allowfullscreen=" " aria-hidden="false " tabindex="0 "></iframe>
+                                width="100% " height="450 " frameborder="0 " style="border:3; " allowfullscreen=" " aria-hidden="false " tabindex="0 "></iframe>
                     </v-card-actions>
                 </v-card>
                 <v-btn absolute dark mr-0 mt-0 fab bottom right color="blue" href="#"><v-icon color="white">mdi-arrow-up</v-icon></v-btn>
