@@ -36,4 +36,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ##Página de inicio: 
 
- ![Imagen](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/ImagesReadme/inicio1.png?raw=true "PaginaInicio")
+ ![Imagen](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/master/ImagesReadme/inicio1.png?raw=true "PaginaInicio")
