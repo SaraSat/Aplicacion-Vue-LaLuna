@@ -36,4 +36,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ##Página de inicio: 
 
- ![Alt text](../imagesReadme/inicio1.png?raw=true "PaginaInicio") 
+ ![Imagen](/imagesReadme/inicio1.png?raw=true "PaginaInicio")
