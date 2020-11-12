@@ -65,7 +65,7 @@ Imagenes: ![GaleriaFotos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/
 
 <br><img src="ImagesReadme/Galeria.PNG" height=400 width=800><br>
 
-<br><img src="ImagesReadme/QuienesSomos.PNG" height=500 width=700><br>
+<br><img src="ImagesReadme/quienesSomos.PNG" height=500 width=700><br>
 
 ## Contacto: 
 Página dónde encontraremos los enlaces a nuestros correos electrónicos, facebook, instagram y teléfono. Ademas de un mapa de nuestra ubicación.
