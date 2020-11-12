@@ -39,10 +39,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 En las siguientes imágenes se puede ver cómo es la página de inicio. Sencillamente se informa de la actividad más próxima, 
 incluyendo un mapa para así ver mejor el lugar de quedada y recogida de la actividad.
 Esta información la podrán modificar los monitores logueados como se podrá ver más adelante.
-
-<br><img src="https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG">
-
-![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG?raw=true "PaginaInicio")
+Imagenes: ![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG?raw=true "PaginaInicio")
 ![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG?raw=true "PaginaInicio")
+
+<br><img src="https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG" height=700 width=600><br>
+
+
 
 
