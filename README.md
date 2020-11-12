@@ -42,7 +42,7 @@ Esta información la podrán modificar los monitores logueados como se podrá ve
 Imagenes: ![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG?raw=true "PaginaInicio")
 ![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG?raw=true "PaginaInicio")
 
-<br><img src="https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/ImagesReadme/inicio1.PNG" height=500 width=600><br>
+<br><img src="https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/ImagesReadme/inicio1.PNG" height=600 width=800><br>
 
 
 
