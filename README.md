@@ -74,7 +74,7 @@ Imagenes:
 
 ![QuienesSomos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/ImagesReadme/quienesSomos.PNG "PaginaInicio")
 
-[Vista_About](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/About.vue)
+[Código_Vista_About](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/About.vue)
 
 
 ## Contacto: 
