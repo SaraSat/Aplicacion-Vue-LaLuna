@@ -47,9 +47,9 @@ Esta información la podrán modificar los monitores logueados como se podrá ve
 <br>
 Imagenes: 
 
-![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG"PaginaInicio")
+![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG)
 
-![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG"PaginaInicio")
+![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG)
 
 [Código_Vista_Home](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/Home.vue)<br>
 
@@ -60,7 +60,7 @@ Donde se podrán visualizar las actividades previstas para ese mes o trimestre. 
 <br>
 Imagen: 
 
-![ImagenActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/actividades.PNG"PaginaActividades")
+![ImagenActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/actividades.PNG)
 
 [Código_Vista_Actividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/Actividades.vue)
 
@@ -70,9 +70,9 @@ Imagen:
 En esta página podemos encontrar una galería de imágenes de las actividades que vamos realizando y una pequeña descripción de lo que somos y lo que hacemos. 
 Imagenes: 
 
-![GaleriaFotos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Galeria.PNG"PaginaInicio")
+![GaleriaFotos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Galeria.PNG)
 
-![QuienesSomos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG"PaginaInicio")
+![QuienesSomos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG)
 
 [Vista_About](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/About.vue)
 
