@@ -47,9 +47,9 @@ Esta información la podrán modificar los monitores logueados como se podrá ve
 <br>
 Imagenes: 
 
-![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG?raw=true "PaginaInicio")
+![ImagenInicio](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicio1.PNG"PaginaInicio")
 
-![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG?raw=true "PaginaInicio")
+![ImagenInicioCompleto](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/inicioCompleto.PNG"PaginaInicio")
 
 [Código_Vista_Home](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/Home.vue)<br>
 
@@ -60,7 +60,7 @@ Donde se podrán visualizar las actividades previstas para ese mes o trimestre. 
 <br>
 Imagen: 
 
-![ImagenActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/actividades.PNG?raw=true "PaginaActividades")
+![ImagenActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/actividades.PNG"PaginaActividades")
 
 [Código_Vista_Actividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/Actividades.vue)
 
@@ -70,9 +70,9 @@ Imagen:
 En esta página podemos encontrar una galería de imágenes de las actividades que vamos realizando y una pequeña descripción de lo que somos y lo que hacemos. 
 Imagenes: 
 
-![GaleriaFotos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Galeria.PNG?raw=true "PaginaInicio")
+![GaleriaFotos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Galeria.PNG"PaginaInicio")
 
-![QuienesSomos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG?raw=true "PaginaInicio")
+![QuienesSomos](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG"PaginaInicio")
 
 [Vista_About](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/About.vue)
 
@@ -93,9 +93,9 @@ Una vez logados los monitores podrán acceder a la tabla de teléfonos de los lu
 
 Imagenes: 
 
-![Login](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/acceso.PNG?raw=true "Login")
+![Login](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/acceso.PNG)
 
-![LoginFallido](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/emailNoValido.PNG?raw=true "Login")
+![LoginFallido](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/emailNoValido.PNG)
 
 [Código_Vista_Login](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/views/Login.vue)
 
@@ -104,7 +104,7 @@ Una vez logado:
 
 Imagenes: 
 
-![AccesoMonitores](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/funcionalidades.PNG?raw=true "PagMonitores")
+![AccesoMonitores](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/funcionalidades.PNG)
 
 [Código_Componente_Logado](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/components/Logado.vue)
 
@@ -116,9 +116,9 @@ Además se pueden añadir nuevos chavales o eliminarlos.
 
 Imagenes: 
 
-![TablaLuneros](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/tablaChavales.PNG?raw=true "PaginaLuneros")
+![TablaLuneros](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/tablaChavales.PNG)
 
-![AñadirLunero](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG?raw=true "PáginaLuneros")
+![AñadirLunero](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/quienesSomos.PNG)
 
 [Código_Componente_Luneros](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/components/Luneros.vue)
 
@@ -128,7 +128,7 @@ Se podrán añadir, eliminar o editar las existentes. Consiste en un formulario 
 
 Imagenes: 
 
-![Evaluaciones](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Evaluaciones.PNG?raw=true "PagEvaluaciones")
+![Evaluaciones](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/Evaluaciones.PNG)
 
 [Código_Componente_Evaluaciones](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/components/Evaluaciones.vue)
 
@@ -137,7 +137,7 @@ Imagenes:
 Únicamente para aquellos con contraseña de Administradores: 
 Imagenes: 
 
-![Registro](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/registro.PNG?raw=true "PagRegistro")
+![Registro](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/registro.PNG)
 
 [Código_Componente_Registro](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/blob/master/src/components/Registro.vue)
 
@@ -149,15 +149,15 @@ De tal modo que en la página de inicio se pueden crear avisos o modificar la ac
 editar, eliminar y añadir nuevas actividades: 
 
 Imagenes: 
-![PaginaInicioEdicion](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/edicioPagInicio.PNG?raw=true "PaginaInicio")
+![PaginaInicioEdicion](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/edicioPagInicio.PNG)
 
-![ActividadPrincipal](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/edicionActividadPrincipal.PNG?raw=true "PáginaInicio")
+![ActividadPrincipal](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/edicionActividadPrincipal.PNG)
 
-![ActividadPrincipalError](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/manejoErroresInicio.PNG?raw=true "PáginaInicio")
+![ActividadPrincipalError](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/manejoErroresInicio.PNG)
 
-![MapaDinámico](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/mapaDinámico.PNG?raw=true "PáginaInicio")
+![MapaDinámico](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/mapaDinámico.PNG)
 
-![PaginaActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/EdicionActividades.PNG?raw=true "PáginaActividades")
+![PaginaActividades](https://github.com/SaraSat/Aplicacion-Vue-LaLuna/tree/master/ImagesReadme/EdicionActividades.PNG)
 
 
 
